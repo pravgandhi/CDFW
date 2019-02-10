@@ -1,0 +1,358 @@
+[
+  {
+    "name": "Derek Grove",
+    "emailId": "dergrove@deloitte.com",
+    "managerName": "Ramu Guduri",
+    "available":"true",
+    "project": "Connecticut State Project",
+    "seatInfo": {
+      "seatNumber": "02.E.001",
+      "floor": "2",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Tom Brady",
+    "emailId": "tombrady@deloitte.com",
+    "managerName": "Bill Belichick",
+    "reserved": "true",
+    "project": "Connecticut State Project",
+    "seatInfo": {
+      "seatNumber": "02.E.002",
+      "floor": "2",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Praveen Gandhi ",
+    "emailId": "pravGandhi @deloitte.com",
+    "managerName": "Pranav Bansal",
+    "reserved": "true",
+    "project": "Anthem",
+    "seatInfo": {
+      "seatNumber": "04.N.003",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Thilip Dhamodharan",
+    "emailId": "thilipshamu@deloitte.com",
+    "managerName": "Pranav Bansal",
+    "reserved": "true",
+    "project": "Anthem",
+    "seatInfo": {
+      "seatNumber": "04.N.007",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Jesse Pinkman",
+    "emailId": "Jesse@deloitte.com",
+    "managerName": "Walter White",
+    "project": "NM",
+    "seatInfo": {
+      "seatNumber": "04.E.003",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+
+  {
+    "name": "Derek Grove",
+    "emailId": "dergrove@deloitte.com",
+    "managerName": "Ramu Guduri",
+    "available":"true",
+    "project": "Connecticut State Project",
+    "seatInfo": {
+      "seatNumber": "02.E.001",
+      "floor": "2",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Tom Brady",
+    "emailId": "tombrady@deloitte.com",
+    "managerName": "Bill Belichick",
+    "reserved": "true",
+    "project": "Connecticut State Project",
+    "seatInfo": {
+      "seatNumber": "02.E.002",
+      "floor": "2",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Praveen Gandhi ",
+    "emailId": "pravGandhi @deloitte.com",
+    "managerName": "Pranav Bansal",
+    "reserved": "true",
+    "project": "Anthem",
+    "seatInfo": {
+      "seatNumber": "04.N.003",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Thilip Dhamodharan",
+    "emailId": "thilipshamu@deloitte.com",
+    "managerName": "Pranav Bansal",
+    "reserved": "true",
+    "project": "Anthem",
+    "seatInfo": {
+      "seatNumber": "04.N.007",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Jesse Pinkman",
+    "emailId": "Jesse@deloitte.com",
+    "managerName": "Walter White",
+    "project": "NM",
+    "seatInfo": {
+      "seatNumber": "04.E.003",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+
+  {
+    "name": "Derek Grove",
+    "emailId": "dergrove@deloitte.com",
+    "managerName": "Ramu Guduri",
+    "available":"true",
+    "project": "Connecticut State Project",
+    "seatInfo": {
+      "seatNumber": "02.E.001",
+      "floor": "2",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Tom Brady",
+    "emailId": "tombrady@deloitte.com",
+    "managerName": "Bill Belichick",
+    "reserved": "true",
+    "project": "Connecticut State Project",
+    "seatInfo": {
+      "seatNumber": "02.E.002",
+      "floor": "2",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Praveen Gandhi ",
+    "emailId": "pravGandhi @deloitte.com",
+    "managerName": "Pranav Bansal",
+    "reserved": "true",
+    "project": "Anthem",
+    "seatInfo": {
+      "seatNumber": "04.N.003",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Thilip Dhamodharan",
+    "emailId": "thilipshamu@deloitte.com",
+    "managerName": "Pranav Bansal",
+    "reserved": "true",
+    "project": "Anthem",
+    "seatInfo": {
+      "seatNumber": "04.N.007",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Jesse Pinkman",
+    "emailId": "Jesse@deloitte.com",
+    "managerName": "Walter White",
+    "project": "NM",
+    "seatInfo": {
+      "seatNumber": "04.E.003",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+
+  {
+    "name": "Derek Grove",
+    "emailId": "dergrove@deloitte.com",
+    "managerName": "Ramu Guduri",
+    "available":"true",
+    "project": "Connecticut State Project",
+    "seatInfo": {
+      "seatNumber": "02.E.001",
+      "floor": "2",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Tom Brady",
+    "emailId": "tombrady@deloitte.com",
+    "managerName": "Bill Belichick",
+    "reserved": "true",
+    "project": "Connecticut State Project",
+    "seatInfo": {
+      "seatNumber": "02.E.002",
+      "floor": "2",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Praveen Gandhi ",
+    "emailId": "pravGandhi @deloitte.com",
+    "managerName": "Pranav Bansal",
+    "reserved": "true",
+    "project": "Anthem",
+    "seatInfo": {
+      "seatNumber": "04.N.003",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Thilip Dhamodharan",
+    "emailId": "thilipshamu@deloitte.com",
+    "managerName": "Pranav Bansal",
+    "reserved": "true",
+    "project": "Anthem",
+    "seatInfo": {
+      "seatNumber": "04.N.007",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+  {
+    "name": "Jesse Pinkman",
+    "emailId": "Jesse@deloitte.com",
+    "managerName": "Walter White",
+    "project": "NM",
+    "seatInfo": {
+      "seatNumber": "04.E.003",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  },
+
+  {
+    "name": "Test One",
+    "emailId": "Jesse@deloitte.com",
+    "managerName": "Walter White",
+    "project": "NM",
+    "seatInfo": {
+      "seatNumber": "04.E.003",
+      "floor": "4",
+      "builiding": "901",
+      "location": {
+        "city": "Orlando",
+        "state": "FL",
+        "country": "USA"
+      }
+    }
+  }
+]

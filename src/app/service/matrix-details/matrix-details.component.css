@@ -1,0 +1,21 @@
+mat-cell,
+.mat-cell,
+mat-footer-cell,
+.mat-footer-cell,
+mat-header-cell, .mat-header-cell {
+  padding: 0.75rem !important;
+}
+
+table, mat-paginator {
+  width: 75%;
+}
+
+mat-header-cell {
+  display:flex;
+  justify-content:flex-end;
+ }
+
+ .mat-form-field {
+   font-size: 14px;
+   width: 50%;
+ }

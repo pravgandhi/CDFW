@@ -1,0 +1,84 @@
+<div class="titleRow">
+  <div class = "titleColumn">
+    <mat-card>{{serviceMatrix?.taskInfo?.regionCode}} / {{serviceMatrix?.taskInfo?.service?.serviceName}}</mat-card>
+  </div>
+</div>
+
+
+<div class="taskRow">
+  <div class="taskColumn" >
+    <div class="row">
+      <div class="column">
+        <mat-form-field>
+          <input matInput placeholder="Enter Multiplier" type="number" name="test_name" min="0" oninput="validity.valid||(value='');">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Enter User Name">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column">
+        <mat-form-field>
+          <input matInput placeholder="Frequency" value="{{serviceMatrix?.taskInfo?.taskId}}" readonly>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Total time of Labor Classes" value="{{serviceMatrix?.taskInfo?.taskId}}" readonly>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Total Hours" value="{{serviceMatrix?.taskInfo?.taskId}}" readonly>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column">
+        <mat-form-field>
+          <input matInput placeholder="Task ID" value="{{serviceMatrix?.taskInfo?.taskId}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Task Name" value="{{serviceMatrix?.taskInfo?.service?.category?.categoryName}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Justification Category" value="{{serviceMatrix?.taskInfo?.taskId}}" readonly>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column" style="width:100%">
+        <mat-form-field>
+          <textarea matInput placeholder="Task Description"  rows="5" cols="33">
+          </textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="taskColumn">
+    <div class="laborRow">
+      <div class="laborColumn">
+        <table mat-table [dataSource]="serviceMatrix?.laborDataStore" class="mat-elevation-z8">
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef> Labor Class Title </th>
+            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+          </ng-container>
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef> Labor Class Role </th>
+            <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+          </ng-container>
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef> Time Labor Class </th>
+            <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

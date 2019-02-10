@@ -1,0 +1,8 @@
+.loginForm {
+  min-height: 50vh;
+  padding: 100px;
+}
+
+mat-card, mat-card > *  {
+  width:50vh;
+}

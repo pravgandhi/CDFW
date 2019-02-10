@@ -1,0 +1,73 @@
+/*.task-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: DodgerBlue;
+  align-content: space-between;
+}
+
+
+.task-container > * {
+  //background-color: #f1f1f1;
+  //width: 50vh;
+  //margin: 10px;
+  //text-align: center;
+  //font-size: 30px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: row wrap;
+  padding: 0 4px;
+  background-color: DodgerBlue;
+  justify-content: flex-start;
+}
+
+.column {
+  //flex: 75%;
+  //max-width: 75%;
+  //padding: 4px;
+  //margin: 10px;
+}*/
+
+.titleRow {
+  display: flex;
+  background-color: green;
+  justify-content: center;
+  align-text: center;
+}
+
+.titleColumn {
+  flex: 80%;
+  max-width: 80%;
+  text-align: center;
+}
+
+.taskRow {
+  display: flex;
+  background-color: red;
+  justify-content: flex-end;
+}
+
+.taskColumn {
+  flex: 50%;
+  max-width: 50%;
+}
+
+
+.laborRow {
+  display: flex;
+  //background-color: blue;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.laborColumn {
+  flex: 50%;
+  max-width: 50%;
+}
+
+.mat-form-field {
+    padding-right: 10px;
+}
