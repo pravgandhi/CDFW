@@ -10,12 +10,17 @@ import { LoginModule } from './login/login.module';
 
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
-  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatSidenavModule
 } from '@angular/material';
 
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { InputsComponent } from './service/inputs/inputs.component';
+import {AuthenticationService} from   './_services/authentication.service'
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { UserService } from './_services';
 
 
 @NgModule({
@@ -25,7 +30,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
   imports: [
     BrowserModule,
     AppRoutingModule,
-
+    HttpClientModule,
     //material
     MatToolbarModule,
     MatButtonModule,
@@ -36,16 +41,20 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
     BrowserAnimationsModule,
+    FormsModule,
 
     FlexLayoutModule,
 
     UserModule,
     ServiceModule,
-    LoginModule
+    LoginModule,
+
 
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [AuthenticationService, UserService],
+  bootstrap: [AppComponent],
+  entryComponents: [InputsComponent]
 })
 export class AppModule { }

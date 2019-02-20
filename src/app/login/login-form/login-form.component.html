@@ -1,4 +1,4 @@
-<form class="loginForm">
+<form class="loginForm" [formGroup]="loginForm" >
     <mat-card>
       <mat-card-header>
         <mat-card-title>Login</mat-card-title>
@@ -7,15 +7,22 @@
         <table cellspacing="0">
           <tr>
             <td>
-              <mat-form-field>
-                <input matInput placeholder="Username" name="username" required>
-              </mat-form-field>
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput placeholder="Username" name="username" required
+                  formControlName="username" class="form-control">
+                </mat-form-field>
+                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">Username is required</div>
+                </div>
+              </div>
             </td>
           </tr>
           <tr>
             <td>
               <mat-form-field>
-                <input matInput placeholder="Password" type="password" name="password" required>
+                <input matInput placeholder="Password" type="password" name="password"
+                formControlName="password" class="form-control" required>
               </mat-form-field>
             </td>
           </tr>
@@ -23,7 +30,7 @@
         <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="getUserDetails()">Login</button>
+        <button type= "submit" mat-raised-button color="primary" (click)="onSubmit()">Login</button>
       </mat-card-actions>
     </mat-card>
   </form>

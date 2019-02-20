@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ServiceMatrixService } from '../service-matrix.service';
+import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
+import { InputsComponent } from '../inputs/inputs.component';
+import { UserService } from 'src/app/_services';
+
 
 @Component({
   selector: 'app-task-details',
@@ -8,9 +12,12 @@ import { ServiceMatrixService } from '../service-matrix.service';
   styleUrls: ['./task-details.component.css']
 })
 export class TaskDetailsComponent implements OnInit {
-  taskId : string;
+  inpuTaskId : string;
+  user: Object;
   task : Object;
+  dataSource = new MatTableDataSource<Object>();
   displayedColumns: string[] = ["title", "role", "time"];
+
   groups = [
    {
      "name": "pencils",
@@ -22,10 +29,49 @@ export class TaskDetailsComponent implements OnInit {
    },
 ] ;
 
-  constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService) { }
+  constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
+     private router: Router, private dialog: MatDialog,
+   private userService:UserService) { }
 
   ngOnInit() {
-    this.taskId = this.route.snapshot.paramMap.get("id");
-    this.serviceMatrix.getTaskInfo(this.taskId);
+    this.inpuTaskId = this.route.snapshot.paramMap.get("id");
+    this.getTaskInfo1(this.inpuTaskId);
+    this.user = this.userService.user;
   }
+
+  public getTaskInfo1 = (taskId) => {
+      this.serviceMatrix.getTaskDetail1(taskId).subscribe(
+        data => {
+          this.task = data;
+          this.dataSource.data = data['laborClass'];
+        }
+      );
+  }
+
+  saveResponse(){
+    alert("Call backend service to store the information");
+  }
+
+  goBackToMatrix(){
+    this.router.navigate(["service"]);
+  }
+
+  viewInputs(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    this.dialog.open(InputsComponent, dialogConfig);
+  }
+
+  provideYourInputs(){
+    this.router.navigate(['task',this.inpuTaskId]);
+  }
+
+  backToRegion(){
+    this.router.navigate(["region"]);
+  }
+
+  backToLogin(){
+    this.router.navigate(["login"]);
+  }
+
 }

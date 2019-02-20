@@ -1,0 +1,29 @@
+{
+    "regionCode": "LAS",
+    "taskId" : "123",
+    "serviceName": "Public Use and Enjoyment",
+    "program": "Recreation",
+    "subProgram": "Wild life Viewing",
+    "taskName": "Task 1",
+    "categoryName" : "Category",
+    "multiplier": "5",
+    "frequency": "365",
+    "totalLaborTime": "60",
+    "totalHours": "0",
+    "taskDescription": "This is a test task description and need to test a bigger description",
+    "multiplierDescription": "This is a test multiplier description",
+    "laborClass" : [{
+      "title": "Law enforcement officer 1" ,
+      "role": "LEO1",
+      "time" : "20"
+    }, {
+      "title": "Law enforcement officer 2" ,
+      "role": "LEO2",
+      "time" : "20"
+    }, {
+      "title": "Law enforcement officer " ,
+      "role": "LEO",
+      "time" : "20"
+    }],
+    "justificationCategory": ["Justification1", "Justification2" , "Justification3"]
+}

@@ -1,51 +1,111 @@
 <div align="center">
-  <mat-form-field>
-    <!--<input matInput placeholder="Input">-->
+
+  <mat-toolbar >
+    <h4> Service Matrix &nbsp;&nbsp; </h4>
+    <mat-icon matListAvatar color="primary" matTooltip = "User Info">account_box</mat-icon>
+    <span>{{user.userName}} &nbsp;&nbsp;</span>
+    <mat-icon matListAvatar color="primary">language</mat-icon>
+  <!--  <span > {{user.regionByRegionId.regionName}} &nbsp;&nbsp;</span> -->
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
+    <span> <b>Actions: </b> &nbsp;&nbsp;</span>
+    <button mat-button color = "primary" [matMenuTriggerFor]="region">
+        <mat-icon>language</mat-icon>
+        Pick a different region
+    </button>
+
+    <mat-menu #region="matMenu">
+      <button mat-menu-item *ngFor="let item of regionList"
+      (click)="chooseRegion(item)"> {{item}} </button>
+    </mat-menu>
+
+    <button mat-button color = "primary" (click)="backToLogin()">
+        <mat-icon>power_settings_new</mat-icon>
+        Logout
+    </button>
+
+  </mat-toolbar>
+
+<mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
-  <table mat-table [dataSource] = "serviceMatrix?.matMtrixDataStore" matSort class="mat-elevation-z8">
-    <ng-container matColumnDef ="regionCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Region</th>
+  <!--  <mat-form-field>
+    <input matInput [ngModel]="globalFilter" (ngModelChange)="applyFilter($event)" placeholder="Filter">
+  </mat-form-field>-->
+  <table mat-table [dataSource] = "dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef ="taskId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Task ID</th>
       <td mat-cell *matCellDef= "let element">
-        {{element.regionCode}}
+        {{element.taskId}}
       </td>
     </ng-container>
 
    <ng-container matColumnDef ="serviceName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Service</th>
       <td mat-cell *matCellDef= "let element">
-        {{element.service.serviceName}}
+        {{element.serviceName}}
       </td>
     </ng-container>
 
    <ng-container matColumnDef ="program">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Program</th>
       <td mat-cell *matCellDef= "let element">
-        {{element.service.program}}
+        {{element.program}}
       </td>
     </ng-container>
 
    <ng-container matColumnDef ="subProgram">
        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sub Program</th>
        <td mat-cell *matCellDef= "let element">
-         {{element.service.subProgram}}
+         {{element.subProgram}}
        </td>
      </ng-container>
 
-     <ng-container matColumnDef ="categoryName">
+     <ng-container matColumnDef ="taskCategory">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Task Category</th>
         <td mat-cell *matCellDef= "let element">
-          {{element.service.category.categoryName}}
+          {{element.taskCategory}}
         </td>
       </ng-container>
 
       <ng-container matColumnDef ="taskName">
          <th mat-header-cell *matHeaderCellDef mat-sort-header>Task</th>
          <td mat-cell *matCellDef= "let element">
-           {{element.service.taskName}}
+           {{element.taskName}}
          </td>
-       </ng-container> -->
+       </ng-container>
 
+    <ng-container matColumnDef="input">
+     <th mat-header-cell *matHeaderCellDef>My Input</th>
+     <td mat-cell *matCellDef="let element">
+         <button mat-icon-button color="primary" >
+             <mat-icon class="mat-18">done</mat-icon>
+         </button>
+     </td>
+   </ng-container>
+
+   <ng-container matColumnDef ="approved">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Approved</th>
+      <td mat-cell *matCellDef= "let element">
+        <button mat-icon-button color="primary" >
+            <mat-icon class="mat-18">done_all</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+   <ng-container matColumnDef ="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef= "let element">
+        {{element.taskName}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef ="count">
+       <th mat-header-cell *matHeaderCellDef mat-sort-header>Count Inputs</th>
+       <td mat-cell *matCellDef= "let element">
+         0
+       </td>
+     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showTask(row)"></tr>

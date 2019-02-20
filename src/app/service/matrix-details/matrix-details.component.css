@@ -7,7 +7,7 @@ mat-header-cell, .mat-header-cell {
 }
 
 table, mat-paginator {
-  width: 75%;
+  width: 90%;
 }
 
 mat-header-cell {
@@ -19,3 +19,17 @@ mat-header-cell {
    font-size: 14px;
    width: 50%;
  }
+
+ .mat-row:hover {
+  background-color: #b4b4b433;
+}
+
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+mat-toolbar > span, mat-toolbar > a > span {
+  font-size: 10pt;
+}
