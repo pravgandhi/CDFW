@@ -19,8 +19,7 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
   searchInput: string;
   user:Object;
   starColor : string = "primary";
-  displayedColumns: string[] = ["taskId", "serviceName", "program",
-   "subProgram", "taskCategory", "taskName"];
+  displayedColumns: string[] = [];
   displayedFilterColumns: string[] = [];
 
   admin:string[] = [ "input", "approved", "status", "count"];
@@ -54,6 +53,9 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     customInit(params){
       // alert(params['regionId']);
       this.user = this.userService.user;
+      this.displayedColumns = ["taskId", "serviceName", "program",
+      "subProgram", "taskCategory", "taskName"];
+      this.displayedFilterColumns = [];
       if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
          this.displayedColumns.push( "input", "approved", "status", "count");
        } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
