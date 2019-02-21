@@ -31,7 +31,7 @@
   <mat-divider matInset></mat-divider>
   <mat-card-actions align="center">
     <mat-form-field >
-      <input matInput placeholder="Input Multiplier" type="number" name="test_name" min="0" oninput="validity.valid||(value='');">
+      <input matInput placeholder="Input Multiplier" type="number" name="test_name" min="0" oninput="validity.valid||(value='');" [(ngModel)]="multiplier">
     </mat-form-field>
     <button mat-button color = "primary" (click)="saveResponse()">
         <mat-icon>save</mat-icon>

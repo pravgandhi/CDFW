@@ -86,7 +86,7 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       this.dataSource.paginator = this.paginator;
     }
 
-    
+
   customFilterPredicate() {
     const myFilterPredicate = (data: any, filter: string): boolean => {
       var globalMatch = !this.globalFilter;
@@ -131,8 +131,6 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     }
 
     showTask(row) {
-      debugger;
-      alert(row);
       this.router.navigate([this.selectedRegion, "task", row.taskId ]);
     }
 
@@ -144,7 +142,4 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       this.router.navigate(["login"]);
     }
 
-    initialiseState(){
-      alert('Inside Initialize');
-    };
 }

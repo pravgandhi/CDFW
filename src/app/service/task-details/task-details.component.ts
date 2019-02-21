@@ -19,6 +19,7 @@ export class TaskDetailsComponent implements OnInit {
   displayedColumns: string[] = ["title", "role", "time"];
   selectedRegion:string;
   selectedTask:string;
+  multiplier: number;
 
   groups = [
    {
@@ -50,29 +51,31 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   public getTaskInfo1 = (selectedRegion, taskId) => {
-      alert('get task info 1');
-      this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
+        this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
         data => {
-          alert('inside get task info');
           this.task = data;
           this.dataSource.data = data['laborClassesByTaskId'];
 
         },
         err => {
-          debugger;
-          alert(`Error is ${err}`);
+
         },
-        () => alert('others')
+        () => {
+
+        }
       );
   }
 
   saveResponse(){
-    alert('saving input');
-    this.serviceMatrix.saveUserInput().
+    let status = 'N';
+    if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
+        status = 'A';
+     } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
+       status = 'P';
+     }
+    this.serviceMatrix.saveUserInput(this.user['userId'], this.selectedRegion, this.inpuTaskId, multiplier, status  ).
     subscribe(res => {
-        alert(res);
     });
-    alert('post save');
   }
 
   goBackToMatrix(){

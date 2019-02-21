@@ -18,8 +18,6 @@ export class InputsComponent implements OnInit  {
 
   }
 
-
-
   approveResponse(){
     this.serviceMatrix.selectedRowIndex = this.selectedRowIndex;
     alert('save the selected value and mark others as rejected');

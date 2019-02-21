@@ -52,13 +52,10 @@ export class ServiceMatrixService {
 
   async getServiceMatrix1 (){
       var self = this;
-      alert('Inside service matrix');
       await fetch(this.API_URL+'service')
         .then(function(response) {
         response.json().then(
             function (data) {
-              alert('Inside service matrix - inside data');
-              debugger;
               console.log(data);
               self.matrixJsonString = data;
               self.matMtrixDataStore = new MatTableDataSource (data);
@@ -90,8 +87,6 @@ export class ServiceMatrixService {
     }
 
     getTaskDetail1 = (selectedRegion: string, taskId :string) => {
-       alert(`region is ${selectedRegion} and task id is ${taskId}`);
-      // return this.http.get('../assets/data0.json');
       return this.http.get(this.API_URL+selectedRegion+'/task/'+ taskId );
     }
 
@@ -122,14 +117,8 @@ export class ServiceMatrixService {
             });
     }
 
-    public saveUserInput(){
-      let regionId =1 ;
-      let userId = 1;
-      let taskId =1 ;
-      let inputValue =4 ;
-      let sttsCd = 'A';
-      debugger;
-      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionId: regionId, taskId: taskId, inputValue :inputValue, sttsCd: sttsCd });
+    public saveUserInput(userId:number, regionName: string, taskId: number, inputValue: number, sttsCd: string){
+      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionId: regionName, taskId: taskId, inputValue :inputValue, sttsCd: sttsCd });
      }
 
 }
