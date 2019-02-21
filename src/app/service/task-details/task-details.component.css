@@ -57,10 +57,11 @@ mat-toolbar > span, mat-toolbar > a > span {
 
 mat-card {
   max-width: 800px;
+  margin: 30px;
 }
 
 
-.row1, .row2, .row3 {
+.row1, .row2, .row3, .row4 {
   display: flex;
   flex-direction: row;
   padding: 0 4px;
@@ -70,7 +71,7 @@ mat-card {
   padding-top: 40px;
 }
 
-.row1 > .column {
+.row1 > .column, .row4 > .column {
   flex: 50%;
   min-width: 50%;
 }
@@ -84,6 +85,10 @@ mat-card {
   flex: 60%;
   max-width: 60%;
   text-align: center;
+}
+
+.row4 {
+  margin-top: 20px;
 }
 
 
@@ -102,4 +107,8 @@ label {
 
 mat-toolbar > span, mat-toolbar > a > span {
   font-size: 10pt;
+}
+
+textarea {
+  margin-left: 10px;
 }

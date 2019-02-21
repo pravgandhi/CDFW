@@ -10,7 +10,7 @@ import { AuthGuard } from './_guards';
 const routes: Routes = [
   { path: 'user', component: UserRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'service/:regionId', component:  MatrixDetailsComponent, canActivate: [AuthGuard]},
-  { path: ':regionId/task/:id', component:  TaskDetailsComponent, canActivate: [AuthGuard]},
+  { path: ':regionId/task/:taskId', component:  TaskDetailsComponent, canActivate: [AuthGuard]},
   { path: 'login', component:  LoginFormComponent},
   { path: '', component:  LoginFormComponent},
   // otherwise redirect to home

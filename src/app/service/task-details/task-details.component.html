@@ -25,7 +25,7 @@
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title>{{task.taskName}}</mat-card-title>
-    <mat-card-subtitle>{{task.serviceName}} / {{task.program}} / {{task.subProgram}} /{{task.categoryName}}</mat-card-subtitle>
+    <mat-card-subtitle>{{task.serviceName}} / {{task.program}} / {{task.subProgram}} /{{task.taskCategory}}</mat-card-subtitle>
 
   </mat-card-header>
   <mat-divider matInset></mat-divider>
@@ -33,14 +33,15 @@
     <mat-form-field >
       <input matInput placeholder="Input Multiplier" type="number" name="test_name" min="0" oninput="validity.valid||(value='');">
     </mat-form-field>
-    <button mat-button color = "primary" (click)="viewInputs()">
-        <mat-icon>touch_app</mat-icon>
-        View Inputs
-    </button>
     <button mat-button color = "primary" (click)="saveResponse()">
         <mat-icon>save</mat-icon>
         Save Response
     </button>
+    <button mat-button color = "primary" (click)="viewInputs()">
+        <mat-icon>touch_app</mat-icon>
+        View Inputs
+    </button>
+
   </mat-card-actions>
   <mat-card-content>
 
@@ -49,16 +50,37 @@
       <div class="column" >
         <label for="taskdesc">Task Description</label>
         <textarea id="taskdesc" name="taskdesc"
-                  rows="3" cols="30" readonly> {{task.taskDescription}}
+                  rows="3" cols="30" readonly> {{task.taskDesc}}
         </textarea>
       </div>
       <div class="column">
         <label for="multiDesc">Input Multiplier Description</label>
         <textarea id="multiDesc" name="multiDesc"
-                  rows="3" cols="30" readonly> {{task.multiplierDescription}}
+                  rows="3" cols="30" readonly> {{task.multDesc}}
         </textarea>
       </div>
     </div>
+    <br>
+    <div class = "row4">
+      <div class="column" >
+        <label for="taskdesc">Task Description</label>
+        <textarea id="taskdesc" name="taskdesc"
+                  rows="3" cols="30" readonly> {{task.taskDesc}}
+        </textarea>
+      </div>
+      <div class="column">
+        <label for="multiDesc">Input Multiplier Description</label>
+        <textarea id="multiDesc" name="multiDesc"
+                  rows="3" cols="30" readonly> {{task.multDesc}}
+        </textarea>
+      </div>
+    </div>
+  </mat-card>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
 
     <div class = "row2">
       <div class="column">
@@ -80,7 +102,7 @@
         </textarea>
       </div>
     </div>
-  </mat-card>
+
 
   <div class = "row3">
     <div class="column" style="width:60%">
@@ -105,17 +127,13 @@
     <div class="column" style="width:40%">
       <label for="justcat">Justification Category</label>
         <mat-list id="justcat">
-        <!-- <mat-list-item *ngFor = "let jc of task.justificationCategory">
+         <mat-list-item *ngFor = "let jc of task.jrsdctnCtgriesByTaskId">
            <mat-icon color="primary">play_arrow </mat-icon>
-           {{jc}}
-          </mat-list-item>-->
+           {{jc.categoryName}}
+          </mat-list-item>-
         </mat-list>
     </div>
   </div>
-
-
-
   </mat-card-content>
-  <mat-divider matInset></mat-divider>
 </mat-card>
 </div>

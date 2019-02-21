@@ -89,8 +89,10 @@ export class ServiceMatrixService {
        });
     }
 
-    getTaskDetail1 = (taskId: string) => {
-       return this.http.get('../assets/data0.json');
+    getTaskDetail1 = (selectedRegion: string, taskId :string) => {
+       alert(`region is ${selectedRegion} and task id is ${taskId}`);
+      // return this.http.get('../assets/data0.json');
+      return this.http.get(this.API_URL+selectedRegion+'/task/'+ taskId );
     }
 
     getRegionDetails = () => {

@@ -18,6 +18,7 @@ export class TaskDetailsComponent implements OnInit {
   dataSource = new MatTableDataSource<Object>();
   displayedColumns: string[] = ["title", "role", "time"];
   selectedRegion:string;
+  selectedTask:string;
 
   groups = [
    {
@@ -31,30 +32,37 @@ export class TaskDetailsComponent implements OnInit {
 ] ;
 
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
-     private router: Router, private dialog: MatDialog,
-   private userService:UserService) { }
+    private router: Router, private dialog: MatDialog,
+    private userService:UserService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
 
       this.selectedRegion = params['regionId'];
+      this.inpuTaskId = params['taskId'];
       this.customInit();
     });
   }
 
   customInit(){
-    this.inpuTaskId = this.route.snapshot.paramMap.get("id");
-    this.getTaskInfo1(this.inpuTaskId);
+    this.getTaskInfo1(this.selectedRegion, this.inpuTaskId);
     this.user = this.userService.user;
   }
 
-  public getTaskInfo1 = (taskId) => {
-      this.serviceMatrix.getTaskDetail1(taskId).subscribe(
+  public getTaskInfo1 = (selectedRegion, taskId) => {
+      alert('get task info 1');
+      this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
         data => {
+          alert('inside get task info');
           this.task = data;
-          this.dataSource.data = data['laborClass'];
+          this.dataSource.data = data['laborClassesByTaskId'];
 
-        }
+        },
+        err => {
+          debugger;
+          alert(`Error is ${err}`);
+        },
+        () => alert('others')
       );
   }
 
