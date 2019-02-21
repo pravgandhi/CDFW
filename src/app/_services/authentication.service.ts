@@ -17,7 +17,6 @@ export class AuthenticationService {
           toPromise()
          .then(function(response) {
            if(response) {
-             debugger;
              console.log(response['userName']);
              localStorage.setItem('currentUser', JSON.stringify(response));
              return true;

@@ -17,6 +17,7 @@ export class TaskDetailsComponent implements OnInit {
   task : Object;
   dataSource = new MatTableDataSource<Object>();
   displayedColumns: string[] = ["title", "role", "time"];
+  selectedRegion:string;
 
   groups = [
    {
@@ -34,6 +35,14 @@ export class TaskDetailsComponent implements OnInit {
    private userService:UserService) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+
+      this.selectedRegion = params['regionId'];
+      this.customInit();
+    });
+  }
+
+  customInit(){
     this.inpuTaskId = this.route.snapshot.paramMap.get("id");
     this.getTaskInfo1(this.inpuTaskId);
     this.user = this.userService.user;
@@ -44,16 +53,22 @@ export class TaskDetailsComponent implements OnInit {
         data => {
           this.task = data;
           this.dataSource.data = data['laborClass'];
+
         }
       );
   }
 
   saveResponse(){
-    alert("Call backend service to store the information");
+    alert('saving input');
+    this.serviceMatrix.saveUserInput().
+    subscribe(res => {
+        alert(res);
+    });
+    alert('post save');
   }
 
   goBackToMatrix(){
-    this.router.navigate(["service"]);
+    this.router.navigate(["service", this.selectedRegion]);
   }
 
   viewInputs(){

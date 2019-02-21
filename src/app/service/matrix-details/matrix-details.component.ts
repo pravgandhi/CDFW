@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceMatrixService }  from '../service-matrix.service';
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
@@ -26,43 +26,46 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
   resp:string[] = [ "input", "approved"];
 
   globalFilter = '';
+  selectedRegion:string;
   regionList;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private http: HttpClient, private router: Router, private serviceMatrix :ServiceMatrixService,
-  private userService:UserService) {
+  private userService:UserService, private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    this.getMatrixDetails();
-    this.user = this.userService.user;
-    if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
-      this.displayedColumns.push( "input", "approved", "status", "count");
-    } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
-      this.displayedColumns.push( "input", "approved");
-    }
-    this.getRegionDetails();
+    this.route.params.subscribe(params => {
+
+      this.selectedRegion = params['regionId'];
+      this.customInit(params);
+    });
   };
 
-    public getMatrixDetails = () => {
+    customInit(params){
+      alert(params['regionId']);
+      this.user = this.userService.user;
+      if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
+         this.displayedColumns.push( "input", "approved", "status", "count");
+       } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
+         this.displayedColumns.push( "input", "approved");
+       }
+       this.getMatrixDetails(this.userService.user['userName']);
+       this.getRegionDetails(this.user);
+    }
 
-        this.serviceMatrix.getData()
+    public getMatrixDetails = (userName:string, ) => {
+        this.serviceMatrix.getData(this.selectedRegion)
         .subscribe(res => {
             this.dataSource.data = res as Object[];
         });
-
     }
 
-    public getRegionDetails = () => {
-      this.serviceMatrix.getRegionDetails().
-      subscribe(
-        res=> {
-          this.regionList = res;
-        }
-      );
+    public getRegionDetails  (user: Object) {
+      this.regionList =  user['userRegionMappingsById'];
     }
 
     ngAfterViewInit() {
@@ -76,16 +79,20 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     }
 
     showTask(row) {
-      console.log(row);
-      this.router.navigate(["task", "123"]);
+      debugger;
+      alert(row);
+      this.router.navigate([this.selectedRegion, "task", row.taskId ]);
     }
 
     chooseRegion(region: string){
-      alert(region);
-      this.router.navigate(["service"]);
+      this.router.navigate(["service", region]);
     }
 
     backToLogin(){
       this.router.navigate(["login"]);
     }
+
+    initialiseState(){
+      alert('Inside Initialize');
+    };
 }

@@ -72,8 +72,8 @@ export class ServiceMatrixService {
     // this.matMtrixDataStore = new MatTableDataSource (response);
    }
 
-   public getData = () => {
-     return this.http.get(this.API_URL+'service');
+   public getData = (selectedRegion: string) => {
+     return this.http.get(this.API_URL+'service/'+selectedRegion);
     }
 
   async getTaskDetail(taskId: string) {
@@ -119,5 +119,15 @@ export class ServiceMatrixService {
               console.log(response);
             });
     }
+
+    public saveUserInput(){
+      let regionId =1 ;
+      let userId = 1;
+      let taskId =1 ;
+      let inputValue =4 ;
+      let sttsCd = 'A';
+      debugger;
+      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionId: regionId, taskId: taskId, inputValue :inputValue, sttsCd: sttsCd });
+     }
 
 }

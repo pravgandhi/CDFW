@@ -5,7 +5,7 @@
     <mat-icon matListAvatar color="primary" matTooltip = "User Info">account_box</mat-icon>
     <span>{{user.userName}} &nbsp;&nbsp;</span>
     <mat-icon matListAvatar color="primary">language</mat-icon>
-  <!--  <span > {{user.regionByRegionId.regionName}} &nbsp;&nbsp;</span> -->
+    <span > {{selectedRegion}} &nbsp;&nbsp;</span>
     <!-- This fills the remaining space of the current row -->
     <span class="example-fill-remaining-space"></span>
     <span> <b>Actions: </b> &nbsp;&nbsp;</span>
@@ -16,7 +16,7 @@
 
     <mat-menu #region="matMenu">
       <button mat-menu-item *ngFor="let item of regionList"
-      (click)="chooseRegion(item)"> {{item}} </button>
+      (click)="chooseRegion(item.regionByRegionId.regionName)"> {{item.regionByRegionId.regionName}} </button>
     </mat-menu>
 
     <button mat-button color = "primary" (click)="backToLogin()">
@@ -25,6 +25,7 @@
     </button>
 
   </mat-toolbar>
+
 
 <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">

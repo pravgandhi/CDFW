@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { FormBuilder, FormGroup , Validators , FormControl } from '@angular/forms';
+import { UserService } from 'src/app/_services';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(private router: Router, private authenticationService: AuthenticationService,
-               private formBuilder: FormBuilder) { }
+               private formBuilder: FormBuilder, private userService : UserService ) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -39,9 +40,8 @@ export class LoginFormComponent implements OnInit {
     this.authenticationService.login(this.f.username.value, this.f.password.value).then(
          isMission => {
            if(isMission){
-              this.router.navigate(['service']);
-           } else if (isMission){
-             this.router.navigate(['login']);
+              let  userRegion = this.userService.user['userRegionMappingsById'][0]['regionByRegionId']['regionName'];
+              this.router.navigate(['service', userRegion]);
            } else {
              this.router.navigate(['login']);
            }
