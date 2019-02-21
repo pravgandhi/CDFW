@@ -7,7 +7,7 @@ import { ServiceMatrixService }  from '../service-matrix.service';
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
 import { AuthenticationService, UserService } from 'src/app/_services';
-import {NgForm} from '@angular/forms';
+import { NgForm, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-matrix-details',
@@ -21,6 +21,7 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
   starColor : string = "primary";
   displayedColumns: string[] = ["taskId", "serviceName", "program",
    "subProgram", "taskCategory", "taskName"];
+  displayedFilterColumns: string[] = [];
 
   admin:string[] = [ "input", "approved", "status", "count"];
   resp:string[] = [ "input", "approved"];
@@ -28,6 +29,9 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
   globalFilter = '';
   selectedRegion:string;
   regionList;
+  filteredValues = { taskId:'', serviceName:'', program:'',
+    subProgram:'', taskCategory: "", taskName : "", status: ""//, topFilter: false
+  };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -43,16 +47,23 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       this.selectedRegion = params['regionId'];
       this.customInit(params);
     });
+
+    this.dataSource.filterPredicate = this.customFilterPredicate();
   };
 
     customInit(params){
-      alert(params['regionId']);
+      // alert(params['regionId']);
       this.user = this.userService.user;
       if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
          this.displayedColumns.push( "input", "approved", "status", "count");
        } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
          this.displayedColumns.push( "input", "approved");
        }
+
+       this.displayedColumns.forEach(e => {
+        this.displayedFilterColumns.push(e + '-filter');
+       });
+
        this.getMatrixDetails(this.userService.user['userName']);
        this.getRegionDetails(this.user);
     }
@@ -73,9 +84,48 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       this.dataSource.paginator = this.paginator;
     }
 
-    applyFilter(filterValue: string) {
+    
+  customFilterPredicate() {
+    const myFilterPredicate = (data: any, filter: string): boolean => {
+      var globalMatch = !this.globalFilter;
+
+      if (this.globalFilter) {
+        let taskIdFound = data.taskId.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        let serviceNameFound = data.serviceName.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        let programFound = data.program.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        let subProgramFound = data.subProgram.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        let taskCategoryFound = data.taskCategory.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        let taskNameFound = data.taskName.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound;
+      }
+
+      if (!globalMatch) {
+        return;
+      }
+
+      let searchString = JSON.parse(filter);
+      let taskIdFound = data.taskId.toString().trim().toLowerCase().indexOf(searchString.taskId.toString().toLowerCase()) !== -1;
+      let serviceNameFound = data.serviceName.toString().trim().toLowerCase().indexOf(searchString.serviceName.toString().toLowerCase()) !== -1;
+      let programFound = data.program.toString().trim().toLowerCase().indexOf(searchString.program.toString().toLowerCase()) !== -1;
+      let subProgramFound = data.subProgram.toString().trim().toLowerCase().indexOf(searchString.subProgram.toString().toLowerCase()) !== -1;
+      let taskCategoryFound = data.taskCategory.toString().trim().toLowerCase().indexOf(searchString.taskCategory.toString().toLowerCase()) !== -1;
+      let taskNameFound = data.taskName.toString().trim().toLowerCase().indexOf(searchString.taskName.toString().toLowerCase()) !== -1;
+      return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound;
+    }
+    return myFilterPredicate;
+  }
+
+    applyColumnFilter(filterValue: string, col: string) {
+      this.filteredValues[col] = filterValue;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    }
+
+    applyFilter(filter) {
     //  this.globalFilter = filterValue;
-       this.dataSource.filter = filterValue.trim().toLowerCase();
+      //  this.dataSource.filter = filterValue.trim().toLowerCase();
+
+      this.globalFilter = filter;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
     }
 
     showTask(row) {

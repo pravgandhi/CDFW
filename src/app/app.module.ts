@@ -19,7 +19,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { InputsComponent } from './service/inputs/inputs.component';
 import {AuthenticationService} from   './_services/authentication.service'
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './_services';
 
 
@@ -29,6 +29,8 @@ import { UserService } from './_services';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     //material
@@ -43,7 +45,6 @@ import { UserService } from './_services';
     MatProgressSpinnerModule,
     MatSidenavModule,
     BrowserAnimationsModule,
-    FormsModule,
 
     FlexLayoutModule,
 
@@ -58,3 +59,4 @@ import { UserService } from './_services';
   entryComponents: [InputsComponent]
 })
 export class AppModule { }
+

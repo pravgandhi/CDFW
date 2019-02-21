@@ -1,4 +1,4 @@
-mat-cell,
+mat-cell, 
 .mat-cell,
 mat-footer-cell,
 .mat-footer-cell,
@@ -32,4 +32,25 @@ mat-header-cell {
 
 mat-toolbar > span, mat-toolbar > a > span {
   font-size: 10pt;
+}
+
+.table-col-title {
+  font-weight: 500;
+  color: black;
+  font-size: 14px;
+}
+
+.table-col-header {
+  font-size: 12px;
+}
+
+.filter-input{
+  width: 75%;
+  text-align: left;
+}
+
+.th-header-background{
+  background: #1f4e79;
+  color: white;
+  font-size: 14px;
 }
