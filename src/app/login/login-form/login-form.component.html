@@ -26,6 +26,11 @@
               </mat-form-field>
             </td>
           </tr>
+          <tr>
+            <td>
+              <span style="color:red;" *ngIf="errMsg != null">{{errMsg}}</span>
+            </td>
+          </tr>
         </table>
         <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
       </mat-card-content>
