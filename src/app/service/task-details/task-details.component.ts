@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ServiceMatrixService } from '../service-matrix.service';
 import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
 import { InputsComponent } from '../inputs/inputs.component';
 import { UserService } from 'src/app/_services';
+
 
 
 @Component({
@@ -19,7 +20,7 @@ export class TaskDetailsComponent implements OnInit {
   displayedColumns: string[] = ["title", "role", "time"];
   selectedRegion:string;
   selectedTask:string;
-  multiplier: number;
+  multiplier: number= 0;
 
   groups = [
    {
@@ -38,7 +39,6 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-
       this.selectedRegion = params['regionId'];
       this.inpuTaskId = params['taskId'];
       this.customInit();
@@ -46,16 +46,25 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   customInit(){
-    this.getTaskInfo1(this.selectedRegion, this.inpuTaskId);
     this.user = this.userService.user;
+    this.getTaskInfo1(this.selectedRegion, this.inpuTaskId);
   }
 
   public getTaskInfo1 = (selectedRegion, taskId) => {
+        let _self = this;
         this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
         data => {
-          this.task = data;
-          this.dataSource.data = data['laborClassesByTaskId'];
-
+          _self.task = data;
+          _self.dataSource.data = data['laborClassesByTaskId'];
+          let inputs = data['missionUserInputsByTaskId'];
+          debugger;
+          _self.serviceMatrix.inputDataStore = inputs;
+          var myInput =  inputs.filter(function(input) {
+	           return input.id == _self.user['id'];
+           });
+           if(myInput.length == 1 ) {
+             _self.multiplier = myInput[0].inputValue;
+           }
         },
         err => {
 
@@ -73,7 +82,7 @@ export class TaskDetailsComponent implements OnInit {
      } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
        status = 'P';
      }
-    this.serviceMatrix.saveUserInput(this.user['userId'], this.selectedRegion, this.inpuTaskId, multiplier, status  ).
+    this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, status  ).
     subscribe(res => {
     });
   }

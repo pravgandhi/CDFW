@@ -10,7 +10,8 @@ import { MatDialogRef } from '@angular/material';
 export class InputsComponent implements OnInit  {
 
   selectedRowIndex: number = -1;
-  inputDisplayedColumns: string[] = ["id", "value", "name"];
+  selectedRow: any;
+  inputDisplayedColumns: string[] = [ "value", "name", "status"];
   constructor(private serviceMatrix : ServiceMatrixService,
               public dialogRef : MatDialogRef<InputsComponent> ) { }
 
@@ -20,7 +21,7 @@ export class InputsComponent implements OnInit  {
 
   approveResponse(){
     this.serviceMatrix.selectedRowIndex = this.selectedRowIndex;
-    alert('save the selected value and mark others as rejected');
+    alert(this.selectedRow.id);
     this.onClose();
   }
 
@@ -35,6 +36,7 @@ export class InputsComponent implements OnInit  {
     var myJSON = JSON.stringify(row);
     console.log(`converted json is ${myJSON}`);
     this.selectedRowIndex = row.id;
+    this.selectedRow = row;
   }
 
   onClose() {

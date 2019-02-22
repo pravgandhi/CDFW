@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ServiceRoutingModule } from './service-routing.module';
 import { MatrixDetailsComponent } from './matrix-details/matrix-details.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -24,7 +25,8 @@ import { InputsComponent } from './inputs/inputs.component';
     ServiceRoutingModule,
     MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
     MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatListModule,
-    MatExpansionModule,  MatPaginatorModule, MatSortModule, MatSidenavModule
+    MatExpansionModule,  MatPaginatorModule, MatSortModule, MatSidenavModule,
+    FormsModule
   ]
 })
 

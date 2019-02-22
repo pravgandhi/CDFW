@@ -45,7 +45,6 @@ export class ServiceMatrixService {
   }
 ];
 
-  test: string = "Hello";
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private http: HttpClient) { }
@@ -117,8 +116,9 @@ export class ServiceMatrixService {
             });
     }
 
-    public saveUserInput(userId:number, regionName: string, taskId: number, inputValue: number, sttsCd: string){
-      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionId: regionName, taskId: taskId, inputValue :inputValue, sttsCd: sttsCd });
+    public saveUserInput(userId:number, regionName: string, taskId: string, inputValue: number, sttsCd: string){
+      alert(`user id is ${userId} and inputValue is ${inputValue} and  sttsCd is ${sttsCd}`);
+      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionName: regionName, taskId: taskId, inputValue :inputValue, sttsCd: sttsCd });
      }
 
 }

@@ -5,25 +5,23 @@
   </mat-card-header>
   <mat-card-content>
   <table mat-table [dataSource]="serviceMatrix?.inputDataStore" class="mat-elevation-z8">
-
     <!-- Position Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Input Number </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Respondent Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.userById.userName}}  </td>
     </ng-container>
 
     <!-- Position Column -->
     <ng-container matColumnDef="value">
       <th mat-header-cell *matHeaderCellDef> Input Value </th>
-      <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.inputValue}} </td>
     </ng-container>
 
     <!-- Position Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Respondent Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.statusBySttsId.statusCode}} </td>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="inputDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: inputDisplayedColumns;"
             [ngClass]="{'highlight': selectedRowIndex == row.id}"
