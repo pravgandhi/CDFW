@@ -1,8 +1,23 @@
 .loginForm {
   min-height: 50vh;
   padding: 100px;
+  width: 350px;
+  margin: auto;
 }
 
 mat-card, mat-card > *  {
-  width:50vh;
+
+}
+
+.text-center {
+  text-align: center;
+}
+
+.login-table {
+  width: 85%;
+  margin: auto;
+}
+
+.login-table .mat-form-field {
+  width: 100%;
 }
