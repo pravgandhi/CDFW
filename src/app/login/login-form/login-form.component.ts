@@ -16,6 +16,7 @@ export class LoginFormComponent implements OnInit {
   userName:string;
   password:string;
   loginForm: FormGroup;
+  errMsg: string = null;
 
   constructor(private router: Router, private authenticationService: AuthenticationService,
                private formBuilder: FormBuilder, private userService : UserService ) { }
@@ -40,10 +41,16 @@ export class LoginFormComponent implements OnInit {
     this.authenticationService.login(this.f.username.value, this.f.password.value).then(
          isMission => {
            if(isMission){
-              let  userRegion = this.userService.user['userRegionMappingsById'][0]['regionByRegionId']['regionName'];
-              debugger;
-              this.router.navigate(['service', userRegion, this.userService.user['id']]);
+             var mappedRegions = this.userService.user['userRegionMappingsById'];
+             if(mappedRegions.length > 0){
+              let  userRegion = mappedRegions[0]['regionByRegionId']['regionName'];
+              this.router.navigate(['service', userRegion]);
+             } else {
+              this.errMsg = "Unable to fetch region information. Please contact the project team.";
+              this.router.navigate(['login']);
+             }
            } else {
+             this.errMsg = "Invalid Credentials";
              this.router.navigate(['login']);
            }
          }

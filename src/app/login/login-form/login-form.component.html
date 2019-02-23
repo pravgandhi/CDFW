@@ -4,7 +4,7 @@
         <mat-card-title>Login</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <table cellspacing="0">
+        <table cellspacing="0" class="login-table">
           <tr>
             <td>
               <div class="form-group">
@@ -26,10 +26,15 @@
               </mat-form-field>
             </td>
           </tr>
+          <tr>
+            <td>
+              <span style="color:red;" *ngIf="errMsg != null">{{errMsg}}</span>
+            </td>
+          </tr>
         </table>
         <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
       </mat-card-content>
-      <mat-card-actions>
+      <mat-card-actions class="text-center">
         <button type= "submit" mat-raised-button color="primary" (click)="onSubmit()">Login</button>
       </mat-card-actions>
     </mat-card>
