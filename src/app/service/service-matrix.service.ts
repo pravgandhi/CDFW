@@ -68,8 +68,8 @@ export class ServiceMatrixService {
     // this.matMtrixDataStore = new MatTableDataSource (response);
    }
 
-   public getData = (selectedRegion: string) => {
-     return this.http.get(this.API_URL+'service/'+selectedRegion);
+   public getData = (selectedRegion: string, userId:string ) => {
+     return this.http.get(this.API_URL+'service/'+selectedRegion+ '/'+ userId);
     }
 
   async getTaskDetail(taskId: string) {

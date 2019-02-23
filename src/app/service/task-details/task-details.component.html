@@ -1,6 +1,6 @@
 
 <mat-toolbar >
-  <h4> Task Information &nbsp;&nbsp; </h4>
+  <h4> Task Details &nbsp;&nbsp; </h4>
     <mat-icon matListAvatar color="primary" matTooltip = "User Info">account_box</mat-icon>
     <span>{{user.userName}} &nbsp;&nbsp;</span>
   <mat-icon matListAvatar color="primary">language</mat-icon>
@@ -63,15 +63,15 @@
     <br>
     <div class = "row4">
       <div class="column" >
-        <label for="taskdesc">Task Description</label>
+        <label for="taskdesc">Desired Performance</label>
         <textarea id="taskdesc" name="taskdesc"
-                  rows="3" cols="30" readonly> {{task.taskDesc}}
+                  rows="3" cols="30" readonly> {{task.desiredPerf}}
         </textarea>
       </div>
       <div class="column">
-        <label for="multiDesc">Input Multiplier Description</label>
+        <label for="multiDesc">Additional Budget Factor(s)</label>
         <textarea id="multiDesc" name="multiDesc"
-                  rows="3" cols="30" readonly> {{task.multDesc}}
+                  rows="3" cols="30" readonly> {{task.addtnlBudgetFator}}
         </textarea>
       </div>
     </div>
@@ -106,14 +106,14 @@
 
   <div class = "row3">
     <div class="column" style="width:60%">
-      <label for="laborTable">Labor Class</label>
+      <label for="laborTable">Labor Classification</label>
       <table id="laborTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef> Labor Class Title </th>
           <td mat-cell *matCellDef="let element"> {{element.title}} </td>
         </ng-container>
         <ng-container matColumnDef="role">
-          <th mat-header-cell *matHeaderCellDef> Labor Class Role </th>
+          <th mat-header-cell *matHeaderCellDef> Labor Classification Code </th>
           <td mat-cell *matCellDef="let element"> {{element.role}} </td>
         </ng-container>
         <ng-container matColumnDef="time">

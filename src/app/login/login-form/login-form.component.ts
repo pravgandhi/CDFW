@@ -41,7 +41,8 @@ export class LoginFormComponent implements OnInit {
          isMission => {
            if(isMission){
               let  userRegion = this.userService.user['userRegionMappingsById'][0]['regionByRegionId']['regionName'];
-              this.router.navigate(['service', userRegion]);
+              debugger;
+              this.router.navigate(['service', userRegion, this.userService.user['id']]);
            } else {
              this.router.navigate(['login']);
            }

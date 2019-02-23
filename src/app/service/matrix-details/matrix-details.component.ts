@@ -57,21 +57,21 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       "subProgram", "taskCategory", "taskName"];
       this.displayedFilterColumns = [];
       if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
-         this.displayedColumns.push( "input", "approved", "status", "count");
+         this.displayedColumns.push( "input",  "status", "count");
        } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
-         this.displayedColumns.push( "input", "approved");
+         this.displayedColumns.push( "input");
        }
 
        this.displayedColumns.forEach(e => {
         this.displayedFilterColumns.push(e + '-filter');
        });
-
-       this.getMatrixDetails(this.userService.user['userName']);
+       debugger;
+       this.getMatrixDetails(this.userService.user['id']);
        this.getRegionDetails(this.user);
     }
 
-    public getMatrixDetails = (userName:string, ) => {
-        this.serviceMatrix.getData(this.selectedRegion)
+    public getMatrixDetails = (userId:string ) => {
+        this.serviceMatrix.getData(this.selectedRegion, userId)
         .subscribe(res => {
             this.dataSource.data = res as Object[];
         });
