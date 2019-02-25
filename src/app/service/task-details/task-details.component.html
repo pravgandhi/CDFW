@@ -86,19 +86,25 @@
 
     <div class = "row2">
       <div class="column">
-        <label for="frequency">Frequency</label>
+        <label for="frequency">Frequency <i class="material-icons help-text-icon" 
+          ngbTooltip="Number of times per year that the task needs to be accomplished (predefined)."
+           >help</i></label>
         <textarea id="frequency" name="frequency" readonly style="overflow:hidden"
                       rows="1" cols="10"> {{task.frequency}}
         </textarea>
       </div>
       <div class="column">
-        <label for="laborhours">Total time of Labor Hours</label>
+        <label for="laborhours">Total Time of Labor Hours <i class="material-icons help-text-icon" 
+          ngbTooltip="Sum of time per labor classification (predefined)."
+           >help</i></label>
         <textarea id="laborhours" name="laborhours" readonly style="overflow:hidden"
                       rows="1" cols="10"> {{task.totalLaborTime}}
         </textarea>
       </div>
       <div class="column">
-        <label for="totalHours">Total Hours</label>
+        <label for="totalHours">Total Hours <i class="material-icons help-text-icon" 
+          ngbTooltip="Product of multiplier (input), times the total time of labor hours, times the frequency (automatically calculated). "
+           >help</i></label>
         <textarea id="totalHours" name="totalHours" style="overflow:hidden"
                       rows="1" cols="10" readonly> {{task.totalHours}}
         </textarea>
@@ -108,7 +114,9 @@
 
   <div class = "row3">
     <div class="column" style="width:60%">
-      <label for="laborTable">Labor Classification</label>
+      <label for="laborTable">Labor Classification <i class="material-icons help-text-icon" 
+        ngbTooltip="Displays the time that each labor classification would spend on the task in question, in the future state / at mission level (predefined). "
+         >help</i></label>
       <table id="laborTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef> Labor Class Title </th>

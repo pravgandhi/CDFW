@@ -13,8 +13,8 @@ import { UserService } from 'src/app/_services';
 export class LoginFormComponent implements OnInit {
 
   show: boolean = false;
-  userName:string;
-  password:string;
+  userName: FormControl;
+  password: FormControl;
   loginForm: FormGroup;
   errMsg: string = null;
 
@@ -23,15 +23,15 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
+            username: new FormControl('', Validators.required),
+            password: new FormControl('', Validators.required)
         });
     // reset login status
     this.authenticationService.logout();
   }
 
   // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
+  get f() { return this.loginForm.controls; }
 
   login() {
     this.router.navigate(['service']);

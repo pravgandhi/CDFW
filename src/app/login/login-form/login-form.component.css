@@ -1,12 +1,8 @@
 .loginForm {
   min-height: 50vh;
-  padding: 100px;
+  padding-top: 100px;
   width: 350px;
   margin: auto;
-}
-
-mat-card, mat-card > *  {
-
 }
 
 .text-center {
