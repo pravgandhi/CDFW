@@ -15,10 +15,12 @@ import { UserService } from 'src/app/_services';
 export class TaskDetailsComponent implements OnInit {
   inpuTaskId : string;
   user: Object;
+  userRole: string;
   task : Object;
   dataSource = new MatTableDataSource<Object>();
   displayedColumns: string[] = ["title", "role", "time"];
   selectedRegion:string;
+  selectedRegionId:string;
   selectedTask:string;
   multiplier: number= 0;
 
@@ -48,6 +50,12 @@ export class TaskDetailsComponent implements OnInit {
   customInit(){
     this.user = this.userService.user;
     this.getTaskInfo1(this.selectedRegion, this.inpuTaskId);
+    this.userRole = this.userService.userRole;
+  }
+
+  getInputDisabledValue(){
+    if('A' === this.task['statusBySttsId']['sttsId'] && 'm_resp' === this.userRole )
+        return true;
   }
 
   public getTaskInfo1 = (selectedRegion, taskId) => {
@@ -57,13 +65,22 @@ export class TaskDetailsComponent implements OnInit {
           _self.task = data;
           _self.dataSource.data = data['laborClassesByTaskId'];
           let inputs = data['missionUserInputsByTaskId'];
-          debugger;
           _self.serviceMatrix.inputDataStore = inputs;
-          var myInput =  inputs.filter(function(input) {
-	           return input.id == _self.user['id'];
-           });
-           if(myInput.length == 1 ) {
-             _self.multiplier = myInput[0].inputValue;
+
+           if('A' === this.task['statusBySttsId']['sttsId']) {
+             let approvedInput =  inputs.filter(function(input) {
+               return input.sttsId== 'A';
+              });
+              if (approvedInput.length == 1) {
+                _self.multiplier = approvedInput[0].inputValue;
+              }
+           } else  {
+             let myInput =  inputs.filter(function(input) {
+               return input.id == _self.user['id'];
+              });
+              if (myInput.length == 1) {
+                _self.multiplier = myInput[0].inputValue;
+              }
            }
         },
         err => {
@@ -94,6 +111,11 @@ export class TaskDetailsComponent implements OnInit {
   viewInputs(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+        regionName: this.selectedRegion,
+        userId: this.user['id'],
+        taskId : this.task['taskId'],
+    };
     this.dialog.open(InputsComponent, dialogConfig);
   }
 

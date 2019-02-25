@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { ServiceMatrixService } from '../service-matrix.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
+import { UserService } from 'src/app/_services';
 
 @Component({
   selector: 'app-inputs',
@@ -11,17 +12,49 @@ export class InputsComponent implements OnInit  {
 
   selectedRowIndex: number = -1;
   selectedRow: any;
+  selectedRegionObject: any;
+  user: any;
+  inputs = new MatTableDataSource<Object>();
   inputDisplayedColumns: string[] = [ "value", "name", "status"];
   constructor(private serviceMatrix : ServiceMatrixService,
-              public dialogRef : MatDialogRef<InputsComponent> ) { }
+              public dialogRef : MatDialogRef<InputsComponent>,
+              private userService:UserService,
+            @Inject(MAT_DIALOG_DATA) public data: any ) { }
 
   ngOnInit() {
+    this.user = this.userService.user;
+    this.selectedRegionObject = this.userService.getSelectedRegionObject(this.data.regionName);
+    this.fetchInputs();
+  }
 
+  fetchInputs(){
+    let _self = this;
+    this.serviceMatrix.fetchInputs(this.selectedRegionObject.regionId, this.data.taskId ).subscribe(
+    data => {
+      debugger;
+      _self.inputs.data = data as Object[];
+    },
+    err => {
+
+    });
   }
 
   approveResponse(){
     this.serviceMatrix.selectedRowIndex = this.selectedRowIndex;
     alert(this.selectedRow.id);
+    let _self = this;
+    debugger;
+    this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.data.taskId,this.selectedRow.id).subscribe(
+    data => {
+      debugger;
+      alert(`success and data is ${data}`);
+    },
+    err => {
+
+    },
+    () => {
+
+    });
     this.onClose();
   }
 

@@ -72,6 +72,14 @@ export class ServiceMatrixService {
      return this.http.get(this.API_URL+'service/'+selectedRegion+ '/'+ userId);
     }
 
+    public selectInput = (regionId: number, taskId: string, userId:string) => {
+      return this.http.get(this.API_URL+'selectInput/'+regionId+'/'+ taskId+ '/'+ userId);
+    }
+
+    public fetchInputs = (regionId: number, taskId : string) => {
+      return this.http.get(this.API_URL+'fetchInputs/'+regionId+'/'+taskId);
+    }
+
   async getTaskDetail(taskId: string) {
      console.log(`Task Detal json ${this.matrixJsonString}`);
      var self = this;

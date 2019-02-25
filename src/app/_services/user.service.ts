@@ -11,6 +11,26 @@ export class UserService {
       return JSON.parse(localStorage.getItem('currentUser'));
     }
 
+    get userId():Object{
+      return JSON.parse(localStorage.getItem('currentUser'))['id'];
+    }
+
+    getSelectedRegionObject(selectedRegion:string): any {
+      if(localStorage.getItem('currentUser') != null || localStorage.getItem('currentUser') != undefined){
+        let userRegionMapping = this.user['userRegionMappingsById'];
+        for(let userRegion of userRegionMapping) {
+          if(selectedRegion === userRegion['regionByRegionId']['regionName']){
+            return userRegion['regionByRegionId'];
+          }
+        }
+      }
+      return null;
+    }
+
+    get userRole():string{
+      return JSON.parse(localStorage.getItem('currentUser'))['userRoleByRoleId']['roleName'];
+    }
+
     getUser() {
         return this.http.get<User[]>(`/users`);
     }

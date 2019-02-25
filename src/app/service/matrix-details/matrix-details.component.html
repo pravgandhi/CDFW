@@ -73,7 +73,7 @@
        </ng-container>
 
     <ng-container matColumnDef="input">
-     <th mat-header-cell *matHeaderCellDef class="th-header-background">My Input</th>
+     <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">My Input</th>
      <td mat-cell *matCellDef="let element">
          <button mat-icon-button color="primary" >
              {{element.myInput}}
@@ -160,19 +160,18 @@
 
     <!-- Myinput Filter Column -->
     <ng-container matColumnDef="input-filter">
-      <th mat-header-cell *matHeaderCellDef> </th>
-    </ng-container>
-
-    <!-- Approved Filter Column -->
-    <ng-container matColumnDef="approved-filter">
-      <th mat-header-cell *matHeaderCellDef> </th>
+      <th mat-header-cell *matHeaderCellDef>
+      <input  class="filter-input"
+        (keyup)="applyColumnFilter($event.target.value, 'input')"
+        placeholder="Filter">
+      </th>
     </ng-container>
 
     <!-- Status Filter Column -->
     <ng-container matColumnDef="status-filter">
         <th mat-header-cell *matHeaderCellDef>
           <input  class="filter-input"
-            (keyup)="applyColumnFilter($event.target.value, 'taskName')"
+            (keyup)="applyColumnFilter($event.target.value, 'status')"
             placeholder="Filter">
         </th>
     </ng-container>
@@ -181,7 +180,7 @@
     <ng-container matColumnDef="count-filter">
       <th mat-header-cell *matHeaderCellDef>
         <input class="filter-input"
-          (keyup)="applyColumnFilter($event.target.value, 'status')"
+          (keyup)="applyColumnFilter($event.target.value, 'count')"
           placeholder="Filter">
       </th>
     </ng-container>

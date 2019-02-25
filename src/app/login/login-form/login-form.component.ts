@@ -46,7 +46,7 @@ export class LoginFormComponent implements OnInit {
               let  userRegion = mappedRegions[0]['regionByRegionId']['regionName'];
               this.router.navigate(['service', userRegion]);
              } else {
-              this.errMsg = "Unable to fetch region information. Please contact the project team.";
+              this.errMsg = `User ${this.f.username.value} does not have access to any region. Please contact the project team.`;
               this.router.navigate(['login']);
              }
            } else {

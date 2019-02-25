@@ -21,15 +21,12 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
   starColor : string = "primary";
   displayedColumns: string[] = [];
   displayedFilterColumns: string[] = [];
-
-  admin:string[] = [ "input", "approved", "status", "count"];
-  resp:string[] = [ "input", "approved"];
-
   globalFilter = '';
   selectedRegion:string;
   regionList;
   filteredValues = { taskId:'', serviceName:'', program:'',
-    subProgram:'', taskCategory: "", taskName : "", status: ""//, topFilter: false
+    subProgram:'', taskCategory: '', taskName : '', status: '',
+    input:'', count: ''//, topFilter: false
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -43,7 +40,7 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
   ngOnInit() {
     this.route.params.subscribe(params => {
 
-      this.selectedRegion = params['regionId'];
+    this.selectedRegion = params['regionId'];
       this.customInit(params);
     });
 
@@ -56,16 +53,16 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       this.displayedColumns = ["taskId", "serviceName", "program",
       "subProgram", "taskCategory", "taskName"];
       this.displayedFilterColumns = [];
+      //remove this block after confirmation about the display of columns for resp
       if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
          this.displayedColumns.push( "input",  "status", "count");
        } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
-         this.displayedColumns.push( "input");
+         this.displayedColumns.push( "input",  "status", "count");
        }
 
        this.displayedColumns.forEach(e => {
         this.displayedFilterColumns.push(e + '-filter');
        });
-       debugger;
        this.getMatrixDetails(this.userService.user['id']);
        this.getRegionDetails(this.user);
     }
@@ -98,7 +95,10 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
         let subProgramFound = data.subProgram.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let taskCategoryFound = data.taskCategory.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let taskNameFound = data.taskName.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
-        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound;
+        let statusFound = data.statusBySttsId.statusCode.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        let countFound = data.inputCount.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound;
       }
 
       if (!globalMatch) {
@@ -112,7 +112,10 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       let subProgramFound = data.subProgram.toString().trim().toLowerCase().indexOf(searchString.subProgram.toString().toLowerCase()) !== -1;
       let taskCategoryFound = data.taskCategory.toString().trim().toLowerCase().indexOf(searchString.taskCategory.toString().toLowerCase()) !== -1;
       let taskNameFound = data.taskName.toString().trim().toLowerCase().indexOf(searchString.taskName.toString().toLowerCase()) !== -1;
-      return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound;
+      let statusFound = data.statusBySttsId.statusCode.toString().trim().toLowerCase().indexOf(searchString.status.toString().toLowerCase()) !== -1;
+      let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(searchString.input.toString().toLowerCase()) !== -1;
+      let countFound = data.inputCount.toString().trim().toLowerCase().indexOf(searchString.count.toString().toLowerCase()) !== -1;
+      return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound;
     }
     return myFilterPredicate;
   }

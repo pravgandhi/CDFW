@@ -30,14 +30,16 @@
   </mat-card-header>
   <mat-divider matInset></mat-divider>
   <mat-card-actions align="center">
-    <mat-form-field >
-      <input matInput placeholder="Input Multiplier" type="number" name="test_name" min="0" oninput="validity.valid||(value='');" [(ngModel)]="multiplier">
+    <mat-form-field  >
+      <input matInput placeholder="Input Multiplier" type="number" name="test_name" min="0" oninput="validity.valid||(value='');" [(ngModel)]="multiplier"
+      [disabled]= "getInputDisabledValue()">
     </mat-form-field>
-    <button mat-button color = "primary" (click)="saveResponse()">
+    <button mat-button color = "primary" (click)="saveResponse()"
+      [disabled]= "getInputDisabledValue()">
         <mat-icon>save</mat-icon>
         Save Response
     </button>
-    <button mat-button color = "primary" (click)="viewInputs()">
+    <button mat-button color = "primary" (click)="viewInputs()" *ngIf="userRole==='admin' || userRole==='m_lead'">
         <mat-icon>touch_app</mat-icon>
         View Inputs
     </button>
