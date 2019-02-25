@@ -24,6 +24,8 @@ export class TaskDetailsComponent implements OnInit {
   selectedTask:string;
   multiplier: number= 0;
   saveRespInputDisabled : boolean = false;
+  errorMessage: string = null;
+  successMessage: string = null;
 
   groups = [
    {
@@ -89,7 +91,7 @@ export class TaskDetailsComponent implements OnInit {
            }
         },
         err => {
-
+          this.errorMessage = "Error fetching task details. Please try again later."
         },
         () => {
 
@@ -106,7 +108,12 @@ export class TaskDetailsComponent implements OnInit {
      }
     this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, status  ).
     subscribe(res => {
-    });
+      this.successMessage = "Input saved successfully"
+    },
+    err => {
+      this.errorMessage = "Error saving input value. Please try again later."
+    }
+    );
   }
 
   goBackToMatrix(){

@@ -20,6 +20,9 @@
       Logout
   </button>
 </mat-toolbar>
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+<ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+
 
 <div class="task-container"  *ngIf="task != undefined">
 <mat-card class="example-card">
