@@ -13,9 +13,10 @@ export class AuthenticationService {
 
       login(username: string, password: string) {
           var self = this;
-          return this.http.post<UserEntity>('http://USLMAPRAVGANDH2:8080/authenticateUser', {username: username, password: password}).
+          return this.http.post<UserEntity>('http://localhost:8080/authenticateUser', {username: username, password: password}).
           toPromise()
          .then(function(response) {
+           console.log(response);
            if(response) {
              localStorage.setItem('currentUser', JSON.stringify(response));
              return true;

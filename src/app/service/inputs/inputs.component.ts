@@ -17,6 +17,10 @@ export class InputsComponent implements OnInit  {
   user: any;
   inputs = new MatTableDataSource<Object>();
   inputDisplayedColumns: string[] = [ "value", "name", "status"];
+
+  errorMessage: string = null;
+  successMessage: string = null;
+
   constructor(private serviceMatrix : ServiceMatrixService,
               public dialogRef : MatDialogRef<InputsComponent>,
               private userService:UserService,
@@ -39,7 +43,7 @@ export class InputsComponent implements OnInit  {
       _self.inputs.data = data as Object[];
     },
     err => {
-
+      this.errorMessage = "Error fectching input values. Please try again later."
     });
   }
 
@@ -48,11 +52,10 @@ export class InputsComponent implements OnInit  {
     let _self = this;
     this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.data.taskId,this.selectedRow.id).subscribe(
     data => {
-
-        this.openSnackBar("Selected Input has been approved", undefined );
+      this.successMessage = "Input value approved."
     },
     err => {
-      this.openSnackBar("Input not saved due to technical issues", undefined);
+      this.errorMessage = "Error approving input value. Please try again later."
     },
     () => {
 

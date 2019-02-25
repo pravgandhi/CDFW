@@ -54,3 +54,7 @@ mat-toolbar > span, mat-toolbar > a > span {
   color: white;
   font-size: 14px;
 }
+
+.help-text-icon {
+  font-size: 14px;
+}

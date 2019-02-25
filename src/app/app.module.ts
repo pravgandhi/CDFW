@@ -8,13 +8,16 @@ import { UserModule } from './user/user.module';
 import { ServiceModule } from './service/service.module';
 import { LoginModule } from './login/login.module';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
-  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatSidenavModule
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSnackBar
 } from '@angular/material';
 
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { InputsComponent } from './service/inputs/inputs.component';
 import {AuthenticationService} from   './_services/authentication.service'
@@ -22,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './_services';
 
+import 'hammerjs';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,9 @@ import { UserService } from './_services';
     AppRoutingModule,
     HttpClientModule,
     //material
+
+    BrowserAnimationsModule,
+    MatFormFieldModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -44,14 +51,13 @@ import { UserService } from './_services';
     MatIconModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
-    BrowserAnimationsModule,
-    MatSnackBarModule,
+    MatTooltipModule,
     FlexLayoutModule,
+    MatSnackBar,
 
     UserModule,
     ServiceModule,
-    LoginModule,
-
+    LoginModule
 
   ],
   providers: [AuthenticationService, UserService],

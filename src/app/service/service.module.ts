@@ -5,7 +5,8 @@ import { ServiceRoutingModule } from './service-routing.module';
 import { MatrixDetailsComponent } from './matrix-details/matrix-details.component';
 import { FormsModule } from '@angular/forms';
 
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
@@ -26,7 +27,9 @@ import { InputsComponent } from './inputs/inputs.component';
     MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
     MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatListModule,
     MatExpansionModule,  MatPaginatorModule, MatSortModule, MatSidenavModule,
-    FormsModule
+    FormsModule,
+    NgbModule.forRoot(),
+    NgbTooltipModule
   ]
 })
 

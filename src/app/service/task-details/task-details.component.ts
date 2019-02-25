@@ -23,6 +23,9 @@ export class TaskDetailsComponent implements OnInit {
   selectedRegionId:string;
   selectedTask:string;
   multiplier: number= 0;
+  saveRespInputDisabled : boolean = false;
+  errorMessage: string = null;
+  successMessage: string = null;
 
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
     private router: Router, private dialog: MatDialog,
@@ -43,12 +46,13 @@ export class TaskDetailsComponent implements OnInit {
     this.user = this.userService.user;
     this.getTaskInfo1(this.selectedRegion, this.inpuTaskId);
     this.userRole = this.userService.userRole;
+    // this.setInputDisabledValue();
   }
 
-  getInputDisabledValue(){
-    if('A' === this.task['statusBySttsId']['sttsId'] && 'm_resp' === this.userRole )
-        return true;
-  }
+  // setInputDisabledValue(){
+  //   if('A' === this.task.statusBySttsId.sttsId && 'm_resp' === this.userRole )
+  //       this.saveRespInputDisabled = true;
+  // }
 
   public getTaskInfo1 = (selectedRegion, taskId) => {
         let _self = this;
@@ -61,6 +65,9 @@ export class TaskDetailsComponent implements OnInit {
 
            if('A' === this.task['statusBySttsId']['sttsId']) {
              let approvedInput =  inputs.filter(function(input) {
+               if(_self.userService.userRole === 'm_resp'){
+                 _self.saveRespInputDisabled = true;
+               }
                return input.sttsId== 'A';
               });
               if (approvedInput.length == 1) {
@@ -76,7 +83,7 @@ export class TaskDetailsComponent implements OnInit {
            }
         },
         err => {
-
+          this.errorMessage = "Error fetching task details. Please try again later."
         },
         () => {
 
@@ -93,8 +100,12 @@ export class TaskDetailsComponent implements OnInit {
      }
     this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, status  ).
     subscribe(res => {
-      this.openSnackBar("Input saved successfully", undefined);
-    });
+      this.successMessage = "Input saved successfully"
+    },
+    err => {
+      this.errorMessage = "Error saving input value. Please try again later."
+    }
+    );
   }
 
   goBackToMatrix(){
