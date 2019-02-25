@@ -55,7 +55,6 @@ export class ServiceMatrixService {
         .then(function(response) {
         response.json().then(
             function (data) {
-              console.log(data);
               self.matrixJsonString = data;
               self.matMtrixDataStore = new MatTableDataSource (data);
 
@@ -81,7 +80,6 @@ export class ServiceMatrixService {
     }
 
   async getTaskDetail(taskId: string) {
-     console.log(`Task Detal json ${this.matrixJsonString}`);
      var self = this;
      await fetch('../assets/data.json')
        .then(function(response) {
@@ -108,7 +106,6 @@ export class ServiceMatrixService {
           response.json().then(
               function (data) {
                  self.taskInfo = data.find(item => item.taskId === taskId);
-                 console.log(self.taskInfo.service.category.task.laborClass);
                  self.laborDataStore = new MatTableDataSource(self.taskInfo.service.category.task.laborClass);
               }
             );
@@ -119,8 +116,6 @@ export class ServiceMatrixService {
     testBackend (){
           this.http.get('http://USLMAPRAVGANDH2:8080/greeting').toPromise()
             .then(function(response) {
-              console.log('inside then');
-              console.log(response);
             });
     }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ServiceMatrixService } from '../service-matrix.service';
-import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatTableDataSource, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { InputsComponent } from '../inputs/inputs.component';
 import { UserService } from 'src/app/_services';
 
@@ -24,20 +24,12 @@ export class TaskDetailsComponent implements OnInit {
   selectedTask:string;
   multiplier: number= 0;
 
-  groups = [
-   {
-     "name": "pencils",
-     "items": ["red pencil","blue pencil","yellow pencil"]
-   },
-   {
-     "name": "rubbers",
-     "items": ["big rubber","small rubber"]
-   },
-] ;
-
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
     private router: Router, private dialog: MatDialog,
-    private userService:UserService) { }
+    private userService:UserService,
+    private snackBar: MatSnackBar) {
+        dialog.afterAllClosed.subscribe(data => this.customInit());
+     }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -101,6 +93,7 @@ export class TaskDetailsComponent implements OnInit {
      }
     this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, status  ).
     subscribe(res => {
+      this.openSnackBar("Input saved successfully", undefined);
     });
   }
 
@@ -129,6 +122,14 @@ export class TaskDetailsComponent implements OnInit {
 
   backToLogin(){
     this.router.navigate(["login"]);
+  }
+
+  openSnackBar(message: string, action: string) {
+  let config = new MatSnackBarConfig();
+   config.verticalPosition = 'bottom';
+   config.horizontalPosition = 'right';
+   config.duration = 2000;
+    this.snackBar.open(message, action, config);
   }
 
 }

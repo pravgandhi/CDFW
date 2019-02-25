@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { ServiceMatrixService } from '../service-matrix.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { UserService } from 'src/app/_services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inputs',
@@ -19,7 +20,11 @@ export class InputsComponent implements OnInit  {
   constructor(private serviceMatrix : ServiceMatrixService,
               public dialogRef : MatDialogRef<InputsComponent>,
               private userService:UserService,
-            @Inject(MAT_DIALOG_DATA) public data: any ) { }
+            @Inject(MAT_DIALOG_DATA) public data: any,
+          private router: Router,
+        private snackBar: MatSnackBar ) {
+
+          }
 
   ngOnInit() {
     this.user = this.userService.user;
@@ -43,9 +48,11 @@ export class InputsComponent implements OnInit  {
     let _self = this;
     this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.data.taskId,this.selectedRow.id).subscribe(
     data => {
+
+        this.openSnackBar("Selected Input has been approved", undefined );
     },
     err => {
-
+      this.openSnackBar("Input not saved due to technical issues", undefined);
     },
     () => {
 
@@ -58,16 +65,21 @@ export class InputsComponent implements OnInit  {
   }
 
   highlight(row){
-    console.log(`Selected row is ${row}`);
-    console.log(`Number  is ${row.number}`);
     var myJSON = JSON.stringify(row);
-    console.log(`converted json is ${myJSON}`);
     this.selectedRowIndex = row.id;
     this.selectedRow = row;
   }
 
   onClose() {
     this.dialogRef.close();
+  }
+
+  openSnackBar(message: string, action: string) {
+  let config = new MatSnackBarConfig();
+   config.verticalPosition = 'bottom';
+   config.horizontalPosition = 'right';
+   config.duration = 2000;
+    this.snackBar.open(message, action, config);
   }
 
 }

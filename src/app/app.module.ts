@@ -13,8 +13,8 @@ import {
   MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatSidenavModule
 } from '@angular/material';
 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { InputsComponent } from './service/inputs/inputs.component';
 import {AuthenticationService} from   './_services/authentication.service'
@@ -45,7 +45,7 @@ import { UserService } from './_services';
     MatProgressSpinnerModule,
     MatSidenavModule,
     BrowserAnimationsModule,
-
+    MatSnackBarModule,
     FlexLayoutModule,
 
     UserModule,
@@ -59,4 +59,3 @@ import { UserService } from './_services';
   entryComponents: [InputsComponent]
 })
 export class AppModule { }
-

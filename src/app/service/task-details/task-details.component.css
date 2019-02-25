@@ -49,6 +49,7 @@ mat-toolbar > span, mat-toolbar > a > span {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: green;
 }
 
 .example-fill-remaining-space {
@@ -56,7 +57,6 @@ mat-toolbar > span, mat-toolbar > a > span {
 }
 
 mat-card {
-  max-width: 800px;
   margin: 15px;
 }
 
