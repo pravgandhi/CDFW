@@ -75,7 +75,7 @@
     <ng-container matColumnDef="input">
      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">
        My Input <i class="material-icons help-text-icon" 
-        ngbTooltip="My Inputs"
+        ngbTooltip="My Inputs" placement="bottom"
        >help</i>
       </th>
      <td mat-cell *matCellDef="let element">
@@ -96,8 +96,10 @@
 
    <ng-container matColumnDef ="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">
-        Status <i class="material-icons help-text-icon" 
-        ngbTooltip="Status"
+        Status <i class="material-icons help-text-icon" placement="bottom"
+        ngbTooltip="'Not started' indicates that no input has been provided for this task. 
+        'Pending' indicates that one or more inputs have been provided, and that the Region lead / Approver has not yet made the final input selection. 
+        'Approved' indicates that the assigned Region lead / Approver has validated the final input and closed the item. Please e-mail your assigned Region lead / Approver with any additional comments you may have. "
          >help</i>
         </th>
       <td mat-cell *matCellDef= "let element">
@@ -107,7 +109,7 @@
 
     <ng-container matColumnDef ="count">
        <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">
-         Input Count <i class="material-icons help-text-icon" 
+         Input Count <i class="material-icons help-text-icon" placement="bottom"
          ngbTooltip="Displays the number of inputs entered the region's respondents so far; the 0 value indicates that no input has been received from any of the region's respondents so far."
           >help</i>
         </th>

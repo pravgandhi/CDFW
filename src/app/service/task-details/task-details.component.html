@@ -21,7 +21,7 @@
   </button>
 </mat-toolbar>
 
-<div class="task-container">
+<div class="task-container"  *ngIf="task != undefined">
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title>{{task.taskName}}</mat-card-title>
@@ -32,10 +32,10 @@
   <mat-card-actions align="center">
     <mat-form-field  >
       <input matInput placeholder="Input Multiplier" type="number" name="test_name" min="0" oninput="validity.valid||(value='');" [(ngModel)]="multiplier"
-      [disabled]= "getInputDisabledValue()">
+      [disabled]= "saveRespInputDisabled">
     </mat-form-field>
     <button mat-button color = "primary" (click)="saveResponse()"
-      [disabled]= "getInputDisabledValue()">
+      [disabled]= "saveRespInputDisabled">
         <mat-icon>save</mat-icon>
         Save Response
     </button>
