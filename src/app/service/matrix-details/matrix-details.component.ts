@@ -48,7 +48,6 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
   };
 
     customInit(params){
-      // alert(params['regionId']);
       this.user = this.userService.user;
       this.displayedColumns = ["taskId", "serviceName", "program",
       "subProgram", "taskCategory", "taskName"];

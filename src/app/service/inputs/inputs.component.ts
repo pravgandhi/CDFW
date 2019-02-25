@@ -31,7 +31,6 @@ export class InputsComponent implements OnInit  {
     let _self = this;
     this.serviceMatrix.fetchInputs(this.selectedRegionObject.regionId, this.data.taskId ).subscribe(
     data => {
-      debugger;
       _self.inputs.data = data as Object[];
     },
     err => {
@@ -41,13 +40,9 @@ export class InputsComponent implements OnInit  {
 
   approveResponse(){
     this.serviceMatrix.selectedRowIndex = this.selectedRowIndex;
-    alert(this.selectedRow.id);
     let _self = this;
-    debugger;
     this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.data.taskId,this.selectedRow.id).subscribe(
     data => {
-      debugger;
-      alert(`success and data is ${data}`);
     },
     err => {
 
@@ -59,7 +54,6 @@ export class InputsComponent implements OnInit  {
   }
 
   provideYourInput() {
-    alert('Back to task Input Screen');
     this.onClose();
   }
 

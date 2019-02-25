@@ -125,7 +125,6 @@ export class ServiceMatrixService {
     }
 
     public saveUserInput(userId:number, regionName: string, taskId: string, inputValue: number, sttsCd: string){
-      alert(`user id is ${userId} and inputValue is ${inputValue} and  sttsCd is ${sttsCd}`);
       return this.http.post(this.API_URL+'saveInput', {userId: userId, regionName: regionName, taskId: taskId, inputValue :inputValue, sttsCd: sttsCd });
      }
 

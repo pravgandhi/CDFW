@@ -13,8 +13,7 @@ export class AppComponent {
 
 
   getUserDetails() {
-    alert('Successfully logged in ');
-    //this.router.navigate(['/heroes']);
+      //this.router.navigate(['/heroes']);
   }
 
 }
