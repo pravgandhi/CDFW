@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
-  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSnackBar
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatSidenavModule
 } from '@angular/material';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -53,8 +53,6 @@ import 'hammerjs';
     MatSidenavModule,
     MatTooltipModule,
     FlexLayoutModule,
-    MatSnackBar,
-
     UserModule,
     ServiceModule,
     LoginModule

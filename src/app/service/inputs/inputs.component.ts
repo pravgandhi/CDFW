@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { ServiceMatrixService } from '../service-matrix.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { UserService } from 'src/app/_services';
 import { Router } from '@angular/router';
 
@@ -26,7 +26,7 @@ export class InputsComponent implements OnInit  {
               private userService:UserService,
             @Inject(MAT_DIALOG_DATA) public data: any,
           private router: Router,
-        private snackBar: MatSnackBar ) {
+         ) {
 
           }
 
@@ -77,12 +77,12 @@ export class InputsComponent implements OnInit  {
     this.dialogRef.close();
   }
 
-  openSnackBar(message: string, action: string) {
+  /*openSnackBar(message: string, action: string) {
   let config = new MatSnackBarConfig();
    config.verticalPosition = 'bottom';
    config.horizontalPosition = 'right';
    config.duration = 2000;
     this.snackBar.open(message, action, config);
-  }
+  } */
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ServiceMatrixService } from '../service-matrix.service';
-import { MatDialog, MatDialogConfig, MatTableDataSource, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
 import { InputsComponent } from '../inputs/inputs.component';
 import { UserService } from 'src/app/_services';
 
@@ -30,7 +30,7 @@ export class TaskDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
     private router: Router, private dialog: MatDialog,
     private userService:UserService,
-    private snackBar: MatSnackBar) {
+  ) {
         dialog.afterAllClosed.subscribe(data => this.customInit());
      }
 
@@ -135,12 +135,12 @@ export class TaskDetailsComponent implements OnInit {
     this.router.navigate(["login"]);
   }
 
-  openSnackBar(message: string, action: string) {
+/*  openSnackBar(message: string, action: string) {
   let config = new MatSnackBarConfig();
    config.verticalPosition = 'bottom';
    config.horizontalPosition = 'right';
    config.duration = 2000;
     this.snackBar.open(message, action, config);
-  }
+  } */
 
 }
