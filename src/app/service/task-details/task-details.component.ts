@@ -110,11 +110,12 @@ export class TaskDetailsComponent implements OnInit {
 
   viewInputs(){
     const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '500px';
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
         regionName: this.selectedRegion,
         userId: this.user['id'],
-        taskId : this.task['taskId'],
+        taskId : this.task['taskId']        
     };
     this.dialog.open(InputsComponent, dialogConfig);
   }

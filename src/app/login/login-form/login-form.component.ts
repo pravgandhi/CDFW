@@ -40,25 +40,26 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authenticationService.login(this.f.username.value, this.f.password.value).then(
-         isMission => {
-           if(isMission){
-             var mappedRegions = this.userService.user['userRegionMappingsById'];
-             if(mappedRegions.length > 0){
-              let  userRegion = mappedRegions[0]['regionByRegionId']['regionName'];
-              this.router.navigate(['service', userRegion]);
-             } else {
-            //  this.snackBar.openSnackBar( `User ${this.f.username.value} does not have access to any region.`, 'Close', "red-snackbar");
-              this.errMsg = `User ${this.f.username.value} does not have access to any region. `;
+    if(this.loginForm.valid){
+      this.authenticationService.login(this.f.username.value, this.f.password.value).then(
+          isMission => {
+            if(isMission){
+              var mappedRegions = this.userService.user['userRegionMappingsById'];
+              if(mappedRegions.length > 0){
+                let  userRegion = mappedRegions[0]['regionByRegionId']['regionName'];
+                this.router.navigate(['service', userRegion]);
+              } else {
+              //  this.snackBar.openSnackBar( `User ${this.f.username.value} does not have access to any region.`, 'Close', "red-snackbar");
+                this.errMsg = `User ${this.f.username.value} does not have access to any region. `;
+                this.router.navigate(['login']);
+              }
+            } else {
+              // this.snackBar.openSnackBar( "Invalid Credentials", 'Close', "red-snackbar");
+              this.errMsg = "Invalid Credentials";
               this.router.navigate(['login']);
-             }
-           } else {
-            // this.snackBar.openSnackBar( "Invalid Credentials", 'Close', "red-snackbar");
-             this.errMsg = "Invalid Credentials";
-             this.router.navigate(['login']);
-           }
-         }
-    );
-
+            }
+          }
+      );
+    }
   }
 }
