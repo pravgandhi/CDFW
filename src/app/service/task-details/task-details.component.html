@@ -38,11 +38,11 @@
   <mat-card>
     <mat-card-actions align="center">
       <mat-form-field  >
-        <input matInput placeholder="Input Multiplier" type="number" name="test_name" min="0" oninput="validity.valid||(value='');" [(ngModel)]="multiplier"
+        <input matInput placeholder="Input Multiplier" type="number" name="multiplier" min="0" [(ngModel)]="multiplier"
         [disabled]= "saveRespInputDisabled">
       </mat-form-field>
       <button mat-button color = "primary" (click)="saveResponse()"
-        [disabled]= "saveRespInputDisabled">
+        [disabled]= "saveRespInputDisabled || multiplier == undefined || multiplier == 0">
           <mat-icon>save</mat-icon>
           Save Response
       </button>

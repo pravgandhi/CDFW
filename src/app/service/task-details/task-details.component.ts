@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ServiceMatrixService } from '../service-matrix.service';
-import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { InputsComponent } from '../inputs/inputs.component';
 import { UserService } from 'src/app/_services';
 import { MatSnackBarComponent } from '../mat-snack-bar/mat-snack-bar.component';
@@ -79,7 +79,7 @@ export class TaskDetailsComponent implements OnInit {
            }
         },
         err => {
-          //this.errorMessage = "Error fetching task details. Please try again later."
+          this.snackBar.openSnackBar( "Error fetching task details. Please try again later", 'Close', "red-snackbar");
         },
         () => {
 
@@ -90,17 +90,34 @@ export class TaskDetailsComponent implements OnInit {
   saveResponse(){
     let status = 'N';
     if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
-        status = 'A';
+        status = 'A';        
+        const dialogRef = this.dialog.open(SaveResponseConfirmDialog, {
+          width: '500px',
+          data: {confirm: 'No'}
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed -->'+result.confirm);
+          if (result.confirm == 'Yes'){
+            this.saveUserInput(status);
+          }
+        });
+
      } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
        status = 'P';
+       this.saveUserInput(status);
+     } else {
+       this.saveUserInput(status);
      }
-    this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, status  ).
-    subscribe(res => {
-      this.snackBar.openSnackBar( "Input saved successfully", 'Close', "green-snackbar");
-    },
-    err => {
+  }
 
-    }
+  saveUserInput(stats){
+    this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, stats).subscribe(res => {
+        this.snackBar.openSnackBar( "Input saved successfully", 'Close', "green-snackbar");
+      },
+      err => {
+        this.snackBar.openSnackBar( "Error saving input value. Please try again later", 'Close', "red-snackbar");
+      }
     );
   }
 
@@ -139,5 +156,25 @@ export class TaskDetailsComponent implements OnInit {
    config.duration = 2000;
     this.snackBar.open(message, action, config);
   } */
+
+}
+
+@Component({
+  selector: 'save-input-confirm-dialog',
+  templateUrl: 'save-input-confirm-dialog.html',
+})
+export class SaveResponseConfirmDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<SaveResponseConfirmDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  // onNoClick(): void {
+  //   this.dialogRef.close();
+  // }
+
+  closeDialog(confirm): void{
+    this.dialogRef.close({'confirm': confirm});
+  }
 
 }

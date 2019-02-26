@@ -13,14 +13,15 @@ import {
   MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatListModule,
   MatExpansionModule, MatPaginatorModule, MatSortModule, MatSidenavModule
 } from '@angular/material';
-import { TaskDetailsComponent } from './task-details/task-details.component';
+import { TaskDetailsComponent, SaveResponseConfirmDialog } from './task-details/task-details.component';
 import { ServiceMatrixService } from './service-matrix.service';
 import { InputsComponent } from './inputs/inputs.component';
 
 
 
 @NgModule({
-  declarations: [MatrixDetailsComponent, TaskDetailsComponent, InputsComponent],
+  declarations: [MatrixDetailsComponent, TaskDetailsComponent, InputsComponent, SaveResponseConfirmDialog],
+  entryComponents : [SaveResponseConfirmDialog],
   providers : [ServiceMatrixService],
   imports: [
     CommonModule,
