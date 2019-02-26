@@ -20,7 +20,6 @@ constructor( private snackBar: MatSnackBarComponent) {
     return next.handle(request)
                .pipe(
                  catchError( (error: HttpErrorResponse) => {
-                    debugger;
                     let errMsg = '';
                     // Client Side Error
                     if (error.error instanceof ErrorEvent) {
