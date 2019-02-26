@@ -59,7 +59,7 @@ import { MatSnackBarComponent } from './service/mat-snack-bar/mat-snack-bar.comp
     UserModule,
     ServiceModule,
     LoginModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [    {
       provide: HTTP_INTERCEPTORS,

@@ -29,8 +29,8 @@ constructor( private snackBar: MatSnackBarComponent) {
                       errMsg = `Error Code: ${error.status},  Message: ${error.message}`;
                     }
                     // show error snackbar with red background
-	          	      this.snackBar.openSnackBar('We are experiencing technical difficulties.','Close','red-snackbar');
-
+	          	      //this.snackBar.openSnackBar('We are experiencing technical difficulties.','Close','red-snackbar');
+                    this.snackBar.openSnackBar(errMsg,'Close','red-snackbar');
                     // return an observable
                     return throwError(errMsg);
                   })

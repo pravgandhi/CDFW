@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ServiceMatrixService } from '../service-matrix.service';
-import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { InputsComponent } from '../inputs/inputs.component';
 import { UserService } from 'src/app/_services';
 import { MatSnackBarComponent } from '../mat-snack-bar/mat-snack-bar.component';
@@ -13,7 +13,8 @@ import { MatSnackBarComponent } from '../mat-snack-bar/mat-snack-bar.component';
   templateUrl: './task-details.component.html',
   styleUrls: ['./task-details.component.css']
 })
-export class TaskDetailsComponent implements OnInit {
+export class TaskDetailsComponent implements OnInit, AfterViewInit {
+
   inpuTaskId : string;
   user: Object;
   userRole: string;
@@ -27,6 +28,9 @@ export class TaskDetailsComponent implements OnInit {
   saveRespInputDisabled : boolean = false;
   errorMessage: string = null;
   successMessage: string = null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
     private router: Router, private dialog: MatDialog,
@@ -47,6 +51,29 @@ export class TaskDetailsComponent implements OnInit {
     this.user = this.userService.user;
     this.getTaskInfo1(this.selectedRegion, this.inpuTaskId);
     this.userRole = this.userService.userRole;
+    this.dataSource.data = [{
+      title:'title1',
+      role : 'role1',
+      time : '1'
+    }, {
+      title:'title2',
+      role : 'role2',
+      time : '2'
+    }, {
+      title:'title3',
+      role : 'role3',
+      time : '3'
+    },
+    {
+      title:'title4',
+      role : 'role4',
+      time : '4'
+    }];
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
 
@@ -55,7 +82,8 @@ export class TaskDetailsComponent implements OnInit {
         this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
         data => {
           _self.task = data;
-          _self.dataSource.data = data['laborClassesByTaskId'];
+          debugger;
+        //  _self.dataSource.data = data['laborClassesByTaskId'];
           let inputs = data['missionUserInputsByTaskId'];
           _self.serviceMatrix.inputDataStore = inputs;
 
@@ -88,13 +116,13 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   saveResponse(){
-    let status = 'N';
+  /*  let status = 'N';
     if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
         status = 'A';
      } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
        status = 'P';
-     }
-    this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, status  ).
+     }*/
+    this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier ).
     subscribe(res => {
       this.snackBar.openSnackBar( "Input saved successfully", 'Close', "green-snackbar");
     },
@@ -131,6 +159,12 @@ export class TaskDetailsComponent implements OnInit {
     this.router.navigate(["login"]);
   }
 
+
+  /*ngAfterViewInit() {
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 /*  openSnackBar(message: string, action: string) {
   let config = new MatSnackBarConfig();
    config.verticalPosition = 'bottom';

@@ -38,7 +38,8 @@
   <mat-card>
     <mat-card-actions align="center">
       <mat-form-field  >
-        <input matInput placeholder="Input Multiplier" type="number" name="test_name" min="0" oninput="validity.valid||(value='');" [(ngModel)]="multiplier"
+        <label for="inputmul">Input Multiplier</label>
+        <input id = "inputmul" matInput type="number" name="test_name" min="0" oninput="validity.valid||(value='');" [(ngModel)]="multiplier"
         [disabled]= "saveRespInputDisabled">
       </mat-form-field>
       <button mat-button color = "primary" (click)="saveResponse()"
@@ -90,24 +91,73 @@
     <mat-card-actions>
       <div class = "row2">
       <mat-form-field >
-        <input matInput placeholder="Frequency" value="{{task.frequency}}" readonly>
+        <label for="frequency">Freuquency <i class="material-icons help-text-icon"
+          ngbTooltip="Number of times per year that the task needs to be accomplished (predefined)."
+           >help</i></label>
+        <input id= "frequency" matInput value="{{task.frequency}}" readonly>
+      </mat-form-field>
+      <mat-form-field >
+        <label for="totallaborhours">Total time of Labor Hours <i class="material-icons help-text-icon"
+          ngbTooltip="Sum of time per labor classification (predefined)."
+           >help</i></label>
+        <input id= "totallaborhours" matInput value="{{task.totalLaborHours}}" readonly>
       </mat-form-field>
 
       <mat-form-field >
-        <input matInput placeholder="Total time of Labor Hours" value="{{task.totalLaborHours}}" readonly>
+        <label for="totalhours">Total Hours <i class="material-icons help-text-icon"
+          ngbTooltip="Product of multiplier (input), times the total time of labor hours, times the frequency (automatically calculated)."
+           >help</i></label>
+        <input id= "totalhours" matInput value="{{task.totalLaborHours * task.frequency * multiplier}}" readonly>
       </mat-form-field>
-
-      <mat-form-field >
-        <input matInput placeholder="Total Hours" value="{{task.totalLaborHours * task.frequency * multiplier }}" readonly>
-      </mat-form-field>
-      </div>
+    </div>
     </mat-card-actions>
       <mat-divider matInset></mat-divider>
     <mat-card-content>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <label>Labor Classification<i class="material-icons help-text-icon"
+            ngbTooltip="Displays the time that each labor classification would spend on the task in question, in the future state / at mission level (predefined). "
+             >help</i></label>
+          </mat-panel-title>
+          </mat-expansion-panel-header>
+          <table id="laborTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef> Labor Class Title </th>
+              <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+            </ng-container>
+            <ng-container matColumnDef="role">
+              <th mat-header-cell *matHeaderCellDef> Labor Classification Code </th>
+              <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+            </ng-container>
+            <ng-container matColumnDef="time">
+              <th mat-header-cell *matHeaderCellDef> Time Labor Class </th>
+              <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <label>Justification Category</label>
+          </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <ul *ngFor = "let jc of task.jrsdctnCtgriesByTaskId">
+            <li>{{jc.categoryName}}</li>
+          </ul>
+      </mat-expansion-panel>
+
     <div class = "row3">
       <div class="column" style="width:60%">
-        <label for="laborTable">Labor Classification</label>
-        <table id="laborTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <label for="laborTable">Labor Classification<i class="material-icons help-text-icon"
+        ngbTooltip="Displays the time that each labor classification would spend on the task in question, in the future state / at mission level (predefined). "
+         >help</i></label>
+        <table id="laborTable" mat-table [dataSource]="dataSource"  matSort class="mat-elevation-z8">
           <ng-container matColumnDef="title">
             <th mat-header-cell *matHeaderCellDef> Labor Class Title </th>
             <td mat-cell *matCellDef="let element"> {{element.title}} </td>
@@ -123,6 +173,8 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <mat-paginator
+          [pageSizeOptions]="[3, 5, 7]" showFirstLastButtons></mat-paginator>
       </div>
       <div class="column" style="width:40%">
         <label for="justcat">Justification Category</label>

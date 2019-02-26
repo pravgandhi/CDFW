@@ -74,14 +74,12 @@
 
     <ng-container matColumnDef="input">
      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">
-       My Input <i class="material-icons help-text-icon" 
+       My Input <i class="material-icons help-text-icon"
         ngbTooltip="My Inputs" placement="bottom"
        >help</i>
       </th>
      <td mat-cell *matCellDef="let element">
-         <button mat-icon-button color="primary" >
              {{element.myInput}}
-         </button>
      </td>
    </ng-container>
 
@@ -97,8 +95,8 @@
    <ng-container matColumnDef ="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">
         Status <i class="material-icons help-text-icon" placement="bottom"
-        ngbTooltip="'Not started' indicates that no input has been provided for this task. 
-        'Pending' indicates that one or more inputs have been provided, and that the Region lead / Approver has not yet made the final input selection. 
+        ngbTooltip="'Not started' indicates that no input has been provided for this task.
+        'Pending' indicates that one or more inputs have been provided, and that the Region lead / Approver has not yet made the final input selection.
         'Approved' indicates that the assigned Region lead / Approver has validated the final input and closed the item. Please e-mail your assigned Region lead / Approver with any additional comments you may have. "
          >help</i>
         </th>

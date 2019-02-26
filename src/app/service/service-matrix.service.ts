@@ -119,8 +119,8 @@ export class ServiceMatrixService {
             });
     }
 
-    public saveUserInput(userId:number, regionName: string, taskId: string, inputValue: number, sttsCd: string){
-      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionName: regionName, taskId: taskId, inputValue :inputValue, sttsCd: sttsCd });
+    public saveUserInput(userId:number, regionName: string, taskId: string, inputValue: number){
+      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionName: regionName, taskId: taskId, inputValue :inputValue });
      }
 
 }
