@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserEntity } from '../_models/UserEntity';
 import {map} from 'rxjs/operators';
+import { MatSnackBarComponent } from '../service/mat-snack-bar/mat-snack-bar.component';
 
 
 @Injectable()
@@ -9,7 +10,7 @@ export class AuthenticationService {
 
     user: UserEntity;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private snackBar: MatSnackBarComponent) { }
 
       login(username: string, password: string) {
           var self = this;
@@ -23,7 +24,7 @@ export class AuthenticationService {
            }
            return false;
          } , function(error) {
-
+            
          });
 
        }

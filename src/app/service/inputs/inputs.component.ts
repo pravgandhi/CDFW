@@ -3,6 +3,7 @@ import { ServiceMatrixService } from '../service-matrix.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { UserService } from 'src/app/_services';
 import { Router } from '@angular/router';
+import { MatSnackBarComponent } from '../mat-snack-bar/mat-snack-bar.component';
 
 @Component({
   selector: 'app-inputs',
@@ -25,7 +26,7 @@ export class InputsComponent implements OnInit  {
               public dialogRef : MatDialogRef<InputsComponent>,
               private userService:UserService,
             @Inject(MAT_DIALOG_DATA) public data: any,
-          private router: Router,
+          private router: Router, private snackBar: MatSnackBarComponent
          ) {
 
           }
@@ -52,10 +53,10 @@ export class InputsComponent implements OnInit  {
     let _self = this;
     this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.data.taskId,this.selectedRow.id).subscribe(
     data => {
-      this.successMessage = "Input value approved."
+      this.snackBar.openSnackBar( "Selected Input is approved", 'Close', "green-snackbar");
     },
     err => {
-      this.errorMessage = "Error approving input value. Please try again later."
+      
     },
     () => {
 

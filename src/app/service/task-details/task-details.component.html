@@ -33,8 +33,8 @@
   </mat-card-header>
   <mat-divider matInset></mat-divider>
   <mat-card-content>
-  <tr>
-  <td>
+  <div class ="matrow1">
+  <div class ="matcolumn1">
   <mat-card>
     <mat-card-actions align="center">
       <mat-form-field  >
@@ -84,22 +84,21 @@
     </div>
     </mat-card-content>
   </mat-card>
-  </td>
-  <td>
+  </div>
+  <div class ="matcolumn2">
   <mat-card>
-
     <mat-card-actions>
       <div class = "row2">
       <mat-form-field >
-        <input matInput placeholder="Frequency" value="{{task.frequency}}" disabled>
+        <input matInput placeholder="Frequency" value="{{task.frequency}}" readonly>
       </mat-form-field>
 
       <mat-form-field >
-        <input matInput placeholder="Total time of Labor Hours" value="{{task.totalLaborHours}}" disabled>
+        <input matInput placeholder="Total time of Labor Hours" value="{{task.totalLaborHours}}" readonly>
       </mat-form-field>
 
       <mat-form-field >
-        <input matInput placeholder="Total Hours" value="{{task.totalLaborHours * task.frequency * multiplier }}" disabled>
+        <input matInput placeholder="Total Hours" value="{{task.totalLaborHours * task.frequency * multiplier }}" readonly>
       </mat-form-field>
       </div>
     </mat-card-actions>
@@ -137,8 +136,8 @@
     </div>
     </mat-card-content>
   </mat-card>
-  </td>
-  </tr>
+  </div>
+  </div>
   </mat-card-content>
 </mat-card>
 </div>

@@ -3,10 +3,7 @@
   <mat-card-header>
       <mat-card-title>Review Inputs</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
-      <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
-      <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
-      
+  <mat-card-content>    
   <table mat-table [dataSource]="inputs" class="mat-elevation-z8">
     <!-- Position Column -->
     <ng-container matColumnDef="name">

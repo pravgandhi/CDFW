@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { FormBuilder, FormGroup , Validators , FormControl } from '@angular/forms';
 import { UserService } from 'src/app/_services';
+import { MatSnackBarComponent } from 'src/app/service/mat-snack-bar/mat-snack-bar.component';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class LoginFormComponent implements OnInit {
   errMsg: string = null;
 
   constructor(private router: Router, private authenticationService: AuthenticationService,
-               private formBuilder: FormBuilder, private userService : UserService ) { }
+               private formBuilder: FormBuilder, private userService : UserService,
+             private snackBar: MatSnackBarComponent ) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -46,10 +48,12 @@ export class LoginFormComponent implements OnInit {
               let  userRegion = mappedRegions[0]['regionByRegionId']['regionName'];
               this.router.navigate(['service', userRegion]);
              } else {
-              this.errMsg = `User ${this.f.username.value} does not have access to any region. Please contact the project team.`;
+            //  this.snackBar.openSnackBar( `User ${this.f.username.value} does not have access to any region.`, 'Close', "red-snackbar");
+              this.errMsg = `User ${this.f.username.value} does not have access to any region. `;
               this.router.navigate(['login']);
              }
            } else {
+            // this.snackBar.openSnackBar( "Invalid Credentials", 'Close', "red-snackbar");
              this.errMsg = "Invalid Credentials";
              this.router.navigate(['login']);
            }

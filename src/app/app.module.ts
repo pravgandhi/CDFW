@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
-  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatSidenavModule
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -21,15 +21,18 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { InputsComponent } from './service/inputs/inputs.component';
 import {AuthenticationService} from   './_services/authentication.service'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './_services';
 
 import 'hammerjs';
+import { HttpErrorInterceptor } from './_services/error-interceptor';
+import { MatSnackBarComponent } from './service/mat-snack-bar/mat-snack-bar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MatSnackBarComponent
   ],
   imports: [
     BrowserModule,
@@ -55,10 +58,15 @@ import 'hammerjs';
     FlexLayoutModule,
     UserModule,
     ServiceModule,
-    LoginModule
-
+    LoginModule,
+    MatSnackBarModule
   ],
-  providers: [AuthenticationService, UserService],
+  providers: [    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true,
+    },
+    AuthenticationService, UserService, MatSnackBarComponent],
   bootstrap: [AppComponent],
   entryComponents: [InputsComponent]
 })

@@ -18,6 +18,7 @@ import { ServiceMatrixService } from './service-matrix.service';
 import { InputsComponent } from './inputs/inputs.component';
 
 
+
 @NgModule({
   declarations: [MatrixDetailsComponent, TaskDetailsComponent, InputsComponent],
   providers : [ServiceMatrixService],

@@ -4,6 +4,7 @@ import { ServiceMatrixService } from '../service-matrix.service';
 import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
 import { InputsComponent } from '../inputs/inputs.component';
 import { UserService } from 'src/app/_services';
+import { MatSnackBarComponent } from '../mat-snack-bar/mat-snack-bar.component';
 
 
 
@@ -29,7 +30,7 @@ export class TaskDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
     private router: Router, private dialog: MatDialog,
-    private userService:UserService,
+    private userService:UserService, private snackBar: MatSnackBarComponent
   ) {
         dialog.afterAllClosed.subscribe(data => this.customInit());
      }
@@ -46,13 +47,8 @@ export class TaskDetailsComponent implements OnInit {
     this.user = this.userService.user;
     this.getTaskInfo1(this.selectedRegion, this.inpuTaskId);
     this.userRole = this.userService.userRole;
-    // this.setInputDisabledValue();
   }
 
-  // setInputDisabledValue(){
-  //   if('A' === this.task.statusBySttsId.sttsId && 'm_resp' === this.userRole )
-  //       this.saveRespInputDisabled = true;
-  // }
 
   public getTaskInfo1 = (selectedRegion, taskId) => {
         let _self = this;
@@ -83,7 +79,7 @@ export class TaskDetailsComponent implements OnInit {
            }
         },
         err => {
-          this.errorMessage = "Error fetching task details. Please try again later."
+          //this.errorMessage = "Error fetching task details. Please try again later."
         },
         () => {
 
@@ -100,10 +96,10 @@ export class TaskDetailsComponent implements OnInit {
      }
     this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, status  ).
     subscribe(res => {
-      this.successMessage = "Input saved successfully"
+      this.snackBar.openSnackBar( "Input saved successfully", 'Close', "green-snackbar");
     },
     err => {
-      this.errorMessage = "Error saving input value. Please try again later."
+
     }
     );
   }
