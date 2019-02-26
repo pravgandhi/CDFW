@@ -4,7 +4,7 @@
       <mat-card-title>Review Inputs</mat-card-title>
   </mat-card-header>
   <mat-card-content>    
-  <table mat-table [dataSource]="inputs" class="mat-elevation-z8">
+  <table mat-table [dataSource]="inputs" class="mat-elevation-z8 w-100">
     <!-- Position Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Respondent Name </th>
@@ -29,8 +29,8 @@
     </tr>
   </table>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="approveResponse()">Select</button>
+  <mat-card-actions class="text-center">
+    <button mat-raised-button color="primary" (click)="approveResponse()" [disabled]="this.selectedRow != undefined && this.selectedRow.statusBySttsId.statusCode == 'Approved'">Select</button>
     <button mat-raised-button color="primary" (click)="provideYourInput()">Provide your Input</button>
   </mat-card-actions>
   </mat-card>

@@ -1,0 +1,8 @@
+<!-- <h1 mat-dialog-title>{{data.name}}</h1> -->
+<div mat-dialog-content>
+  <p>This action will approve the input value irrespective of existing inputs from responders. Do you want to continue?</p>
+</div>
+<div class="text-center">
+  <button mat-raised-button (click)="closeDialog('No')" class="mr-2">Cancel</button>
+  <button mat-raised-button color="primary" (click)="closeDialog('Yes')" cdkFocusInitial>Yes</button>
+</div>
