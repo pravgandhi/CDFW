@@ -12,7 +12,7 @@
 
   <button mat-button color = "primary" (click)="goBackToMatrix()">
       <mat-icon>arrow_back</mat-icon>
-      Back to Matrix
+      Back to Catalog
   </button>
 
   <button mat-button color = "primary" (click)="backToLogin()">
@@ -20,8 +20,8 @@
       Logout
   </button>
 </mat-toolbar>
-<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
-<ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+<ngb-alert *ngIf="approved && userRole==='m_resp'" type="success" (close)="approvedMsgResp = null">{{ approvedMsgResp }}</ngb-alert>
+<ngb-alert *ngIf="approved && (userRole==='m_lead' || userRole==='admin') errorMessage" type="success" (close)="approvedMsgLead = null">{{ approvedMsgLead }}</ngb-alert>
 
 
 <div class="task-container"  *ngIf="task != undefined">
@@ -38,18 +38,20 @@
   <mat-card>
     <mat-card-actions align="center">
       <mat-form-field  >
-        <label for="inputmul">Input Multiplier</label>
-        <input id = "inputmul" matInput placeholder="Input Multiplier" type="number" name="multiplier" min="0" [(ngModel)]="multiplier"
+        <label for="inputmul">Input Multiplier<i class="material-icons help-text-icon"
+          ngbTooltip="Displays the input recorded for this task. This is the only field that requires an input from respondents in this exercise. "
+           >help</i></label>
+        <input id = "inputmul" matInput type="number" name="test_name" min="0" oninput="validity.valid||(value='');" [(ngModel)]="multiplier"
         [disabled]= "saveRespInputDisabled">
       </mat-form-field>
       <button mat-button color = "primary" (click)="saveResponse()"
-        [disabled]= "saveRespInputDisabled || multiplier == undefined || multiplier == 0">
+        [disabled]= "saveRespInputDisabled">
           <mat-icon>save</mat-icon>
           Save Response
       </button>
       <button mat-button color = "primary" (click)="viewInputs()" *ngIf="userRole==='admin' || userRole==='m_lead'" >
           <mat-icon>touch_app</mat-icon>
-          View Inputs
+          Review Inputs
       </button>
     </mat-card-actions>
       <mat-divider matInset></mat-divider>
@@ -58,13 +60,13 @@
       <div class="column" >
         <label for="taskdesc">Task Description</label>
         <textarea id="taskdesc" name="taskdesc"
-                  rows="3" cols="30" readonly> {{task.taskDesc}}
+                  rows="5" cols="30" readonly> {{task.taskDesc}}
         </textarea>
       </div>
       <div class="column">
         <label for="multiDesc">Input Multiplier Description</label>
         <textarea id="multiDesc" name="multiDesc"
-                  rows="3" cols="30" readonly> {{task.multDesc}}
+                  rows="5" cols="30" readonly> {{task.multDesc}}
         </textarea>
       </div>
     </div>
@@ -73,13 +75,13 @@
       <div class="column" >
         <label for="taskdesc">Desired Performance</label>
         <textarea id="taskdesc" name="taskdesc"
-                  rows="3" cols="30" readonly> {{task.desiredPerf}}
+                  rows="5" cols="30" readonly> {{task.desiredPerf}}
         </textarea>
       </div>
       <div class="column">
         <label for="multiDesc">Additional Budget Factor(s)</label>
         <textarea id="multiDesc" name="multiDesc"
-                  rows="3" cols="30" readonly> {{task.addtnlBudgetFator}}
+                  rows="5" cols="30" readonly> {{task.addtnlBudgetFator}}
         </textarea>
       </div>
     </div>
@@ -114,6 +116,7 @@
       <mat-divider matInset></mat-divider>
     <mat-card-content>
 
+<!--
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -150,16 +153,16 @@
           <ul *ngFor = "let jc of task.jrsdctnCtgriesByTaskId">
             <li>{{jc.categoryName}}</li>
           </ul>
-      </mat-expansion-panel>
+      </mat-expansion-panel> -->
 
     <div class = "row3">
       <div class="column" style="width:60%">
         <label for="laborTable">Labor Classification<i class="material-icons help-text-icon"
         ngbTooltip="Displays the time that each labor classification would spend on the task in question, in the future state / at mission level (predefined). "
          >help</i></label>
-        <table id="laborTable" mat-table [dataSource]="dataSource"  matSort class="mat-elevation-z8">
+        <table id="laborTable" mat-table [dataSource]="dataSource"  matSort class="mat-elevation-z1 w-100">
           <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef> Labor Class Title </th>
+            <th mat-header-cell *matHeaderCellDef> Labor Classification Title </th>
             <td mat-cell *matCellDef="let element"> {{element.title}} </td>
           </ng-container>
           <ng-container matColumnDef="role">
@@ -167,7 +170,7 @@
             <td mat-cell *matCellDef="let element"> {{element.role}} </td>
           </ng-container>
           <ng-container matColumnDef="time">
-            <th mat-header-cell *matHeaderCellDef> Time Labor Class </th>
+            <th mat-header-cell *matHeaderCellDef> Labor Classification Time </th>
             <td mat-cell *matCellDef="let element"> {{element.time}} </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -178,12 +181,14 @@
       </div>
       <div class="column" style="width:40%">
         <label for="justcat">Justification Category</label>
-          <mat-list id="justcat">
-           <mat-list-item *ngFor = "let jc of task.jrsdctnCtgriesByTaskId">
-             <mat-icon color="primary">play_arrow </mat-icon>
-             {{jc.categoryName}}
-            </mat-list-item>
-          </mat-list>
+        <table id="justcat" mat-table [dataSource]="dataSourceJustification"  matSort class="mat-elevation-z1 w-100">
+          <ng-container matColumnDef="categoryName">
+            <th mat-header-cell *matHeaderCellDef> Category Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsJustification"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsJustification;"></tr>
+        </table>
       </div>
     </div>
     </mat-card-content>

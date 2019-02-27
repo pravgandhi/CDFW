@@ -128,11 +128,6 @@ textarea {
   font-size: 14px;
 }
 
-mat-expansion-panel {
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.row2 > mat-form-field {
-  margin: 5px;
+#justcat {
+  margin-left: 10px;
 }

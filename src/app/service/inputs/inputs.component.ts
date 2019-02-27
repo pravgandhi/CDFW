@@ -56,7 +56,7 @@ export class InputsComponent implements OnInit  {
       this.snackBar.openSnackBar( "Selected Input is approved", 'Close', "green-snackbar");
     },
     err => {
-      
+        this.snackBar.openSnackBar( "Error saving selected input", 'Close', "red-snackbar");
     },
     () => {
 
@@ -75,7 +75,7 @@ export class InputsComponent implements OnInit  {
   }
 
   onClose() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.data);
   }
 
   /*openSnackBar(message: string, action: string) {

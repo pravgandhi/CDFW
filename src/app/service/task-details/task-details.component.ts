@@ -19,50 +19,60 @@ export class TaskDetailsComponent implements OnInit {
   userRole: string;
   task : Object;
   dataSource = new MatTableDataSource<Object>();
+  dataSourceJustification = new MatTableDataSource<Object>();
   displayedColumns: string[] = ["title", "role", "time"];
+  displayedColumnsJustification: string[] = ["categoryName"];
   selectedRegion:string;
   selectedRegionId:string;
   selectedTask:string;
   multiplier: number= 0;
   saveRespInputDisabled : boolean = false;
+  approved: boolean = false;
   errorMessage: string = null;
   successMessage: string = null;
+  approvedMsgResp: string = null;
+  approvedMsgLead: string = null;
 
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
     private router: Router, private dialog: MatDialog,
     private userService:UserService, private snackBar: MatSnackBarComponent
   ) {
-        dialog.afterAllClosed.subscribe(data => this.customInit());
+
      }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.selectedRegion = params['regionId'];
-      this.inpuTaskId = params['taskId'];
-      this.customInit();
+      this.customInit(params['regionId'], params['taskId']);
     });
   }
 
-  customInit(){
+  customInit(regionId:string,taskId: string){
     this.user = this.userService.user;
-    this.getTaskInfo1(this.selectedRegion, this.inpuTaskId);
+    this.getTaskInfo1(regionId, taskId);
     this.userRole = this.userService.userRole;
+    this.selectedRegion = regionId;
+    this.inpuTaskId = taskId;
   }
 
 
   public getTaskInfo1 = (selectedRegion, taskId) => {
         let _self = this;
-        this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
+          this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
         data => {
           _self.task = data;
           _self.dataSource.data = data['laborClassesByTaskId'];
+          _self.dataSourceJustification.data = data['jrsdctnCtgriesByTaskId'];
           let inputs = data['missionUserInputsByTaskId'];
           _self.serviceMatrix.inputDataStore = inputs;
 
            if('A' === this.task['statusBySttsId']['sttsId']) {
+             this.approved = true;
              let approvedInput =  inputs.filter(function(input) {
                if(_self.userService.userRole === 'm_resp'){
                  _self.saveRespInputDisabled = true;
+                 _self.approvedMsgResp = "The multiplier input for this task has been validated. You may submit additional suggestions to your designated Region lead by reaching out directly.";
+               } else {
+                 _self.approvedMsgLead = "The multiplier input for this task has been validated.";
                }
                return input.sttsId== 'A';
               });
@@ -91,22 +101,25 @@ export class TaskDetailsComponent implements OnInit {
     let status = 'N';
     if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
         status = 'A';
-        const dialogRef = this.dialog.open(SaveResponseConfirmDialog, {
-          width: '500px',
-          data: {confirm: 'No'}
-        });
+        if (this.task['missionUserInputsByTaskId'] != undefined && this.task['missionUserInputsByTaskId'].length > 0)  {
+          const dialogRef = this.dialog.open(SaveResponseConfirmDialog, {
+            width: '500px',
+            data: {confirm: 'No'}
+          });
 
-        dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed -->'+result.confirm);
-          if (result.confirm == 'Yes'){
-            this.saveUserInput(status);
-          }
-        });
-
+          dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed -->'+result.confirm);
+            if (result.confirm == 'Yes'){
+              this.saveUserInput(status);
+            } else {
+              this.viewInputs();
+            }
+          });
+        } else {
+          this.saveUserInput(status);
+        }
      } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
        status = 'P';
-       this.saveUserInput(status);
-     } else {
        this.saveUserInput(status);
      }
   }
@@ -116,7 +129,7 @@ export class TaskDetailsComponent implements OnInit {
         this.snackBar.openSnackBar( "Input saved successfully", 'Close', "green-snackbar");
       },
       err => {
-        this.snackBar.openSnackBar( "Error saving input value. Please try again later", 'Close', "red-snackbar");
+        this.snackBar.openSnackBar( "Error saving input value", 'Close', "red-snackbar");
       }
     );
   }
@@ -134,7 +147,13 @@ export class TaskDetailsComponent implements OnInit {
         userId: this.user['id'],
         taskId : this.task['taskId']
     };
-    this.dialog.open(InputsComponent, dialogConfig);
+    const inputDialogRef = this.dialog.open(InputsComponent, dialogConfig);
+
+    inputDialogRef.afterClosed().subscribe(data => {
+      if (data != undefined){
+        this.customInit(data.regionName, data.taskId);
+      }
+    });
   }
 
   provideYourInputs(){
@@ -168,10 +187,6 @@ export class SaveResponseConfirmDialog {
   constructor(
     public dialogRef: MatDialogRef<SaveResponseConfirmDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {}
-
-  // onNoClick(): void {
-  //   this.dialogRef.close();
-  // }
 
   closeDialog(confirm): void{
     this.dialogRef.close({'confirm': confirm});
