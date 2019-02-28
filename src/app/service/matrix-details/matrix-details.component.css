@@ -30,7 +30,7 @@ mat-header-cell {
   flex: 1 1 auto;
 }
 
-mat-toolbar > span, mat-toolbar > a > span {
+mat-toolbar  span, mat-toolbar  a  span {
   font-size: 10pt;
 }
 

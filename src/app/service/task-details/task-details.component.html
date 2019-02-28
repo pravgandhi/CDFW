@@ -1,200 +1,175 @@
-
-<mat-toolbar >
-  <h4> Task Details &nbsp;&nbsp; </h4>
-    <mat-icon matListAvatar color="primary" matTooltip = "User Info">account_box</mat-icon>
-    <span>{{user.userName}} &nbsp;&nbsp;</span>
-  <mat-icon matListAvatar color="primary">language</mat-icon>
-  <span > {{selectedRegion}} &nbsp;&nbsp;</span>
-  <!-- This fills the remaining space of the current row -->
-  <span class="example-fill-remaining-space"></span>
-  <span> <b>Actions: </b> &nbsp;&nbsp;</span>
-
-
-  <button mat-button color = "primary" (click)="goBackToMatrix()">
+<mat-toolbar>
+  <div class="row w-100 m-0">
+  <div class="col-md-6">
+  <span> <b>Task Details</b> </span>
+  
+  <button mat-button color="primary" matTooltip="User Info" style="cursor:default;">
+      <mat-icon>account_box</mat-icon>
+      {{user.userName}}
+    </button>
+    <button mat-button color="primary" matTooltip="Region" style="cursor:default;">
+        <mat-icon>language</mat-icon>
+        {{selectedRegion}}
+      </button>
+  </div>
+  <div class="col-md-6 text-right">
+    <span> <b>Actions: </b></span>
+    <button mat-button color="primary" (click)="goBackToMatrix()">
       <mat-icon>arrow_back</mat-icon>
       Back to Catalog
-  </button>
-
-  <button mat-button color = "primary" (click)="backToLogin()">
+    </button>
+    <button mat-button color="primary" (click)="backToLogin()">
       <mat-icon>power_settings_new</mat-icon>
       Logout
-  </button>
+    </button>
+  </div>
+  </div>
 </mat-toolbar>
-<ngb-alert *ngIf="approved && userRole==='m_resp' && approvedMsgResp !== null" type="success" (close)="approvedMsgResp = null">{{ approvedMsgResp }}</ngb-alert>
-<ngb-alert *ngIf="approved && (userRole==='m_lead' || userRole==='admin') && approvedMsgLead !== null" type="success" (close)="approvedMsgLead = null">{{ approvedMsgLead }}</ngb-alert>
+
+<ngb-alert *ngIf="approved && userRole==='m_resp' && approvedMsgResp !== null" type="success"
+  (close)="approvedMsgResp = null">{{ approvedMsgResp }}</ngb-alert>
+<ngb-alert *ngIf="approved && (userRole==='m_lead' || userRole==='admin') && approvedMsgLead !== null" type="success"
+  (close)="approvedMsgLead = null">{{ approvedMsgLead }}</ngb-alert>
 
 
-<div class="task-container"  *ngIf="task != undefined">
-<mat-card class="example-card">
-  <mat-card-header>
-    <mat-card-title>{{task.taskName}}</mat-card-title>
-    <mat-card-subtitle>{{task.serviceName}} / {{task.program}} / {{task.subProgram}} /{{task.taskCategory}}</mat-card-subtitle>
+<div class="task-container" *ngIf="task != undefined">
+  <mat-card class="example-card m-3">
+    <mat-card-header>
+      <mat-card-title>{{task.taskName}}</mat-card-title>
+      <mat-card-subtitle>{{task.serviceName}} / {{task.program}} / {{task.subProgram}} /{{task.taskCategory}}
+      </mat-card-subtitle>
 
-  </mat-card-header>
-  <mat-divider matInset></mat-divider>
-  <mat-card-content>
-  <div class ="matrow1">
-  <div class ="matcolumn1">
-  <mat-card>
-    <mat-card-actions align="center">
-      <mat-form-field  >
-        <label for="inputmul">Input Multiplier<i class="material-icons help-text-icon"
-          matTooltip="Displays the input recorded for this task. This is the only field that requires an input from respondents in this exercise. "
-           >help</i></label>
-        <input id = "inputmul" matInput type="number" name="test_name" min="0" oninput="validity.valid||(value='');" [(ngModel)]="multiplier"
-        [disabled]= "saveRespInputDisabled">
-      </mat-form-field>
-      <button mat-button color = "primary" (click)="saveResponse()"
-        [disabled]= "saveRespInputDisabled">
-          <mat-icon>save</mat-icon>
-          Save Response
-      </button>
-      <button mat-button color = "primary" (click)="viewInputs()" *ngIf="userRole==='admin' || userRole==='m_lead'" >
-          <mat-icon>touch_app</mat-icon>
-          Review Inputs
-      </button>
-    </mat-card-actions>
-      <mat-divider matInset></mat-divider>
-    <mat-card-content>
-    <div class = "row1">
-      <div class="column" >
-        <label for="taskdesc">Task Description</label>
-        <textarea id="taskdesc" name="taskdesc"
-                  rows="5" cols="30" readonly> {{task.taskDesc}}
+    </mat-card-header>
+    <mat-divider matInset></mat-divider>
+    <mat-card-content class="py-3">
+      <div class="row">
+        <div class="col-md-6">
+          <mat-card>
+            <mat-card-actions class="m-0 p-0 mb-3">
+              <div class="row mx-0">
+                <div class="col-sm-4">
+                    <mat-form-field>
+                      <label for="inputmul">Input Multiplier<i class="material-icons help-text-icon"
+                          matTooltip="Displays the input recorded for this task. This is the only field that requires an input from respondents in this exercise. ">help</i></label>
+                      <input id="inputmul" matInput type="number" name="test_name" min="0"
+                        oninput="validity.valid||(value='');" [(ngModel)]="multiplier" [disabled]="saveRespInputDisabled">
+                    </mat-form-field>
+
+                </div>
+                <div class="col-sm-4 pt-4">
+                    <button mat-raised-button color="primary" (click)="saveResponse()" [disabled]="saveRespInputDisabled">
+                      <mat-icon>save</mat-icon>
+                      Save Response
+                    </button>
+                  
+                  </div>
+                  <div class="col-sm-4 pt-4">
+                      <button mat-raised-button color="primary" (click)="viewInputs()"
+                        *ngIf="userRole==='admin' || userRole==='m_lead'">
+                        <mat-icon>touch_app</mat-icon>
+                        Review Inputs
+                      </button>
+                  
+                    </div>
+              </div>
+            </mat-card-actions>
+            <mat-divider matInset></mat-divider>
+            <mat-card-content>
+              <div class="row pt-3">
+                <div class="col-sm-6">
+                  <label for="taskdesc">Task Description</label><br>
+                  <textarea id="taskdesc" name="taskdesc" rows="5" cols="30" readonly> {{task.taskDesc}}
         </textarea>
-      </div>
-      <div class="column">
-        <label for="multiDesc">Input Multiplier Description</label>
-        <textarea id="multiDesc" name="multiDesc"
-                  rows="5" cols="30" readonly> {{task.multDesc}}
+                </div>
+                <div class="col-sm-6">
+                  <label for="multiDesc">Input Multiplier Description</label><br>
+                  <textarea id="multiDesc" name="multiDesc" rows="5" cols="30" readonly> {{task.multDesc}}
         </textarea>
-      </div>
-    </div>
-    <br>
-    <div class = "row4">
-      <div class="column" >
-        <label for="taskdesc">Desired Performance</label>
-        <textarea id="taskdesc" name="taskdesc"
-                  rows="5" cols="30" readonly> {{task.desiredPerf}}
+                </div>
+              </div>
+              <div class="row pt-3">
+                <div class="col-sm-6">
+                  <label for="taskdesc2">Desired Performance</label><br>
+                  <textarea id="taskdesc2" name="taskdesc" rows="5" cols="30" readonly> {{task.desiredPerf}}
         </textarea>
-      </div>
-      <div class="column">
-        <label for="multiDesc">Additional Budget Factor(s)</label>
-        <textarea id="multiDesc" name="multiDesc"
-                  rows="5" cols="30" readonly> {{task.addtnlBudgetFator}}
+                </div>
+                <div class="col-sm-6">
+                  <label for="multiDesc2">Additional Budget Factor(s)</label><br>
+                  <textarea id="multiDesc2" name="multiDesc" rows="5" cols="30" readonly> {{task.addtnlBudgetFator}}
         </textarea>
-      </div>
-    </div>
-    </mat-card-content>
-  </mat-card>
-  </div>
-  <div class ="matcolumn2">
-  <mat-card>
-    <mat-card-actions>
-      <div class = "row2">
-      <mat-form-field >
-        <label for="frequency">Freuquency <i class="material-icons help-text-icon"
-          matTooltip="Number of times per year that the task needs to be accomplished (predefined)."
-           >help</i></label>
-        <input id= "frequency" matInput value="{{task.frequency}}" readonly>
-      </mat-form-field>
-      <mat-form-field >
-        <label for="totallaborhours">Total time of Labor Hours <i class="material-icons help-text-icon"
-          matTooltip="Sum of time per labor classification (predefined)."
-           >help</i></label>
-        <input id= "totallaborhours" matInput value="{{task.totalLaborHours}}" readonly>
-      </mat-form-field>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-md-6">
+          <mat-card>
+            <mat-card-actions class="m-0 p-0 mb-3">
+              <div class="row mx-0">
+                  <div class="col-sm-3">
+                <mat-form-field>
+                  <label for="frequency">Freuquency <i class="material-icons help-text-icon"
+                      matTooltip="Number of times per year that the task needs to be accomplished (predefined).">help</i></label>
+                  <input id="frequency" matInput value="{{task.frequency}}" readonly>
+                </mat-form-field></div>
+                <div class="col-sm-6">
+                <mat-form-field>
+                  <label for="totallaborhours">Total time of Labor Hours <i class="material-icons help-text-icon"
+                      matTooltip="Sum of time per labor classification (predefined).">help</i></label>
+                  <input id="totallaborhours" matInput value="{{task.totalLaborHours}}" readonly>
+                </mat-form-field></div>
+                <div class="col-sm-3">
 
-      <mat-form-field >
-        <label for="totalhours">Total Hours <i class="material-icons help-text-icon"
-          matTooltip="Product of multiplier (input), times the total time of labor hours, times the frequency (automatically calculated)."
-           >help</i></label>
-        <input id= "totalhours" matInput value="{{task.totalLaborHours * task.frequency * multiplier}}" readonly>
-      </mat-form-field>
-    </div>
-    </mat-card-actions>
-      <mat-divider matInset></mat-divider>
-    <mat-card-content>
-
-<!--
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <label>Labor Classification<i class="material-icons help-text-icon"
-            ngbTooltip="Displays the time that each labor classification would spend on the task in question, in the future state / at mission level (predefined). "
-             >help</i></label>
-          </mat-panel-title>
-          </mat-expansion-panel-header>
-          <table id="laborTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="title">
-              <th mat-header-cell *matHeaderCellDef> Labor Class Title </th>
-              <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-            </ng-container>
-            <ng-container matColumnDef="role">
-              <th mat-header-cell *matHeaderCellDef> Labor Classification Code </th>
-              <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-            </ng-container>
-            <ng-container matColumnDef="time">
-              <th mat-header-cell *matHeaderCellDef> Time Labor Class </th>
-              <td mat-cell *matCellDef="let element"> {{element.time}} </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <label>Justification Category</label>
-          </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <ul *ngFor = "let jc of task.jrsdctnCtgriesByTaskId">
-            <li>{{jc.categoryName}}</li>
-          </ul>
-      </mat-expansion-panel> -->
-
-    <div class = "row3">
-      <div class="column" style="width:60%">
-        <label for="laborTable">Labor Classification<i class="material-icons help-text-icon"
-          matTooltip="Displays the time that each labor classification would spend on the task in question, in the future state / at mission level (predefined). "
-         >help</i></label>
-        <table id="laborTable" mat-table [dataSource]="dataSource"  matSort class="mat-elevation-z1 w-100">
-          <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef> Labor Classification Title </th>
-            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-          </ng-container>
-          <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef> Labor Classification Code </th>
-            <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-          </ng-container>
-          <ng-container matColumnDef="time">
-            <th mat-header-cell *matHeaderCellDef> Labor Classification Time </th>
-            <td mat-cell *matCellDef="let element"> {{element.time}} </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      <!--  <mat-paginator
+                <mat-form-field>
+                  <label for="totalhours">Total Hours <i class="material-icons help-text-icon"
+                      matTooltip="Product of multiplier (input), times the total time of labor hours, times the frequency (automatically calculated).">help</i></label>
+                  <input id="totalhours" matInput value="{{task.totalLaborHours * task.frequency * multiplier}}"
+                    readonly>
+                </mat-form-field></div>
+              </div>
+            </mat-card-actions>
+            <mat-divider matInset></mat-divider>
+            <mat-card-content>
+              <div class="row pt-3">
+                <div class="col-sm-8">
+                  <label for="laborTable">Labor Classification<i class="material-icons help-text-icon"
+                      matTooltip="Displays the time that each labor classification would spend on the task in question, in the future state / at mission level (predefined). ">help</i></label>
+                  <table id="laborTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1 w-100">
+                    <ng-container matColumnDef="title">
+                      <th mat-header-cell *matHeaderCellDef> Title </th>
+                      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="role">
+                      <th mat-header-cell *matHeaderCellDef> Code </th>
+                      <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="time">
+                      <th mat-header-cell *matHeaderCellDef> Time </th>
+                      <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                  <!--  <mat-paginator
           [pageSizeOptions]="[3, 5, 7]" showFirstLastButtons></mat-paginator> -->
+                </div>
+                <div class="col-sm-4">
+                  <label for="justcat">Justification Category</label>
+                  <table id="justcat" mat-table [dataSource]="dataSourceJustification" matSort
+                    class="mat-elevation-z1 w-100">
+                    <ng-container matColumnDef="categoryName">
+                      <th mat-header-cell *matHeaderCellDef> Name </th>
+                      <td mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsJustification"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsJustification;"></tr>
+                  </table>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </div>
-      <div class="column" style="width:40%">
-        <label for="justcat">Justification Category</label>
-        <table id="justcat" mat-table [dataSource]="dataSourceJustification"  matSort class="mat-elevation-z1 w-100">
-          <ng-container matColumnDef="categoryName">
-            <th mat-header-cell *matHeaderCellDef> Category Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsJustification"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumnsJustification;"></tr>
-        </table>
-      </div>
-    </div>
     </mat-card-content>
   </mat-card>
-  </div>
-  </div>
-  </mat-card-content>
-</mat-card>
 </div>

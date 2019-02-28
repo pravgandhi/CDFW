@@ -1,13 +1,45 @@
 <div align="center" class="mb-4">
-  <mat-toolbar >
+    <mat-toolbar>
+        <div class="row w-100 m-0">
+        <div class="col-md-6 text-left">
+        <span> <b>Task Catalog</b> </span>
+        
+        <button mat-button color="primary" matTooltip="User Info" style="cursor:default;">
+            <mat-icon>account_box</mat-icon>
+            {{user.userName}}
+          </button>
+          <button mat-button color="primary" matTooltip="Region" style="cursor:default;">
+              <mat-icon>language</mat-icon>
+              {{selectedRegion}}
+            </button>
+        </div>
+        <div class="col-md-6 text-right">
+          <span> <b>Actions: </b></span>
+          <button mat-button color = "primary" [matMenuTriggerFor]="region">
+              <mat-icon>language</mat-icon>
+              Pick a different region
+          </button>
+      
+          <mat-menu #region="matMenu">
+            <button mat-menu-item *ngFor="let item of regionList"
+            (click)="chooseRegion(item.regionByRegionId.regionName)"> {{item.regionByRegionId.regionName}} </button>
+          </mat-menu>
+      
+          <button mat-button color = "primary" (click)="backToLogin()">
+              <mat-icon>power_settings_new</mat-icon>
+              Logout
+          </button>
+        </div>
+        </div>
+      </mat-toolbar>
+  <!-- <mat-toolbar >
     <h4> Task Catalog &nbsp;&nbsp; </h4>
     <mat-icon matListAvatar color="primary" matTooltip = "User Info">account_box</mat-icon>
     <span>{{user.userName}} &nbsp;&nbsp;</span>
     <mat-icon matListAvatar color="primary">language</mat-icon>
     <span > {{selectedRegion}} &nbsp;&nbsp;</span>
-    <!-- This fills the remaining space of the current row -->
     <span class="example-fill-remaining-space"></span>
-    <span> <b>Actions: </b> &nbsp;&nbsp;</span>
+    <span> <b>Actions: </b> </span>
     <button mat-button color = "primary" [matMenuTriggerFor]="region">
         <mat-icon>language</mat-icon>
         Pick a different region
@@ -23,7 +55,7 @@
         Logout
     </button>
 
-  </mat-toolbar>
+  </mat-toolbar> -->
 
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
