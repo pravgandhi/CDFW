@@ -150,8 +150,9 @@ export class TaskDetailsComponent implements OnInit {
     const inputDialogRef = this.dialog.open(InputsComponent, dialogConfig);
 
     inputDialogRef.afterClosed().subscribe(data => {
-      if (data != undefined){
-        this.customInit(data.regionName, data.taskId);
+      if(data != undefined) {
+        debugger;
+        this.customInit(data.regionName , data.taskId);
       }
     });
   }

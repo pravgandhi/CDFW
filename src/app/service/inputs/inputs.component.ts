@@ -18,6 +18,7 @@ export class InputsComponent implements OnInit  {
   user: any;
   inputs = new MatTableDataSource<Object>();
   inputDisplayedColumns: string[] = [ "value", "name", "status"];
+  approvedInput: number;
 
   errorMessage: string = null;
   successMessage: string = null;
@@ -53,15 +54,14 @@ export class InputsComponent implements OnInit  {
     let _self = this;
     this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.data.taskId,this.selectedRow.id).subscribe(
     data => {
+      _self.approvedInput = Number(data);
       this.snackBar.openSnackBar( "Selected Input is approved", 'Close', "green-snackbar");
+      this.dialogRef.close(this.data);
     },
     err => {
         this.snackBar.openSnackBar( "Error saving selected input", 'Close', "red-snackbar");
-    },
-    () => {
-
+        this.onClose();
     });
-    this.onClose();
   }
 
   provideYourInput() {
@@ -75,7 +75,7 @@ export class InputsComponent implements OnInit  {
   }
 
   onClose() {
-    this.dialogRef.close(this.data);
+    this.dialogRef.close();
   }
 
   /*openSnackBar(message: string, action: string) {
