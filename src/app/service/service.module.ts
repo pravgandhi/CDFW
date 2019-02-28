@@ -17,6 +17,7 @@ import { TaskDetailsComponent, SaveResponseConfirmDialog } from './task-details/
 import { ServiceMatrixService } from './service-matrix.service';
 import { InputsComponent } from './inputs/inputs.component';
 
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { InputsComponent } from './inputs/inputs.component';
     ServiceRoutingModule,
     MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
     MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatListModule,
-    MatExpansionModule,  MatPaginatorModule, MatSortModule, MatSidenavModule,
+    MatExpansionModule,  MatPaginatorModule, MatSortModule, MatSidenavModule, MatTooltipModule,
     FormsModule,
     NgbModule.forRoot(),
     NgbTooltipModule

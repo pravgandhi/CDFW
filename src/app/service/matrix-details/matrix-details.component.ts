@@ -50,14 +50,14 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     customInit(params){
       this.user = this.userService.user;
       this.displayedColumns = ["taskId", "serviceName", "program",
-      "subProgram", "taskCategory", "taskName"];
+      "subProgram", "taskCategory", "taskName", "myInput",  "statusCode", "inputCount"];
       this.displayedFilterColumns = [];
       //remove this block after confirmation about the display of columns for resp
-      if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
-         this.displayedColumns.push( "input",  "status", "count");
-       } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
-         this.displayedColumns.push( "input",  "status", "count");
-       }
+      // if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
+      //    this.displayedColumns.push( "input",  "status", "count");
+      //  } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
+      //    this.displayedColumns.push( "input",  "status", "count");
+      //  }
 
        this.displayedColumns.forEach(e => {
         this.displayedFilterColumns.push(e + '-filter');
@@ -69,7 +69,11 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     public getMatrixDetails = (userId:string ) => {
         this.serviceMatrix.getData(this.selectedRegion, userId)
         .subscribe(res => {
-            this.dataSource.data = res as Object[];
+          console.log(res);
+          this.dataSource.data = res as Object[];
+          this.dataSource.data.forEach(e => {
+            e["statusCode"] = e["statusBySttsId"].statusCode;
+           })
         });
     }
 

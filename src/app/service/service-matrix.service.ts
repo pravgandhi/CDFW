@@ -11,7 +11,7 @@ export class ServiceMatrixService {
   taskInfo;
   laborDataStore;
   selectedRowIndex;
-  API_URL:string = "http://USLMAPRAVGANDH2:8080/";
+  API_URL:string = "http://localhost:8080/";
    @ViewChild(MatPaginator) paginator: MatPaginator;
   inputDataStore = [{
     id: 1,
@@ -114,7 +114,7 @@ export class ServiceMatrixService {
 
 
     testBackend (){
-          this.http.get('http://USLMAPRAVGANDH2:8080/greeting').toPromise()
+          this.http.get('http://localhost:8080/greeting').toPromise()
             .then(function(response) {
             });
     }

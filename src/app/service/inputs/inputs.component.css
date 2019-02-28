@@ -1,3 +1,7 @@
 .highlight{
-  background: #b4b4b433;
+  background: #ddd;
+}
+
+.mat-row:hover{
+  background-color: #EEE;
 }
