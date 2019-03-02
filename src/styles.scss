@@ -48,3 +48,8 @@ body {
 .red-snackbar {
     background: #B00020;
 }
+
+.material-icons {
+  /* Support for IE */
+  font-feature-settings: 'liga';
+}

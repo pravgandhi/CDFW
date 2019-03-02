@@ -2,7 +2,7 @@
   <div class="row w-100 m-0">
   <div class="col-md-6">
   <span> <b>Task Details</b> </span>
-  
+
   <button mat-button color="primary" matTooltip="User Info" style="cursor:default;">
       <mat-icon>account_box</mat-icon>
       {{user.userName}}
@@ -57,11 +57,11 @@
 
                 </div>
                 <div class="col-sm-4 pt-4">
-                    <button mat-raised-button color="primary" (click)="saveResponse()" [disabled]="saveRespInputDisabled">
+                      <button mat-raised-button color="primary" (click)="saveResponse()" [disabled]="saveRespInputDisabled || multiplier == undefined || multiplier == 0">
                       <mat-icon>save</mat-icon>
                       Save Response
                     </button>
-                  
+
                   </div>
                   <div class="col-sm-4 pt-4">
                       <button mat-raised-button color="primary" (click)="viewInputs()"
@@ -69,7 +69,7 @@
                         <mat-icon>touch_app</mat-icon>
                         Review Inputs
                       </button>
-                  
+
                     </div>
               </div>
             </mat-card-actions>

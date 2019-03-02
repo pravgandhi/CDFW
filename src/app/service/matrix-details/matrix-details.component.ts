@@ -25,8 +25,8 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
   selectedRegion:string;
   regionList;
   filteredValues = { taskId:'', serviceName:'', program:'',
-    subProgram:'', taskCategory: '', taskName : '', status: '',
-    input:'', count: ''//, topFilter: false
+    subProgram:'', taskCategory: '', taskName : '', statusCode: '',
+    myInput:'', inputCount: ''//, topFilter: false
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -90,7 +90,6 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
   customFilterPredicate() {
     const myFilterPredicate = (data: any, filter: string): boolean => {
       var globalMatch = !this.globalFilter;
-
       if (this.globalFilter) {
         let taskIdFound = data.taskId.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let serviceNameFound = data.serviceName.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
@@ -115,9 +114,9 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       let subProgramFound = data.subProgram.toString().trim().toLowerCase().indexOf(searchString.subProgram.toString().toLowerCase()) !== -1;
       let taskCategoryFound = data.taskCategory.toString().trim().toLowerCase().indexOf(searchString.taskCategory.toString().toLowerCase()) !== -1;
       let taskNameFound = data.taskName.toString().trim().toLowerCase().indexOf(searchString.taskName.toString().toLowerCase()) !== -1;
-      let statusFound = data.statusBySttsId.statusCode.toString().trim().toLowerCase().indexOf(searchString.status.toString().toLowerCase()) !== -1;
-      let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(searchString.input.toString().toLowerCase()) !== -1;
-      let countFound = data.inputCount.toString().trim().toLowerCase().indexOf(searchString.count.toString().toLowerCase()) !== -1;
+      let statusFound = data.statusBySttsId.statusCode.toString().trim().toLowerCase().indexOf(searchString.statusCode.toString().toLowerCase()) !== -1;
+      let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(searchString.myInput.toString().toLowerCase()) !== -1;
+      let countFound = data.inputCount.toString().trim().toLowerCase().indexOf(searchString.inputCount.toString().toLowerCase()) !== -1;
       return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound;
     }
     return myFilterPredicate;

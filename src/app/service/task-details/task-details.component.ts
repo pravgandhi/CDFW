@@ -3,8 +3,9 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ServiceMatrixService } from '../service-matrix.service';
 import { MatDialog, MatDialogConfig, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { InputsComponent } from '../inputs/inputs.component';
-import { UserService } from 'src/app/_services';
+
 import { MatSnackBarComponent } from '../mat-snack-bar/mat-snack-bar.component';
+import { UserService } from 'src/app/_services';
 
 
 
@@ -64,9 +65,8 @@ export class TaskDetailsComponent implements OnInit {
           _self.dataSourceJustification.data = data['jrsdctnCtgriesByTaskId'];
           let inputs = data['missionUserInputsByTaskId'];
           _self.serviceMatrix.inputDataStore = inputs;
-
-           if('A' === this.task['statusBySttsId']['sttsId']) {
-             this.approved = true;
+           if('A' === _self.task['statusBySttsId']['sttsId']) {
+             _self.approved = true;
              let approvedInput =  inputs.filter(function(input) {
                if(_self.userService.userRole === 'm_resp'){
                  _self.saveRespInputDisabled = true;
@@ -151,7 +151,6 @@ export class TaskDetailsComponent implements OnInit {
 
     inputDialogRef.afterClosed().subscribe(data => {
       if(data != undefined) {
-        debugger;
         this.customInit(data.regionName , data.taskId);
       }
     });
