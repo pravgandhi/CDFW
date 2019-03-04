@@ -24,6 +24,7 @@ export class AuthenticationService {
            }
            return false;
          } , function(error) {
+           console.log(error);
             return error;
          });
 

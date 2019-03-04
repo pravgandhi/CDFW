@@ -28,6 +28,7 @@ import { UserService } from './_services';
 import 'hammerjs';
 import { HttpErrorInterceptor } from './_services/error-interceptor';
 import { MatSnackBarComponent } from './service/mat-snack-bar/mat-snack-bar.component';
+import { AuthInterceptor } from './_services/http.interceptor';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,11 @@ import { MatSnackBarComponent } from './service/mat-snack-bar/mat-snack-bar.comp
   providers: [    {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
+      multi: true,
+    },
+     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     },
     AuthenticationService, UserService, MatSnackBarComponent],
