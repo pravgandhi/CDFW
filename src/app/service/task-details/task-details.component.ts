@@ -60,6 +60,7 @@ export class TaskDetailsComponent implements OnInit {
         let _self = this;
           this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
         data => {
+          debugger;
           _self.task = data;
           _self.dataSource.data = data['laborClassesByTaskId'];
           _self.dataSourceJustification.data = data['jrsdctnCtgriesByTaskId'];
@@ -81,7 +82,7 @@ export class TaskDetailsComponent implements OnInit {
               }
            } else  {
              let myInput =  inputs.filter(function(input) {
-               return input.id == _self.user['id'];
+               return input.id == _self.user['id'] && input['regionByRegionId']['regionName'] == selectedRegion;
               });
               if (myInput.length == 1) {
                 _self.multiplier = myInput[0].inputValue;
