@@ -166,6 +166,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   backToLogin(){
+    this.serviceMatrix.logout(this.userService.user['id']);
     this.router.navigate(["login"]);
   }
 

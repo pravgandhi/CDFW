@@ -144,6 +144,7 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     }
 
     backToLogin(){
+      this.serviceMatrix.logout(this.userService.user['id']);
       this.router.navigate(["login"]);
     }
 

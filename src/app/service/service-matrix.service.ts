@@ -112,6 +112,12 @@ export class ServiceMatrixService {
           });
     }
 
+    logout(usrId : string) {
+      this.http.post(this.API_URL+"logout", {userId : usrId}).subscribe(res => {
+        // console.log(res);
+      });
+    }
+
 
     testBackend (){
           this.http.get('http://localhost:8080/greeting').toPromise()
