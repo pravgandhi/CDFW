@@ -64,10 +64,10 @@
 
                   </div>
                   <div class="col-sm-4 pt-4">
-                      <button mat-raised-button color="primary" (click)="viewInputs()"
-                        *ngIf="userRole==='admin' || userRole==='m_lead'">
+                      <button mat-raised-button color="primary" (click)="viewInputs()" [disabled]="task['inputCount'] == 0"
+                        *ngIf="(userRole==='admin' || userRole==='m_lead')">
                         <mat-icon>touch_app</mat-icon>
-                        Review Inputs
+                        Review Inputs ({{task['inputCount']}})
                       </button>
 
                     </div>
