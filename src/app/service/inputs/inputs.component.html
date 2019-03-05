@@ -30,7 +30,7 @@
   </table>
   </mat-card-content>
   <mat-card-actions class="text-center">
-    <button mat-raised-button color="primary" (click)="approveResponse()" [disabled]="this.selectedRow != undefined && this.selectedRow.statusBySttsId.statusCode == 'Approved'">Select</button>
+    <button mat-raised-button color="primary" (click)="approveResponse()" [disabled]="this.selectedRow != undefined && this.selectedRow.taskStatus == 'Approved'">Select</button>
     <button mat-raised-button color="primary" (click)="provideYourInput()">Provide your own Input</button>
   </mat-card-actions>
   </mat-card>
