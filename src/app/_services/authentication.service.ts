@@ -17,14 +17,12 @@ export class AuthenticationService {
           return this.http.post<UserEntity>('http://localhost:8080/authenticateUser', {username: username, password: password}).
           toPromise()
          .then(function(response) {
-           console.log(response);
            if(response) {
              localStorage.setItem('currentUser', JSON.stringify(response));
              return true;
            }
            return false;
          } , function(error) {
-           console.log(error);
             return error;
          });
 

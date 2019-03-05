@@ -60,7 +60,6 @@ export class TaskDetailsComponent implements OnInit {
         let _self = this;
           this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
         data => {
-          debugger;
           _self.task = data;
           _self.dataSource.data = data['laborClassesByTaskId'];
           _self.dataSourceJustification.data = data['jrsdctnCtgriesByTaskId'];
@@ -68,22 +67,21 @@ export class TaskDetailsComponent implements OnInit {
           _self.serviceMatrix.inputDataStore = inputs;
            if('Validated' === _self.task['taskStatus']) {
              _self.approved = true;
+             if(_self.userService.userRole === 'm_resp'){
+               _self.saveRespInputDisabled = true;
+               _self.approvedMsgResp = "The multiplier input for this task has been validated. You may submit additional suggestions to your designated Region lead by reaching out directly.";
+             } else {
+               _self.approvedMsgLead = "The multiplier input for this task has been validated.";
+             }
              let approvedInput =  inputs.filter(function(input) {
-               if(_self.userService.userRole === 'm_resp'){
-                 _self.saveRespInputDisabled = true;
-                 _self.approvedMsgResp = "The multiplier input for this task has been validated. You may submit additional suggestions to your designated Region lead by reaching out directly.";
-               } else {
-                 _self.approvedMsgLead = "The multiplier input for this task has been validated.";
-               }
-               return input.sttsId== 'A';
+               return input['regionByRegionId']['regionName'] == selectedRegion && input['sttsId'] == "A";
               });
+
               if (approvedInput.length == 1) {
                 _self.multiplier = approvedInput[0].inputValue;
               }
            } else  {
-             let myInput =  inputs.filter(function(input) {
-               return input.id == _self.user['id'] && input['regionByRegionId']['regionName'] == selectedRegion;
-              });
+             let myInput = this.filterInputsByUserAndRegion(inputs, _self.user['id'], selectedRegion);
               if (myInput.length == 1) {
                 _self.multiplier = myInput[0].inputValue;
               }
@@ -98,6 +96,14 @@ export class TaskDetailsComponent implements OnInit {
       );
   }
 
+  filterInputsByUserAndRegion(inputs:any, userId:number, regionName:string){
+    let myInputs = inputs.filter(function(input) {
+      return input.id == userId && input['regionByRegionId']['regionName'] == regionName;
+     });
+     return myInputs;
+  }
+
+
   saveResponse(){
     let status = 'N';
     if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
@@ -109,7 +115,6 @@ export class TaskDetailsComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed -->'+result.confirm);
             if (result.confirm == 'Yes'){
               this.saveUserInput(status);
             } else {

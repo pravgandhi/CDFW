@@ -69,7 +69,6 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     public getMatrixDetails = (userId:string ) => {
         this.serviceMatrix.getData(this.selectedRegion, userId)
         .subscribe(res => {
-          console.log(res);
           this.dataSource.data = res as Object[];
           this.dataSource.data.forEach(e => {
             e["statusCode"] = e["taskStatus"];
