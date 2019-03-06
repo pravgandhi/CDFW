@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from './_services';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'SBB';
+  title = 'SBB Data Collection Tool';
 
+  constructor(private userService:UserService) {}
 
   getUserDetails() {
       //this.router.navigate(['/heroes']);
+  }
+
+  getDataType(){
+    if(this.userService.user != null){
+      if(this.userService.user['dataTypeByDataTypeId']['dataType'] == 'mission'){
+        return ' - Mission Level';
+      } else if(this.userService.user['dataTypeByDataTypeId']['dataType'] == 'current'){
+        return ' - Current State'
+      } 
+    } 
+    return '';
   }
 
 }
