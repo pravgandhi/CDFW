@@ -11,6 +11,7 @@ export class ServiceMatrixService {
   taskInfo;
   laborDataStore;
   selectedRowIndex;
+  filterStore: Filters ;
   API_URL:string = "http://localhost:8080/";
    @ViewChild(MatPaginator) paginator: MatPaginator;
   inputDataStore = [{
@@ -47,7 +48,9 @@ export class ServiceMatrixService {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.filterStore = new Filters();
+  }
 
   async getServiceMatrix1 (){
       var self = this;
@@ -128,5 +131,18 @@ export class ServiceMatrixService {
     public saveUserInput(userId:number, regionName: string, taskId: string, inputValue: number){
       return this.http.post(this.API_URL+'saveInput', {userId: userId, regionName: regionName, taskId: taskId, inputValue :inputValue });
      }
+
+
+
+}
+
+
+export class Filters {
+  pageIndex: number;
+  globalFilter : string;
+
+/*  get pageIndex():number{
+    return this.pageIndex;
+  } */
 
 }

@@ -58,7 +58,7 @@
   </mat-toolbar> -->
 
   <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)] = "globalFilter">
   </mat-form-field>
   <table mat-table [dataSource] = "dataSource" matSort class="mat-elevation-z8">
     <ng-container matColumnDef ="taskId">
@@ -140,12 +140,12 @@
 
     <ng-container matColumnDef ="inputCount">
        <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background"
-       matTooltip="Displays the number of inputs entered the region's respondents so far; the 0 value indicates that no input has been received from any of the region's respondents so far.">
-         Input Count <i class="material-icons help-text-icon" placement="bottom"
+       matTooltip="Displays the inputs entered the region's respondents so far; the 0 value indicates that no input has been received from any of the region's respondents so far.">
+         Input Received <i class="material-icons help-text-icon" placement="bottom"
           >help</i>
         </th>
        <td mat-cell *matCellDef= "let element">
-         {{element.inputCount}}
+         {{element.inputReceived}}
        </td>
      </ng-container>
 

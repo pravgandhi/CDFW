@@ -39,11 +39,9 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-
     this.selectedRegion = params['regionId'];
       this.customInit(params);
     });
-
     this.dataSource.filterPredicate = this.customFilterPredicate();
   };
 
@@ -52,18 +50,13 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       this.displayedColumns = ["taskId", "serviceName", "program",
       "subProgram", "taskCategory", "taskName", "myInput",  "statusCode", "inputCount"];
       this.displayedFilterColumns = [];
-      //remove this block after confirmation about the display of columns for resp
-      // if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
-      //    this.displayedColumns.push( "input",  "status", "count");
-      //  } else if ('m_resp' === this.user['userRoleByRoleId']['roleName']) {
-      //    this.displayedColumns.push( "input",  "status", "count");
-      //  }
-
-       this.displayedColumns.forEach(e => {
-        this.displayedFilterColumns.push(e + '-filter');
+      this.displayedColumns.forEach(e => {
+      this.displayedFilterColumns.push(e + '-filter');
        });
-       this.getMatrixDetails(this.userService.user['id']);
-       this.getRegionDetails(this.user);
+      this.getMatrixDetails(this.userService.user['id']);
+      this.getRegionDetails(this.user);
+      this.paginator.pageIndex = this.serviceMatrix.filterStore.pageIndex;
+      this.globalFilter = this.serviceMatrix.filterStore.globalFilter;
     }
 
     public getMatrixDetails = (userId:string ) => {
@@ -98,7 +91,7 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
         let taskNameFound = data.taskName.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let statusFound = data.taskStatus.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
-        let countFound = data.inputCount.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        let countFound = data.inputReceived.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound;
       }
 
@@ -115,7 +108,7 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       let taskNameFound = data.taskName.toString().trim().toLowerCase().indexOf(searchString.taskName.toString().toLowerCase()) !== -1;
       let statusFound = data.taskStatus.toString().trim().toLowerCase().indexOf(searchString.statusCode.toString().toLowerCase()) !== -1;
       let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(searchString.myInput.toString().toLowerCase()) !== -1;
-      let countFound = data.inputCount.toString().trim().toLowerCase().indexOf(searchString.inputCount.toString().toLowerCase()) !== -1;
+      let countFound = data.inputReceived.toString().trim().toLowerCase().indexOf(searchString.inputCount.toString().toLowerCase()) !== -1;
       return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound;
     }
     return myFilterPredicate;
@@ -135,6 +128,7 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     }
 
     showTask(row) {
+      this.storeFilterValues(this.paginator.pageIndex);
       this.router.navigate([this.selectedRegion, "task", row.taskId ]);
     }
 
@@ -147,4 +141,8 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       this.router.navigate(["login"]);
     }
 
+    storeFilterValues(pageIndex: number){
+      this.serviceMatrix.filterStore.pageIndex = pageIndex;
+      this.serviceMatrix.filterStore.globalFilter = this.globalFilter;
+    }
 }
