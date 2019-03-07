@@ -90,10 +90,6 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       this.applyColumnFilter(this.filteredValues.inputCount, 'inputReceived');
     }
 
-    // ngAfterViewChecked() {
-    //   this.dataSource.paginator.pageIndex = 3;
-    // }
-
   customFilterPredicate() {
     const myFilterPredicate = (data: any, filter: string): boolean => {
       var globalMatch = !this.globalFilter;
