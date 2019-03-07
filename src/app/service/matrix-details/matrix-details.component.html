@@ -69,7 +69,6 @@
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)] = "globalFilter">
   </mat-form-field>
   
-  <button (click)="goTo(2)">Go To</button>
   <table mat-table [dataSource] = "dataSource" matSort class="mat-elevation-z8">
     <ng-container matColumnDef ="taskId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task ID</th>
