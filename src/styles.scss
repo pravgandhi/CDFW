@@ -6,8 +6,13 @@
 @include angular-material-theme($my-theme);
 
 .logo {
+  width: 200px;
+  background-color: #1f4e79;
+}
+
+.logo-sbb {
   background: white;
-  padding: 8px;
+  padding: 1px;
 }
 
 /*html {
@@ -52,4 +57,30 @@ body {
 .material-icons {
   /* Support for IE */
   font-feature-settings: 'liga';
+}
+
+.mat-tooltip {
+  font-size: 13px !important;
+}
+
+.font-color-black{
+  color: black !important;
+}
+
+.mat-form-field-label mat-label {
+  color: black !important;
+  font-size: 18px !important;
+}
+
+.task-input-multiplier {
+  margin: 3px 3px 10px 10px !important;
+  height: 34px !important;
+}
+
+.task-input-multiplier-btn {
+  margin: 3px 3px 10px 0px !important;
+}
+
+.task-input-multiplier-btn:disabled {
+  color: lightgrey !important;
 }
