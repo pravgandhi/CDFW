@@ -141,6 +141,8 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     showTask(row) {
       this.storeFilterValues(this.paginator.pageIndex);
       this.router.navigate([this.selectedRegion, "task", row.taskId ]);
+      var tasks = this.dataSource.data.filter(e => e['subProgram'] == row.subProgram);
+      this.serviceMatrix.filterStore.selectedSubProgTasks = tasks;
     }
 
     chooseRegion(region: string){
@@ -149,6 +151,11 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
 
     backToLogin(){
       this.serviceMatrix.logout(this.userService.user['id']);
+      
+    this.serviceMatrix.filterStore.pageIndex = 0;
+    this.serviceMatrix.filterStore.globalFilter = '';
+    this.serviceMatrix.filterStore.columnFilter = undefined;
+    this.serviceMatrix.filterStore.selectedSubProgTasks = [];
       this.router.navigate(["login"]);
     }
 

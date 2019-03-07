@@ -139,8 +139,9 @@ export class ServiceMatrixService {
 
 export class Filters {
   pageIndex: number = 0;
-  globalFilter : string;
+  globalFilter : string = '';
   columnFilter : any;
+  selectedSubProgTasks: any[];
 
 /*  get pageIndex():number{
     return this.pageIndex;

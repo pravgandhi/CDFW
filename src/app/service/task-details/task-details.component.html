@@ -41,7 +41,7 @@
 <div class="task-container" *ngIf="task != undefined">
   <mat-card class="example-card m-3">
     <mat-card-header>
-      <mat-card-title>{{task.taskName}}</mat-card-title>
+      <mat-card-title>{{task.taskName}} <button *ngIf="subProgramTasks.length > 1">Next Task</button></mat-card-title>
       <mat-card-subtitle>{{task.serviceName}} / {{task.program}} / {{task.subProgram}} /{{task.taskCategory}}
       </mat-card-subtitle>
 

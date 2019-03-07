@@ -33,6 +33,7 @@ export class TaskDetailsComponent implements OnInit {
   successMessage: string = null;
   approvedMsgResp: string = null;
   approvedMsgLead: string = null;
+  subProgramTasks: any[] = [];
 
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
     private router: Router, private dialog: MatDialog,
@@ -45,6 +46,9 @@ export class TaskDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.customInit(params['regionId'], params['taskId']);
     });
+    if (this.serviceMatrix.filterStore.selectedSubProgTasks != undefined) {
+      this.subProgramTasks = this.serviceMatrix.filterStore.selectedSubProgTasks;
+    }
   }
 
   customInit(regionId:string,taskId: string){
@@ -172,6 +176,10 @@ export class TaskDetailsComponent implements OnInit {
 
   backToLogin(){
     this.serviceMatrix.logout(this.userService.user['id']);
+    this.serviceMatrix.filterStore.pageIndex = 0;
+    this.serviceMatrix.filterStore.globalFilter = '';
+    this.serviceMatrix.filterStore.columnFilter = undefined;
+    this.serviceMatrix.filterStore.selectedSubProgTasks = [];
     this.router.navigate(["login"]);
   }
 
