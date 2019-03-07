@@ -55,8 +55,10 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
        });
       this.getMatrixDetails(this.userService.user['id']);
       this.getRegionDetails(this.user);
-      this.paginator.pageIndex = this.serviceMatrix.filterStore.pageIndex;
       this.globalFilter = this.serviceMatrix.filterStore.globalFilter;
+      if(this.serviceMatrix.filterStore.columnFilter != undefined){
+        this.filteredValues = this.serviceMatrix.filterStore.columnFilter;
+      }
     }
 
     public getMatrixDetails = (userId:string ) => {
@@ -76,8 +78,21 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     ngAfterViewInit() {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.applyFilter(this.globalFilter);
+      this.applyColumnFilter(this.filteredValues.taskId, 'taskId');
+      this.applyColumnFilter(this.filteredValues.serviceName, 'serviceName');
+      this.applyColumnFilter(this.filteredValues.program, 'program');
+      this.applyColumnFilter(this.filteredValues.subProgram, 'subProgram');
+      this.applyColumnFilter(this.filteredValues.taskCategory, 'taskCategory');
+      this.applyColumnFilter(this.filteredValues.taskName, 'taskName');
+      this.applyColumnFilter(this.filteredValues.myInput, 'myInput');
+      this.applyColumnFilter(this.filteredValues.statusCode, 'statusCode');      
+      this.applyColumnFilter(this.filteredValues.inputCount, 'inputReceived');
     }
 
+    // ngAfterViewChecked() {
+    //   this.dataSource.paginator.pageIndex = 3;
+    // }
 
   customFilterPredicate() {
     const myFilterPredicate = (data: any, filter: string): boolean => {
@@ -144,5 +159,6 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
     storeFilterValues(pageIndex: number){
       this.serviceMatrix.filterStore.pageIndex = pageIndex;
       this.serviceMatrix.filterStore.globalFilter = this.globalFilter;
+      this.serviceMatrix.filterStore.columnFilter = this.filteredValues;
     }
 }

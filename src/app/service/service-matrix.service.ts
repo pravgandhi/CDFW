@@ -138,8 +138,9 @@ export class ServiceMatrixService {
 
 
 export class Filters {
-  pageIndex: number;
+  pageIndex: number = 0;
   globalFilter : string;
+  columnFilter : any;
 
 /*  get pageIndex():number{
     return this.pageIndex;

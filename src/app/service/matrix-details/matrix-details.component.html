@@ -68,6 +68,8 @@
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)] = "globalFilter">
   </mat-form-field>
+  
+  <button (click)="goTo(2)">Go To</button>
   <table mat-table [dataSource] = "dataSource" matSort class="mat-elevation-z8">
     <ng-container matColumnDef ="taskId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task ID</th>
@@ -160,7 +162,7 @@
      <!-- Task Id Filter Column -->
     <ng-container matColumnDef="taskId-filter">
         <th mat-header-cell *matHeaderCellDef>
-          <input class="filter-input"
+          <input class="filter-input" value="{{filteredValues.taskId}}"
             (keyup)="applyColumnFilter($event.target.value, 'taskId')"
             placeholder="Filter">
         </th>
@@ -169,7 +171,7 @@
     <!-- Service Filter Column -->
     <ng-container matColumnDef="serviceName-filter">
         <th mat-header-cell *matHeaderCellDef>
-          <input  class="filter-input"
+          <input  class="filter-input" value="{{filteredValues.serviceName}}"
             (keyup)="applyColumnFilter($event.target.value, 'serviceName')"
             placeholder="Filter">
         </th>
@@ -178,7 +180,7 @@
     <!-- Program Filter Column -->
     <ng-container matColumnDef="program-filter">
         <th mat-header-cell *matHeaderCellDef>
-          <input  class="filter-input"
+          <input  class="filter-input" value="{{filteredValues.program}}"
             (keyup)="applyColumnFilter($event.target.value, 'program')"
             placeholder="Filter">
         </th>
@@ -187,7 +189,7 @@
     <!-- Sub Program Filter Column -->
     <ng-container matColumnDef="subProgram-filter">
         <th mat-header-cell *matHeaderCellDef>
-          <input  class="filter-input"
+          <input  class="filter-input" value="{{filteredValues.subProgram}}"
             (keyup)="applyColumnFilter($event.target.value, 'subProgram')"
             placeholder="Filter">
         </th>
@@ -196,7 +198,7 @@
     <!-- Task Category Filter Column -->
     <ng-container matColumnDef="taskCategory-filter">
         <th mat-header-cell *matHeaderCellDef>
-          <input  class="filter-input"
+          <input  class="filter-input" value="{{filteredValues.taskCategory}}"
             (keyup)="applyColumnFilter($event.target.value, 'taskCategory')"
             placeholder="Filter">
         </th>
@@ -205,7 +207,7 @@
     <!-- Task Filter Column -->
     <ng-container matColumnDef="taskName-filter">
         <th mat-header-cell *matHeaderCellDef>
-          <input  class="filter-input"
+          <input  class="filter-input" value="{{filteredValues.taskName}}"
             (keyup)="applyColumnFilter($event.target.value, 'taskName')"
             placeholder="Filter">
         </th>
@@ -214,7 +216,7 @@
     <!-- Myinput Filter Column -->
     <ng-container matColumnDef="myInput-filter">
       <th mat-header-cell *matHeaderCellDef>
-      <input  class="filter-input"
+      <input  class="filter-input" value="{{filteredValues.myInput}}"
         (keyup)="applyColumnFilter($event.target.value, 'myInput')"
         placeholder="Filter">
       </th>
@@ -223,7 +225,7 @@
     <!-- Status Filter Column -->
     <ng-container matColumnDef="statusCode-filter">
         <th mat-header-cell *matHeaderCellDef>
-          <input  class="filter-input"
+          <input  class="filter-input" value="{{filteredValues.statusCode}}"
             (keyup)="applyColumnFilter($event.target.value, 'statusCode')"
             placeholder="Filter">
         </th>
@@ -232,7 +234,7 @@
     <!-- Count Input Filter Column -->
     <ng-container matColumnDef="inputCount-filter">
       <th mat-header-cell *matHeaderCellDef>
-        <input class="filter-input"
+        <input class="filter-input" value="{{filteredValues.inputCount}}"
           (keyup)="applyColumnFilter($event.target.value, 'inputCount')"
           placeholder="Filter">
       </th>
@@ -242,6 +244,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedFilterColumns" class="example-second-header-row"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showTask(row)"></tr>
   </table>
-<mat-paginator
-  [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<mat-paginator #paginator
+  [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>
