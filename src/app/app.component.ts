@@ -8,7 +8,7 @@ import { UserService } from './_services';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'SBB Data Collection Tool';
+  title = 'Service Based Budgeting Project Data Collection Tool';
 
   constructor(private userService:UserService) {}
 
