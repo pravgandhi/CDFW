@@ -68,6 +68,7 @@
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)] = "globalFilter">
   </mat-form-field>
+  <button mat-button color="primary" (click)="clearAllFilters()">Clear All Filters</button>
   
   <table mat-table [dataSource] = "dataSource" matSort class="mat-elevation-z8">
     <ng-container matColumnDef ="taskId">

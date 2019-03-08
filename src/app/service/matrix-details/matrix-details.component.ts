@@ -71,7 +71,7 @@ export class MatrixDetailsComponent implements OnInit{
            this.paginator.pageIndex = this.serviceMatrix.filterStore.pageIndex;
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
-          this.applyFilters();
+          this.applyAllFilters(this.globalFilter, this.filteredValues);
         });
     }
 
@@ -79,17 +79,33 @@ export class MatrixDetailsComponent implements OnInit{
       this.regionList =  user['userRegionMappingsById'];
     }
 
-    applyFilters(){
-      this.applyFilter(this.globalFilter);
-      this.applyColumnFilter(this.filteredValues.taskId, 'taskId');
-      this.applyColumnFilter(this.filteredValues.serviceName, 'serviceName');
-      this.applyColumnFilter(this.filteredValues.program, 'program');
-      this.applyColumnFilter(this.filteredValues.subProgram, 'subProgram');
-      this.applyColumnFilter(this.filteredValues.taskCategory, 'taskCategory');
-      this.applyColumnFilter(this.filteredValues.taskName, 'taskName');
-      this.applyColumnFilter(this.filteredValues.myInput, 'myInput');
-      this.applyColumnFilter(this.filteredValues.statusCode, 'statusCode');      
-      this.applyColumnFilter(this.filteredValues.inputCount, 'inputReceived');
+    applyAllFilters(gFilter, fValues){
+      this.applyFilter(gFilter);
+      this.applyColumnFilter(fValues.taskId, 'taskId');
+      this.applyColumnFilter(fValues.serviceName, 'serviceName');
+      this.applyColumnFilter(fValues.program, 'program');
+      this.applyColumnFilter(fValues.subProgram, 'subProgram');
+      this.applyColumnFilter(fValues.taskCategory, 'taskCategory');
+      this.applyColumnFilter(fValues.taskName, 'taskName');
+      this.applyColumnFilter(fValues.myInput, 'myInput');
+      this.applyColumnFilter(fValues.statusCode, 'statusCode');      
+      this.applyColumnFilter(fValues.inputCount, 'inputReceived');
+    }
+
+    clearAllFilters(){
+      this.paginator.pageIndex = 0;
+      this.dataSource.paginator = this.paginator;
+      this.globalFilter = '';
+      this.filteredValues = { taskId:'', serviceName:'', program:'',
+        subProgram:'', taskCategory: '', taskName : '', statusCode: '',
+        myInput:'', inputCount: ''
+      };
+      this.serviceMatrix.filterStore.pageIndex = 0;
+      this.serviceMatrix.filterStore.globalFilter = '';
+      this.serviceMatrix.filterStore.columnFilter = undefined;
+      this.serviceMatrix.filterStore.selectedSubProgTasks = [];
+
+      this.applyAllFilters(this.globalFilter, this.filteredValues);
     }
 
   customFilterPredicate() {
