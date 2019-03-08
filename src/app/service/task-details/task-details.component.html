@@ -41,9 +41,18 @@
 <div class="task-container" *ngIf="task != undefined">
   <mat-card class="example-card m-3">
     <mat-card-header>
-      <mat-card-title>{{task.taskName}} <button *ngIf="subProgramTasks.length > 1">Next Task</button></mat-card-title>
+      <mat-card-title>{{task.taskName}} 
+    </mat-card-title>
       <mat-card-subtitle>{{task.serviceName}} / {{task.program}} / {{task.subProgram}} /{{task.taskCategory}}
       </mat-card-subtitle>
+      <div class="flex-sm-fill">
+    <button mat-button class="float-sm-right" *ngIf="task.nextTaskId != undefined" title="{{task.nextTaskId}}" (click)="goToTask(task.nextTaskId)" style="height:100%">
+      <mat-icon class="next_task_icon">navigate_next</mat-icon>
+  </button>
+  <button mat-button class="float-sm-right" *ngIf="task.nextTaskId != undefined" title="{{task.prevTaskId}}" (click)="goToTask(task.prevTaskId)" style="height:100%">
+      <mat-icon class="next_task_icon">navigate_before</mat-icon>
+  </button>
+</div>
 
     </mat-card-header>
     <mat-divider matInset></mat-divider>

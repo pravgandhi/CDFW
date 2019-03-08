@@ -160,7 +160,23 @@ export class MatrixDetailsComponent implements OnInit{
       this.storeFilterValues(this.paginator.pageIndex);
       this.router.navigate([this.selectedRegion, "task", row.taskId ]);
       var tasks = this.dataSource.data.filter(e => e['subProgram'] == row.subProgram);
-      this.serviceMatrix.filterStore.selectedSubProgTasks = tasks;
+      this.serviceMatrix.filterStore.selectedSubProgTasks = [];
+      if(tasks.length > 1){
+        for(var i=0; i<tasks.length; i++){
+          var sspt = tasks[i];
+          if(i==0){
+            sspt["prevTaskId"] = tasks[tasks.length-1]['taskId'];
+            sspt["nextTaskId"] = tasks[i+1]['taskId'];
+          } else if (i == tasks.length-1) {
+            sspt["prevTaskId"] = tasks[i-1]['taskId'];
+            sspt["nextTaskId"] = tasks[0]['taskId'];
+          } else {
+            sspt["prevTaskId"] = tasks[i-1]['taskId'];
+            sspt["nextTaskId"] = tasks[i+1]['taskId'];
+          }
+          this.serviceMatrix.filterStore.selectedSubProgTasks.push(sspt);
+        }
+      }
     }
 
     chooseRegion(region: string){

@@ -46,9 +46,10 @@ export class TaskDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.customInit(params['regionId'], params['taskId']);
     });
-    if (this.serviceMatrix.filterStore.selectedSubProgTasks != undefined) {
-      this.subProgramTasks = this.serviceMatrix.filterStore.selectedSubProgTasks;
-    }
+  }
+
+  ngOnChanges(){
+
   }
 
   customInit(regionId:string,taskId: string){
@@ -57,6 +58,10 @@ export class TaskDetailsComponent implements OnInit {
     this.userRole = this.userService.userRole;
     this.selectedRegion = regionId;
     this.inpuTaskId = taskId;
+    
+    if (this.serviceMatrix.filterStore.selectedSubProgTasks != undefined) {
+      this.subProgramTasks = this.serviceMatrix.filterStore.selectedSubProgTasks;
+    }
   }
 
 
@@ -64,11 +69,13 @@ export class TaskDetailsComponent implements OnInit {
         let _self = this;
           this.serviceMatrix.getTaskDetail1(selectedRegion, taskId).subscribe(
         data => {
-          _self.task = data;
+          _self.task = data;          
           _self.dataSource.data = data['laborClassesByTaskId'];
           _self.dataSourceJustification.data = data['jrsdctnCtgriesByTaskId'];
           let inputs = data['missionUserInputsByTaskId'];
           _self.serviceMatrix.inputDataStore = inputs;
+          _self.approved = false;
+          _self.multiplier = 0;
            if('Validated' === _self.task['taskStatus']) {
              _self.approved = true;
              if(_self.userService.userRole === 'm_resp'){
@@ -90,6 +97,15 @@ export class TaskDetailsComponent implements OnInit {
                 _self.multiplier = myInput[0].inputValue;
               }
            }
+
+           if(this.subProgramTasks.length > 1){
+             var fltr = this.subProgramTasks.filter(e => e['taskId'] == _self.task['taskId']);
+             if(fltr.length > 0){
+              _self.task["nextTaskId"] = fltr[0].nextTaskId;
+              _self.task["prevTaskId"] = fltr[0].prevTaskId;
+            }
+           }
+
         },
         err => {
           this.snackBar.openSnackBar( "Error fetching task details. Please try again later", 'Close', "red-snackbar");
@@ -98,6 +114,10 @@ export class TaskDetailsComponent implements OnInit {
 
         }
       );
+  }
+
+  goToTask(taskId){
+    this.router.navigate([this.selectedRegion, "task", taskId ]);
   }
 
   filterInputsByUserAndRegion(inputs:any, userId:number, regionName:string){
