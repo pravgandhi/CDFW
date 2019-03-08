@@ -14,7 +14,7 @@ import { NgForm, FormControl } from '@angular/forms';
   templateUrl: './matrix-details.component.html',
   styleUrls: ['./matrix-details.component.css']
 })
-export class MatrixDetailsComponent implements OnInit, AfterViewInit{
+export class MatrixDetailsComponent implements OnInit{
   dataSource = new MatTableDataSource<Object>();
   searchInput: string;
   user:Object;
@@ -68,6 +68,10 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
           this.dataSource.data.forEach(e => {
             e["statusCode"] = e["taskStatus"];
            })
+           this.paginator.pageIndex = this.serviceMatrix.filterStore.pageIndex;
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.applyFilters();
         });
     }
 
@@ -75,9 +79,7 @@ export class MatrixDetailsComponent implements OnInit, AfterViewInit{
       this.regionList =  user['userRegionMappingsById'];
     }
 
-    ngAfterViewInit() {
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+    applyFilters(){
       this.applyFilter(this.globalFilter);
       this.applyColumnFilter(this.filteredValues.taskId, 'taskId');
       this.applyColumnFilter(this.filteredValues.serviceName, 'serviceName');
