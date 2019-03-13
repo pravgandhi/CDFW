@@ -17,6 +17,7 @@ import {
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { InputsComponent } from './service/inputs/inputs.component';
@@ -61,6 +62,7 @@ import { AuthInterceptor } from './_services/http.interceptor';
     ServiceModule,
     LoginModule,
     MatSnackBarModule,
+    NgxSpinnerModule
   ],
   providers: [    {
       provide: HTTP_INTERCEPTORS,
