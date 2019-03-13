@@ -14,7 +14,7 @@ export class AuthenticationService {
 
       login(username: string, password: string) {
           var self = this;
-          return this.http.post<UserEntity>('http://localhost:8080/authenticateUser', {username: username, password: password}).
+          return this.http.post<UserEntity>('http://ec2-18-220-6-166.us-east-2.compute.amazonaws.com:8080/authenticateUser', {username: username, password: password}).
           toPromise()
          .then(function(response) {
            if(response) {

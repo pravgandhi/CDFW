@@ -76,6 +76,7 @@ export class TaskDetailsComponent implements OnInit {
           _self.serviceMatrix.inputDataStore = inputs;
           _self.approved = false;
           _self.multiplier = 0;
+          _self.saveRespInputDisabled = false;
            if('Validated' === _self.task['taskStatus']) {
              _self.approved = true;
              if(_self.userService.userRole === 'm_resp'){
