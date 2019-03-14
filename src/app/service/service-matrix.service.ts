@@ -13,6 +13,7 @@ export class ServiceMatrixService {
   selectedRowIndex;
   filterStore: Filters ;
   API_URL:string = "http://ec2-18-220-6-166.us-east-2.compute.amazonaws.com:8080/";
+  /*API_URL:string = "http://localhost:8080/";*/
    @ViewChild(MatPaginator) paginator: MatPaginator;
   inputDataStore = [{
     id: 1,
@@ -74,8 +75,8 @@ export class ServiceMatrixService {
      return this.http.get(this.API_URL+'service/'+selectedRegion+ '/'+ userId);
     }
 
-    public selectInput = (regionId: number, taskId: string, userId:string) => {
-      return this.http.get(this.API_URL+'selectInput/'+regionId+'/'+ taskId+ '/'+ userId);
+    public selectInput = (regionId: number, taskId: string, userId:string, approvedUserId:any) => {
+      return this.http.get(this.API_URL+'selectInput/'+regionId+'/'+ taskId+ '/'+ userId+'/'+approvedUserId);
     }
 
     public fetchInputs = (regionId: number, taskId : string) => {

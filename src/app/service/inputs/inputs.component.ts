@@ -17,7 +17,7 @@ export class InputsComponent implements OnInit  {
   selectedRegionObject: any;
   user: any;
   inputs = new MatTableDataSource<Object>();
-  inputDisplayedColumns: string[] = [ "value", "name", "status"];
+  inputDisplayedColumns: string[] = [ "value", "name", "status", "approverName"];
   approvedInput: number;
 
   errorMessage: string = null;
@@ -52,7 +52,7 @@ export class InputsComponent implements OnInit  {
   approveResponse(){
     this.serviceMatrix.selectedRowIndex = this.selectedRowIndex;
     let _self = this;
-    this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.data.taskId,this.selectedRow.id).subscribe(
+    this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.data.taskId,this.selectedRow.id, this.userService.userId).subscribe(
     data => {
       _self.approvedInput = Number(data);
       this.snackBar.openSnackBar( "Selected Input is approved", 'Close', "green-snackbar");
