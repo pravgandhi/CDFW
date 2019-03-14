@@ -36,6 +36,14 @@
 
   <div class = "main-content">
     <router-outlet #routerOutlet="outlet"> </router-outlet>
+    <ngx-spinner
+        size = "default"
+        color = "#fff"
+        type = "ball-pulse"
+        fullScreen = "true"
+        >
+        <p style="color: white" > Loading... </p>
+        </ngx-spinner>
   </div>
   <div>
     <footer flex>
