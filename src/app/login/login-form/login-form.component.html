@@ -1,44 +1,46 @@
 <form class="loginForm" [formGroup]="loginForm">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Login</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <table cellspacing="0" class="login-table">
-          <tr>
-            <td>
-              <div class="form-group">
-                <mat-form-field>
-                  <input matInput placeholder="Username" name="username" required
-                  formControlName="username">
-                  <mat-error *ngIf="loginForm.controls['username'].errors?.required && loginForm.controls['username'].touched">
-                      Username is <strong>required</strong>
-                    </mat-error>
-                </mat-form-field>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table cellspacing="0" class="login-table">
+        <tr>
+          <td>
+            <div class="form-group">
               <mat-form-field>
-                <input matInput placeholder="Password" type="password" name="password"
-                formControlName="password" required>
-                <mat-error *ngIf="loginForm.controls['password'].errors?.required && loginForm.controls['password'].touched">
-                    Password is <strong>required</strong>
-                  </mat-error>
+                <input matInput placeholder="Username" name="username" required formControlName="username">
+                <mat-error
+                  *ngIf="loginForm.controls['username'].errors?.required && loginForm.controls['username'].touched">
+                  Username is <strong>required</strong>
+                </mat-error>
               </mat-form-field>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span style="color:red;" *ngIf="errMsg != null">{{errMsg}}</span>
-            </td>
-          </tr>
-        </table>
-        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-      </mat-card-content>
-      <mat-card-actions class="text-center">
-        <button type= "submit" mat-raised-button color="primary" (click)="onSubmit()">Login</button>
-      </mat-card-actions>
-    </mat-card>
-  </form>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="Password" type="password" name="password" formControlName="password"
+                required>
+              <mat-error
+                *ngIf="loginForm.controls['password'].errors?.required && loginForm.controls['password'].touched">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="color:red;" *ngIf="errMsg != null">{{errMsg}}</span>
+          </td>
+        </tr>
+      </table>
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+      <button type="submit" mat-raised-button (click)="resetPassword()">Reset Password</button>
+      <button type="submit" mat-raised-button color="primary" (click)="onSubmit()">Login</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
