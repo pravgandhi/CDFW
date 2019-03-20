@@ -1,0 +1,29 @@
+<div>
+    <!-- <mat-card>
+        <mat-card-header>
+            <mat-card-title>Feedbacks</mat-card-title> -->
+            <h4>Feedbacks</h4>
+        <!-- </mat-card-header>
+        <mat-card-content> -->
+            <table mat-table [dataSource]="feedbacks" class="mat-elevation-z8 w-100">
+                <!-- Position Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Respondent Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.userById.userName}} </td>
+                </ng-container>
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="feedback">
+                    <th mat-header-cell *matHeaderCellDef> Feedback </th>
+                    <td mat-cell *matCellDef="let element"> {{element.feedback}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="inputDisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: inputDisplayedColumns;"></tr>
+            </table>
+        <!-- </mat-card-content> -->
+        <div class="text-center pt-2">
+            <button mat-raised-button color="primary" (click)="onClose()">Close</button>
+        </div>
+    <!-- </mat-card> -->
+</div>

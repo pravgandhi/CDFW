@@ -13,7 +13,7 @@ export class ServiceMatrixService {
   selectedRowIndex;
   filterStore: Filters ;
   API_URL:string = "http://ec2-18-220-6-166.us-east-2.compute.amazonaws.com:8080/";
-  /*API_URL:string = "http://localhost:8080/";*/
+  // API_URL:string = "http://localhost:8080/";
    @ViewChild(MatPaginator) paginator: MatPaginator;
   inputDataStore = [{
     id: 1,
@@ -129,8 +129,8 @@ export class ServiceMatrixService {
             });
     }
 
-    public saveUserInput(userId:number, regionName: string, taskId: string, inputValue: number){
-      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionName: regionName, taskId: taskId, inputValue :inputValue });
+    public saveUserInput(userId:number, regionName: string, taskId: string, inputValue: number, taskfeedback: string){
+      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionName: regionName, taskId: taskId, inputValue :inputValue,  feedback: taskfeedback });
      }
 
 

@@ -45,13 +45,13 @@ export class LoginFormComponent implements OnInit {
       this.authenticationService.login(this.f.username.value, this.f.password.value).then(
         isMission => {
           if (isMission) {
-            var mappedRegions = this.userService.user['userRegionMappingsById'];
-            if (mappedRegions.length > 0) {
+            var mappedRegions = this.userService.user != undefined ? this.userService.user['userRegionMappingsById'] : null;
+            if (mappedRegions != null && mappedRegions.length > 0) {
               let userRegion = mappedRegions[0]['regionByRegionId']['regionName'];
               this.router.navigate(['service', userRegion]);
             } else {
               //  this.snackBar.openSnackBar( `User ${this.f.username.value} does not have access to any region.`, 'Close', "red-snackbar");
-              this.errMsg = `User ${this.f.username.value} does not have access to any region. `;
+              this.errMsg = `User does not have access to any region. `;
               this.router.navigate(['login']);
             }
           } else {

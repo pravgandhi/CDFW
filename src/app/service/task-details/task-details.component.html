@@ -18,9 +18,9 @@
       <mat-icon>arrow_back</mat-icon>
       Back to Catalog
     </button>
-    <a mat-button color="primary" title="Provide Feedback" target="_new" href="https://deloitteus.sharefile.com/home/shared/fo8dafd8-6efd-428c-aa4f-2e7bf8643f16">
+    <!-- <a mat-button color="primary" title="Provide Feedback" target="_new" href="https://deloitteus.sharefile.com/home/shared/fo8dafd8-6efd-428c-aa4f-2e7bf8643f16">
         <mat-icon>feedback</mat-icon>
-    </a>
+    </a> -->
     <a mat-button color="primary" title="Training Materials" target="_new" href="https://deloitteus.sharefile.com/home/shared/fo8dafd8-6efd-428c-aa4f-2e7bf8643f16">
         <mat-icon>file_copy</mat-icon>
     </a>
@@ -41,7 +41,7 @@
 <div class="task-container" *ngIf="task != undefined">
   <mat-card class="example-card m-3">
     <mat-card-header>
-      <mat-card-title>{{task.taskName}} 
+      <mat-card-title>{{task.taskName}} (Task ID : {{task.taskId}})
     </mat-card-title>
       <mat-card-subtitle>{{task.serviceName}} / {{task.program}} / {{task.subProgram}} /{{task.taskCategory}}
       </mat-card-subtitle>
@@ -63,29 +63,43 @@
             <mat-card-actions class="m-0 p-0 mb-3">
               <table class="text-white w-100" style="background: #1f4e79; height: 80px;">
                 <tr>
-                  <td colspan="3">
+                  <td>
                       <label for="inputmul" style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;">Input Multiplier<i class="material-icons help-text-icon"
                         matTooltip="Displays the input recorded for this task. This is the only field that requires an input from respondents in this exercise. ">help</i></label>
                   </td>
+                  <td class="w-65">
+                      <label style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;">Feedback</label>
+                  </td>
                 </tr>
                 <tr>
-                  <td>
-                      <input id="inputmul" type="number" name="test_name" min="0" class="task-input-multiplier"
+                  <td class="align-top">
+                      <input id="inputmul" type="number" name="test_name" min="0" class="task-input-multiplier align-top"
                       oninput="validity.valid||(value='');" [(ngModel)]="multiplier" [disabled]="saveRespInputDisabled">
                   </td>
+                  
                   <td>
-                      <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]="saveRespInputDisabled || multiplier == undefined || multiplier == 0">
-                          <mat-icon>save</mat-icon>
-                          Save Response
-                        </button>
-                  </td>
-                  <td>
-                      <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewInputs()" [disabled]="task['inputCount'] == 0"
-                      *ngIf="(userRole==='admin' || userRole==='m_lead')">
-                      <mat-icon>touch_app</mat-icon>
-                      Review Inputs ({{task['inputCount']}})
-                    </button>
-                  </td>
+                      <textarea name="taskfeedback" [(ngModel)]="taskfeedback" rows="5" cols="25" maxlength="2000" class="input-task-feedback-area w-94" [disabled]="saveRespInputDisabled"> </textarea>
+                    </td>
+                </tr>
+                <tr>
+                  <td class="text-center align-top" colspan="2">
+                    <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]="saveRespInputDisabled || multiplier == undefined || multiplier == 0">
+                        <mat-icon>save</mat-icon>
+                        Save Response
+                      </button>
+
+                    <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewInputs()" [disabled]="task['inputCount'] == 0"
+                    *ngIf="(userRole==='admin' || userRole==='m_lead')">
+                    <mat-icon>touch_app</mat-icon>
+                    Review Inputs ({{task['inputCount']}})
+                  </button>
+
+                  <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewFeedbacks()" [disabled]="task['feedbackCount'] == 0"
+                  *ngIf="(userRole==='admin' || userRole==='m_lead')">
+                  <mat-icon>feedback</mat-icon>
+                  View Feedbacks ({{task['feedbackCount']}})
+                </button>
+                </td>
                 </tr>
               </table>
               <!-- <div class="row mx-0 text-white p-2" style="background: #1f4e79; ">

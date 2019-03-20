@@ -25,3 +25,19 @@ mat-toolbar  span, mat-toolbar  a  span {
 .help-text-icon {
   font-size: 14px;
 }
+
+.input-task-feedback-lbl {
+  margin: 3px 3px 3px 10px !important;
+}
+
+.input-task-feedback-area {
+  margin: 3px 3px 10px 10px !important;
+}
+
+.w-65{
+  width: 65%;
+}
+
+.w-94{
+  width: 94%;
+}

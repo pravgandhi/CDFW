@@ -6,6 +6,7 @@ import { InputsComponent } from '../inputs/inputs.component';
 
 import { MatSnackBarComponent } from '../mat-snack-bar/mat-snack-bar.component';
 import { UserService } from 'src/app/_services';
+import { FeedbackComponent } from '../feedback/feedback.component';
 
 
 
@@ -27,6 +28,7 @@ export class TaskDetailsComponent implements OnInit {
   selectedRegionId:string;
   selectedTask:string;
   multiplier: number= 0;
+  taskfeedback: string;
   saveRespInputDisabled : boolean = false;
   approved: boolean = false;
   errorMessage: string = null;
@@ -76,6 +78,7 @@ export class TaskDetailsComponent implements OnInit {
           _self.serviceMatrix.inputDataStore = inputs;
           _self.approved = false;
           _self.multiplier = 0;
+          _self.taskfeedback = "";
           _self.saveRespInputDisabled = false;
            if('Validated' === _self.task['taskStatus']) {
              _self.approved = true;
@@ -97,6 +100,11 @@ export class TaskDetailsComponent implements OnInit {
               if (myInput.length == 1) {
                 _self.multiplier = myInput[0].inputValue;
               }
+           }
+           
+           let loggedinUserInput = this.filterInputsByUserAndRegion(inputs, _self.user['id'], selectedRegion);
+           if (loggedinUserInput.length == 1) {
+             _self.taskfeedback = loggedinUserInput[0].feedback;
            }
 
            if(this.subProgramTasks.length > 1){
@@ -156,7 +164,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   saveUserInput(stats){
-    this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier).subscribe(res => {
+    this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, this.taskfeedback).subscribe(res => {
         this.customInit(this.selectedRegion , this.inpuTaskId);
         this.snackBar.openSnackBar( "Input saved successfully", 'Close', "green-snackbar");
       },
@@ -186,6 +194,21 @@ export class TaskDetailsComponent implements OnInit {
         this.customInit(data.regionName , data.taskId);
       }
     });
+  }
+
+  viewFeedbacks(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '800px';
+    dialogConfig.maxHeight = '400px';
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+        regionName: this.selectedRegion,
+        userId: this.user['id'],
+        taskId : this.task['taskId']
+    };
+    const inputDialogRef = this.dialog.open(FeedbackComponent, dialogConfig);
+
+    inputDialogRef.afterClosed().subscribe(data => {});
   }
 
   provideYourInputs(){

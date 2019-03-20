@@ -18,10 +18,11 @@ import { ServiceMatrixService } from './service-matrix.service';
 import { InputsComponent } from './inputs/inputs.component';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 @NgModule({
-  declarations: [MatrixDetailsComponent, TaskDetailsComponent, InputsComponent, SaveResponseConfirmDialog],
+  declarations: [MatrixDetailsComponent, TaskDetailsComponent, InputsComponent, SaveResponseConfirmDialog, FeedbackComponent],
   entryComponents : [SaveResponseConfirmDialog],
   providers : [ServiceMatrixService],
   imports: [

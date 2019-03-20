@@ -31,6 +31,7 @@ import { HttpErrorInterceptor } from './_services/error-interceptor';
 import { MatSnackBarComponent } from './service/mat-snack-bar/mat-snack-bar.component';
 import { AuthInterceptor } from './_services/http.interceptor';
 import { ResestPasswordDialog } from './login/login-form/login-form.component';
+import { FeedbackComponent } from './service/feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,6 @@ import { ResestPasswordDialog } from './login/login-form/login-form.component';
   },
     AuthenticationService, UserService, MatSnackBarComponent],
   bootstrap: [AppComponent],
-  entryComponents: [InputsComponent, ResestPasswordDialog]
+  entryComponents: [InputsComponent, ResestPasswordDialog, FeedbackComponent]
 })
 export class AppModule { }
