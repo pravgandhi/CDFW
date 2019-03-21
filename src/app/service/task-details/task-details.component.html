@@ -41,7 +41,7 @@
 <div class="task-container" *ngIf="task != undefined">
   <mat-card class="example-card m-3">
     <mat-card-header>
-      <mat-card-title>{{task.taskName}} (Task ID : {{task.taskId}})
+      <mat-card-title>{{task.taskName}} (Task ID: {{task.taskId}})
     </mat-card-title>
       <mat-card-subtitle>{{task.serviceName}} / {{task.program}} / {{task.subProgram}} /{{task.taskCategory}}
       </mat-card-subtitle>
@@ -88,7 +88,7 @@
                         Save Response
                       </button>
 
-                    <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewInputs()" [disabled]="task['inputCount'] == 0"
+                    <button mat-button class="mx-2 text-dark bg-white task-input-multiplier-btn" (click)="viewInputs()" [disabled]="task['inputCount'] == 0"
                     *ngIf="(userRole==='admin' || userRole==='m_lead')">
                     <mat-icon>touch_app</mat-icon>
                     Review Inputs ({{task['inputCount']}})
