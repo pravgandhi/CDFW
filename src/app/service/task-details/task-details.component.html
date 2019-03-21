@@ -94,7 +94,7 @@
                     Review Inputs ({{task['inputCount']}})
                   </button>
 
-                  <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewFeedbacks()" [disabled]="task['feedbackCount'] == 0"
+                  <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewFeedbacks()" [disabled]="task['feedbackCount'] == undefined || task['feedbackCount'] == 0"
                   *ngIf="(userRole==='admin' || userRole==='m_lead')">
                   <mat-icon>feedback</mat-icon>
                   View Feedbacks ({{task['feedbackCount']}})
