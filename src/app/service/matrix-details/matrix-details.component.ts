@@ -26,7 +26,7 @@ export class MatrixDetailsComponent implements OnInit{
   regionList;
   filteredValues = { taskId:'', serviceName:'', program:'',
     subProgram:'', taskCategory: '', taskName : '', statusCode: '',
-    myInput:'', inputCount: ''//, topFilter: false
+    myInput:'', inputCount: '', feedbackReceived: ''//, topFilter: false
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -51,8 +51,12 @@ export class MatrixDetailsComponent implements OnInit{
       "subProgram", "taskCategory", "taskName", "myInput",  "statusCode", "inputCount"];
       this.displayedFilterColumns = [];
       this.displayedColumns.forEach(e => {
-      this.displayedFilterColumns.push(e + '-filter');
-       });
+        this.displayedFilterColumns.push(e + '-filter');
+      });
+      if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']){
+        this.displayedColumns.push("feedbackReceived");
+        this.displayedFilterColumns.push('feedbackReceived-filter');
+      }
       this.getMatrixDetails(this.userService.user['id']);
       this.getRegionDetails(this.user);
       this.globalFilter = this.serviceMatrix.filterStore.globalFilter;
@@ -90,6 +94,7 @@ export class MatrixDetailsComponent implements OnInit{
       this.applyColumnFilter(fValues.myInput, 'myInput');
       this.applyColumnFilter(fValues.statusCode, 'statusCode');      
       this.applyColumnFilter(fValues.inputCount, 'inputReceived');
+      this.applyColumnFilter(fValues.feedbackReceived, 'feedbackReceived');
     }
 
     clearAllFilters(){
@@ -98,7 +103,8 @@ export class MatrixDetailsComponent implements OnInit{
       this.globalFilter = '';
       this.filteredValues = { taskId:'', serviceName:'', program:'',
         subProgram:'', taskCategory: '', taskName : '', statusCode: '',
-        myInput:'', inputCount: ''
+        myInput:'', inputCount: '',
+        feedbackReceived:''
       };
       this.serviceMatrix.filterStore.pageIndex = 0;
       this.serviceMatrix.filterStore.globalFilter = '';
@@ -121,7 +127,8 @@ export class MatrixDetailsComponent implements OnInit{
         let statusFound = data.taskStatus.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let countFound = data.inputReceived.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
-        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound;
+        let fbReceivedFound = data.feedbackReceived.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound || fbReceivedFound;
       }
 
       if (!globalMatch) {
@@ -138,7 +145,8 @@ export class MatrixDetailsComponent implements OnInit{
       let statusFound = data.taskStatus.toString().trim().toLowerCase().indexOf(searchString.statusCode.toString().toLowerCase()) !== -1;
       let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(searchString.myInput.toString().toLowerCase()) !== -1;
       let countFound = data.inputReceived.toString().trim().toLowerCase().indexOf(searchString.inputCount.toString().toLowerCase()) !== -1;
-      return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound;
+      let fbReceivedFound = data.feedbackReceived.toString().trim().toLowerCase().indexOf(searchString.feedbackReceived.toString().toLowerCase()) !== -1;
+      return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound && fbReceivedFound;
     }
     return myFilterPredicate;
   }

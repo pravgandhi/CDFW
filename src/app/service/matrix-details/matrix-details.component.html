@@ -159,6 +159,15 @@
        </td>
      </ng-container>
 
+     <ng-container matColumnDef ="feedbackReceived">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">
+        Feedback Received 
+       </th>
+      <td mat-cell *matCellDef= "let element">
+        {{element.feedbackReceived}}
+      </td>
+    </ng-container>
+
      <!-- Task Id Filter Column -->
     <ng-container matColumnDef="taskId-filter">
         <th mat-header-cell *matHeaderCellDef>
@@ -236,6 +245,15 @@
       <th mat-header-cell *matHeaderCellDef>
         <input class="filter-input" value="{{filteredValues.inputCount}}"
           (keyup)="applyColumnFilter($event.target.value, 'inputCount')"
+          placeholder="Filter">
+      </th>
+    </ng-container>
+
+    <!-- Feedback Received Filter Column -->
+    <ng-container matColumnDef="feedbackReceived-filter">
+      <th mat-header-cell *matHeaderCellDef>
+        <input class="filter-input" value="{{filteredValues.feedbackReceived}}"
+          (keyup)="applyColumnFilter($event.target.value, 'feedbackReceived')"
           placeholder="Filter">
       </th>
     </ng-container>
