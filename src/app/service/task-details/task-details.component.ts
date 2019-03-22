@@ -101,7 +101,7 @@ export class TaskDetailsComponent implements OnInit {
                 _self.multiplier = myInput[0].inputValue;
               }
            }
-           
+
            let loggedinUserInput = this.filterInputsByUserAndRegion(inputs, _self.user['id'], selectedRegion);
            if (loggedinUserInput.length == 1) {
              _self.taskfeedback = loggedinUserInput[0].feedback;
@@ -222,6 +222,7 @@ export class TaskDetailsComponent implements OnInit {
   backToLogin(){
     this.serviceMatrix.logout(this.userService.user['id']);
     this.serviceMatrix.filterStore.pageIndex = 0;
+    this.serviceMatrix.filterStore.pageSize = 5;
     this.serviceMatrix.filterStore.globalFilter = '';
     this.serviceMatrix.filterStore.columnFilter = undefined;
     this.serviceMatrix.filterStore.selectedSubProgTasks = [];

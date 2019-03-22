@@ -73,6 +73,7 @@ export class MatrixDetailsComponent implements OnInit{
             e["statusCode"] = e["taskStatus"];
            })
            this.paginator.pageIndex = this.serviceMatrix.filterStore.pageIndex;
+           this.paginator.pageSize = this.serviceMatrix.filterStore.pageSize;
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
           this.applyAllFilters(this.globalFilter, this.filteredValues);
@@ -92,13 +93,14 @@ export class MatrixDetailsComponent implements OnInit{
       this.applyColumnFilter(fValues.taskCategory, 'taskCategory');
       this.applyColumnFilter(fValues.taskName, 'taskName');
       this.applyColumnFilter(fValues.myInput, 'myInput');
-      this.applyColumnFilter(fValues.statusCode, 'statusCode');      
+      this.applyColumnFilter(fValues.statusCode, 'statusCode');
       this.applyColumnFilter(fValues.inputCount, 'inputReceived');
       this.applyColumnFilter(fValues.feedbackReceived, 'feedbackReceived');
     }
 
     clearAllFilters(){
       this.paginator.pageIndex = 0;
+      this.paginator.pageSize = 5;
       this.dataSource.paginator = this.paginator;
       this.globalFilter = '';
       this.filteredValues = { taskId:'', serviceName:'', program:'',
@@ -110,7 +112,7 @@ export class MatrixDetailsComponent implements OnInit{
       this.serviceMatrix.filterStore.globalFilter = '';
       this.serviceMatrix.filterStore.columnFilter = undefined;
       this.serviceMatrix.filterStore.selectedSubProgTasks = [];
-
+      this.serviceMatrix.filterStore.pageSize = 5;
       this.applyAllFilters(this.globalFilter, this.filteredValues);
     }
 
@@ -165,7 +167,7 @@ export class MatrixDetailsComponent implements OnInit{
     }
 
     showTask(row) {
-      this.storeFilterValues(this.paginator.pageIndex);
+      this.storeFilterValues(this.paginator.pageIndex, this.paginator.pageSize);
       this.router.navigate([this.selectedRegion, "task", row.taskId ]);
       var tasks = this.dataSource.data.filter(e => e['subProgram'] == row.subProgram);
       this.serviceMatrix.filterStore.selectedSubProgTasks = [];
@@ -193,16 +195,18 @@ export class MatrixDetailsComponent implements OnInit{
 
     backToLogin(){
       this.serviceMatrix.logout(this.userService.user['id']);
-      
+
     this.serviceMatrix.filterStore.pageIndex = 0;
     this.serviceMatrix.filterStore.globalFilter = '';
     this.serviceMatrix.filterStore.columnFilter = undefined;
+    this.serviceMatrix.filterStore.pageSize = 5;
     this.serviceMatrix.filterStore.selectedSubProgTasks = [];
       this.router.navigate(["login"]);
     }
 
-    storeFilterValues(pageIndex: number){
+    storeFilterValues(pageIndex: number, pageSize :number){
       this.serviceMatrix.filterStore.pageIndex = pageIndex;
+      this.serviceMatrix.filterStore.pageSize = pageSize;
       this.serviceMatrix.filterStore.globalFilter = this.globalFilter;
       this.serviceMatrix.filterStore.columnFilter = this.filteredValues;
     }

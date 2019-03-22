@@ -18,10 +18,10 @@
       <mat-icon>arrow_back</mat-icon>
       Back to Catalog
     </button>
-    <!-- <a mat-button color="primary" title="Provide Feedback" target="_new" href="https://deloitteus.sharefile.com/home/shared/fo8dafd8-6efd-428c-aa4f-2e7bf8643f16">
+    <a mat-button color="primary" title="Provide Feedback" target="_new" href="https://deloittesurvey.deloitte.com/Community/se/3FC11B2638966086">
         <mat-icon>feedback</mat-icon>
-    </a> -->
-    <a mat-button color="primary" title="Training Materials" target="_new" href="https://deloitteus.sharefile.com/home/shared/fo8dafd8-6efd-428c-aa4f-2e7bf8643f16">
+    </a>
+    <a mat-button color="primary" title="Training Materials" target="_new" href="http://dfgintranet/portal/BusinessOperations/Budget/ServiceBasedBudgeting/Respondents/tabid/2880/Default.aspx">
         <mat-icon>file_copy</mat-icon>
     </a>
     <button mat-button color="primary" (click)="backToLogin()">
@@ -76,9 +76,9 @@
                       <input id="inputmul" type="number" name="test_name" min="0" class="task-input-multiplier align-top"
                       oninput="validity.valid||(value='');" [(ngModel)]="multiplier" [disabled]="saveRespInputDisabled">
                   </td>
-                  
+
                   <td>
-                      <textarea name="taskfeedback" [(ngModel)]="taskfeedback" rows="5" cols="25" maxlength="2000" class="input-task-feedback-area w-94" [disabled]="saveRespInputDisabled"> </textarea>
+                      <textarea name="taskfeedback" [(ngModel)]="taskfeedback" rows="5" cols="25" maxlength="2000" class="input-task-feedback-area w-94" [disabled]="saveRespInputDisabled || multiplier == undefined || multiplier == 0"> </textarea>
                     </td>
                 </tr>
                 <tr>
@@ -136,7 +136,7 @@
                     <textarea matInput id="taskdesc" name="taskdesc" rows="5" cols="30" disabled class="border-0 font-color-black"> {{task.taskDesc}} </textarea>
                   </mat-form-field>
                 </div>
-                <div class="col-sm-6">                  
+                <div class="col-sm-6">
                     <mat-form-field appearance="outline">
                   <mat-label>Input Multiplier Description</mat-label>
                   <textarea matInput id="multiDesc" name="multiDesc" rows="5" cols="30" disabled class="border-0 font-color-black"> {{task.multDesc}} </textarea>
