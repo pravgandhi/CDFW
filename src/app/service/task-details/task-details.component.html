@@ -7,7 +7,7 @@
       <mat-icon>account_box</mat-icon>
       {{user.userName}}
     </button>
-    <button mat-button color="primary" matTooltip="Region" style="cursor:default;">
+    <button mat-button color="primary" matTooltip="Region/Branch/District" style="cursor:default;">
         <mat-icon>language</mat-icon>
         {{selectedRegion}}
       </button>
@@ -21,7 +21,7 @@
     <a mat-button color="primary" title="Provide Feedback" target="_new" href="https://deloittesurvey.deloitte.com/Community/se/3FC11B2638966086">
         <mat-icon>feedback</mat-icon>
     </a>
-    <a mat-button color="primary" title="Training Materials" target="_new" href="http://dfgintranet/portal/BusinessOperations/Budget/ServiceBasedBudgeting/Respondents/tabid/2880/Default.aspx">
+    <a mat-button color="primary" title="Respondent Resource Hub" target="_new" href="http://dfgintranet/portal/BusinessOperations/Budget/ServiceBasedBudgeting/Respondents/tabid/2880/Default.aspx">
         <mat-icon>file_copy</mat-icon>
     </a>
     <button mat-button color="primary" (click)="backToLogin()">
@@ -78,12 +78,14 @@
                   </td>
 
                   <td>
-                      <textarea name="taskfeedback" [(ngModel)]="taskfeedback" rows="5" cols="25" maxlength="2000" class="input-task-feedback-area w-94" [disabled]="saveRespInputDisabled || multiplier == undefined || multiplier == 0"> </textarea>
-                    </td>
+                      <textarea name="taskfeedback" [(ngModel)]="taskfeedback" rows="5" cols="25" maxlength="2000" class="input-task-feedback-area w-94"
+                      [disabled]="saveRespInputDisabled || multiplier == undefined"> </textarea>
+                  </td>
                 </tr>
                 <tr>
                   <td class="text-center align-top" colspan="2">
-                    <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]="saveRespInputDisabled || multiplier == undefined || multiplier == 0">
+                    <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]="saveRespInputDisabled
+                    || multiplier == undefined">
                         <mat-icon>save</mat-icon>
                         Save Response
                       </button>
@@ -97,7 +99,7 @@
                   <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewFeedbacks()" [disabled]="task['feedbackCount'] == undefined || task['feedbackCount'] == 0"
                   *ngIf="(userRole==='admin' || userRole==='m_lead')">
                   <mat-icon>feedback</mat-icon>
-                  View Feedbacks ({{task['feedbackCount']}})
+                  View Feedback ({{task['feedbackCount']}})
                 </button>
                 </td>
                 </tr>

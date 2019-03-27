@@ -222,7 +222,7 @@ export class TaskDetailsComponent implements OnInit {
   backToLogin(){
     this.serviceMatrix.logout(this.userService.user['id']);
     this.serviceMatrix.filterStore.pageIndex = 0;
-    this.serviceMatrix.filterStore.pageSize = 5;
+    this.serviceMatrix.filterStore.pageSize = 50;
     this.serviceMatrix.filterStore.globalFilter = '';
     this.serviceMatrix.filterStore.columnFilter = undefined;
     this.serviceMatrix.filterStore.selectedSubProgTasks = [];

@@ -100,7 +100,7 @@ export class MatrixDetailsComponent implements OnInit{
 
     clearAllFilters(){
       this.paginator.pageIndex = 0;
-      this.paginator.pageSize = 5;
+      this.paginator.pageSize = 50;
       this.dataSource.paginator = this.paginator;
       this.globalFilter = '';
       this.filteredValues = { taskId:'', serviceName:'', program:'',
@@ -112,7 +112,7 @@ export class MatrixDetailsComponent implements OnInit{
       this.serviceMatrix.filterStore.globalFilter = '';
       this.serviceMatrix.filterStore.columnFilter = undefined;
       this.serviceMatrix.filterStore.selectedSubProgTasks = [];
-      this.serviceMatrix.filterStore.pageSize = 5;
+      this.serviceMatrix.filterStore.pageSize = 50;
       this.applyAllFilters(this.globalFilter, this.filteredValues);
     }
 
@@ -199,7 +199,7 @@ export class MatrixDetailsComponent implements OnInit{
     this.serviceMatrix.filterStore.pageIndex = 0;
     this.serviceMatrix.filterStore.globalFilter = '';
     this.serviceMatrix.filterStore.columnFilter = undefined;
-    this.serviceMatrix.filterStore.pageSize = 5;
+    this.serviceMatrix.filterStore.pageSize = 50;
     this.serviceMatrix.filterStore.selectedSubProgTasks = [];
       this.router.navigate(["login"]);
     }
