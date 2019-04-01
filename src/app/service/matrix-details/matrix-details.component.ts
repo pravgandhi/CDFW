@@ -169,7 +169,7 @@ export class MatrixDetailsComponent implements OnInit{
     showTask(row) {
       this.storeFilterValues(this.paginator.pageIndex, this.paginator.pageSize);
       this.router.navigate([this.selectedRegion, "task", row.taskId ]);
-      var tasks = this.dataSource.data.filter(e => e['subProgram'] == row.subProgram);
+      var tasks = this.dataSource.data.filter(e => e['program'] == row.program);
       this.serviceMatrix.filterStore.selectedSubProgTasks = [];
       if(tasks.length > 1){
         for(var i=0; i<tasks.length; i++){
