@@ -30,14 +30,17 @@ import 'hammerjs';
 import { HttpErrorInterceptor } from './_services/error-interceptor';
 import { MatSnackBarComponent } from './service/mat-snack-bar/mat-snack-bar.component';
 import { AuthInterceptor } from './_services/http.interceptor';
-import { ResestPasswordDialog } from './login/login-form/login-form.component';
+import { ResestPasswordDialog, DataTypeSelectionDialog } from './login/login-form/login-form.component';
 import { FeedbackComponent } from './service/feedback/feedback.component';
+import { LaborClassComponent } from './current-state/labor-class/labor-class.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MatSnackBarComponent,
-    ResestPasswordDialog
+    ResestPasswordDialog,
+    DataTypeSelectionDialog,
+    LaborClassComponent
   ],
   imports: [
     BrowserModule,
@@ -79,6 +82,6 @@ import { FeedbackComponent } from './service/feedback/feedback.component';
   },
     AuthenticationService, UserService, MatSnackBarComponent],
   bootstrap: [AppComponent],
-  entryComponents: [InputsComponent, ResestPasswordDialog, FeedbackComponent]
+  entryComponents: [InputsComponent, ResestPasswordDialog, FeedbackComponent, DataTypeSelectionDialog]
 })
 export class AppModule { }

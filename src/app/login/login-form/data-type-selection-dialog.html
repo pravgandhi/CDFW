@@ -1,0 +1,8 @@
+<!-- <h1 mat-dialog-title>{{data.name}}</h1> -->
+<div mat-dialog-content>
+  <p>Please choose the data type: Mission Level or Current State </p>
+</div>
+<div class="text-center">
+  <button mat-raised-button (click)="closeDialog('mission')" class="mr-2">Mission Level</button>
+  <button mat-raised-button color="primary" (click)="closeDialog('current')" cdkFocusInitial>Current State</button>
+</div>

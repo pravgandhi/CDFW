@@ -10,9 +10,9 @@ export class AuthenticationService {
 
   user: UserEntity;
   //API_URL: string = "http://ec2-18-220-6-166.us-east-2.compute.amazonaws.com:8080/";
-  //API_URL: string = "http://localhost:8080/";
+  API_URL: string = "http://localhost:8080/";
    //API_URL: string = "http://cdfw-alb-prod-775994205.us-west-1.elb.amazonaws.com:9301/";
-   API_URL: string = "https://prod.cdfw-sbb.com/";
+   //API_URL: string = "https://prod.cdfw-sbb.com/";
    //API_URL: string = "https://dev.cdfw-sbb.com/";
 
   constructor(private http: HttpClient, private snackBar: MatSnackBarComponent) { }

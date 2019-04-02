@@ -5,12 +5,14 @@ import { MatrixDetailsComponent} from './service/matrix-details/matrix-details.c
 import { LoginFormComponent } from './login/login-form/login-form.component';
 import { TaskDetailsComponent } from './service/task-details/task-details.component';
 import { AuthGuard } from './_guards';
+import { LaborClassComponent } from './current-state/labor-class/labor-class.component';
 
 
 const routes: Routes = [
   { path: 'user', component: UserRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'service/:regionId', component:  MatrixDetailsComponent, canActivate: [AuthGuard]},
   { path: ':regionId/task/:taskId', component:  TaskDetailsComponent, canActivate: [AuthGuard]},
+  { path: 'currentState', component:  LaborClassComponent, canActivate: [AuthGuard]},
   { path: 'login', component:  LoginFormComponent},
   { path: '', component:  LoginFormComponent},
   // otherwise redirect to home

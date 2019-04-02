@@ -4,7 +4,7 @@ import { AuthenticationService } from '../../_services/authentication.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { UserService } from 'src/app/_services';
 import { MatSnackBarComponent } from 'src/app/service/mat-snack-bar/mat-snack-bar.component';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, ErrorStateMatcher } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, ErrorStateMatcher, MatDialogConfig } from '@angular/material';
 
 
 @Component({
@@ -42,22 +42,29 @@ export class LoginFormComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
+      var self = this;
       this.authenticationService.login(this.f.username.value, this.f.password.value).then(
-        isMission => {
-          if (isMission) {
-            var mappedRegions = this.userService.user != undefined ? this.userService.user['userRegionMappingsById'] : null;
+        validUser => {
+          if (validUser) {
+            var mappedRegions = self.userService.user != undefined ? self.userService.user['userRegionMappingsById'] : null;
             if (mappedRegions != null && mappedRegions.length > 0) {
               let userRegion = mappedRegions[0]['regionByRegionId']['regionName'];
-              this.router.navigate(['service', userRegion]);
+              if(self.userService.user['dataTypeByDataTypeId']['dataType'] == 'mission') {
+                  self.router.navigate(['service', userRegion]);
+              } else if (self.userService.user['dataTypeByDataTypeId']['dataType'] == 'current') {
+                 self.router.navigate(['currentState']);
+              } else if (self.userService.user['dataTypeByDataTypeId']['dataType'] == 'both'){
+                  this.chooseDataType(userRegion);
+              }
             } else {
               //  this.snackBar.openSnackBar( `User ${this.f.username.value} does not have access to any region.`, 'Close', "red-snackbar");
-              this.errMsg = `User does not have access to any region. `;
-              this.router.navigate(['login']);
+              self.errMsg = `User does not have access to any region. `;
+              self.router.navigate(['login']);
             }
           } else {
             // this.snackBar.openSnackBar( "Invalid Credentials", 'Close', "red-snackbar");
-            this.errMsg = "Invalid Credentials";
-            this.router.navigate(['login']);
+            self.errMsg = "Invalid Credentials";
+            self.router.navigate(['login']);
           }
         }
       );
@@ -72,6 +79,25 @@ export class LoginFormComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+
+
+  chooseDataType(userRegion:any){
+    status = 'A';
+
+      const dialogRef = this.dialog.open(DataTypeSelectionDialog, {
+        width: '500px',
+        data: {confirm: 'No'}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.confirm == 'mission'){
+          this.router.navigate(['service', userRegion]);
+        } else {
+          this.router.navigate(['currentState']);
+        }
+      });
+
   }
 }
 
@@ -127,6 +153,21 @@ export class ResestPasswordDialog {
 
   closeDialog(confirm): void {
     this.dialogRef.close({ 'confirm': confirm });
+  }
+}
+
+@Component({
+  selector: 'data-type-selection-dialog',
+  templateUrl: 'data-type-selection-dialog.html',
+})
+export class DataTypeSelectionDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DataTypeSelectionDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  closeDialog(confirm): void{
+    this.dialogRef.close({'confirm': confirm});
   }
 
 }
