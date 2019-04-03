@@ -59,7 +59,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showTask(row)"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showMatrix(row)"></tr>
   </table>
   <mat-paginator #paginator [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>

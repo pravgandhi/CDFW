@@ -77,6 +77,11 @@ export class ServiceMatrixService {
      return this.http.get(this.API_URL+'service/'+selectedRegion+ '/'+ userId);
     }
 
+
+    public getCsMatrixData = () => {
+        return this.http.get(this.API_URL+'service/csmatrix');
+     }
+
     public selectInput = (regionId: number, taskId: string, userId:string, approvedUserId:any) => {
       return this.http.get(this.API_URL+'selectInput/'+regionId+'/'+ taskId+ '/'+ userId+'/'+approvedUserId);
     }

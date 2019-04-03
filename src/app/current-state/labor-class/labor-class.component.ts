@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceMatrixService } from 'src/app/service/service-matrix.service';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
@@ -17,13 +17,23 @@ export class LaborClassComponent implements OnInit {
   dataSource = new MatTableDataSource<Object>();
   user: any = null;
   displayedColumns: string[] = [];
+  selectedRegion: string;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+
   constructor(private http: HttpClient, private router: Router, private serviceMatrix: ServiceMatrixService,
-    private userService:UserService) { }
+    private userService:UserService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+    this.selectedRegion = params['regionId'];
+      this.customInit(params);
+    });
+  }
+
+
+  customInit(params){
     this.user = this.userService.user;
     if(this.user != null && this.user["laborClassMappingsById"].length > 0){
       this.displayedColumns = ["laborClassName", "hours"];
@@ -38,6 +48,11 @@ export class LaborClassComponent implements OnInit {
 
   backToLogin() {
     this.router.navigate(["login"]);
+  }
+
+
+  showMatrix(row) {
+    this.router.navigate(['cslaborhours']);
   }
 
 }

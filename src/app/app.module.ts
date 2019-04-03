@@ -33,6 +33,7 @@ import { AuthInterceptor } from './_services/http.interceptor';
 import { ResestPasswordDialog, DataTypeSelectionDialog } from './login/login-form/login-form.component';
 import { FeedbackComponent } from './service/feedback/feedback.component';
 import { LaborClassComponent } from './current-state/labor-class/labor-class.component';
+import { LaborHourDetailsComponent } from './current-state/labor-hour-details/labor-hour-details.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { LaborClassComponent } from './current-state/labor-class/labor-class.com
     MatSnackBarComponent,
     ResestPasswordDialog,
     DataTypeSelectionDialog,
-    LaborClassComponent
+    LaborClassComponent,
+    LaborHourDetailsComponent
   ],
   imports: [
     BrowserModule,
