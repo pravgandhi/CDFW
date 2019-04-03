@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
-  MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSnackBarModule
+  MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatPaginatorModule
 } from '@angular/material';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -68,7 +68,9 @@ import { LaborClassComponent } from './current-state/labor-class/labor-class.com
     ServiceModule,
     LoginModule,
     MatSnackBarModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,  
+    MatPaginatorModule, 
+    MatSortModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
