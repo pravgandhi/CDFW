@@ -52,7 +52,7 @@ export class LoginFormComponent implements OnInit {
               if(self.userService.user['dataTypeByDataTypeId']['dataType'] == 'mission') {
                   self.router.navigate(['service', userRegion]);
               } else if (self.userService.user['dataTypeByDataTypeId']['dataType'] == 'current') {
-                 self.router.navigate(['currentState']);
+                 self.router.navigate(['currentState', userRegion["regionId"]]);
               } else if (self.userService.user['dataTypeByDataTypeId']['dataType'] == 'both'){
                   this.chooseDataType(userRegion);
               }

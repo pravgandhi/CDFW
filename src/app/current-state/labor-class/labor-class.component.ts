@@ -17,7 +17,7 @@ export class LaborClassComponent implements OnInit {
   dataSource = new MatTableDataSource<Object>();
   user: any = null;
   displayedColumns: string[] = [];
-  selectedRegion: string;
+  selectedRegionId: number;
   selectedRegionObj: string;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -28,16 +28,16 @@ export class LaborClassComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.selectedRegion = params['regionId'];
-      this.customInit(params);
+      this.selectedRegionId = params['regionId'];
+      this.customInit(this.selectedRegionId);
     });
   }
 
-  customInit(params) {
-    this.user = this.userService.user;    
+  customInit(regionId) {
+    this.user = this.userService.user;
     this.setRegionDetails(this.user);
     if (this.user != null && this.user["laborClassMappingsById"].length > 0) {
-      this.setDatasource(this.selectedRegion);
+      this.setDatasource(this.selectedRegionId);
     }
   }
 
@@ -46,7 +46,7 @@ export class LaborClassComponent implements OnInit {
   }
 
   chooseRegion(regionId: number){
-     this.setDatasource(regionId);
+     this.router.navigate(["currentState", regionId]);
   }
 
   setDatasource(regionId){
@@ -67,7 +67,7 @@ export class LaborClassComponent implements OnInit {
   }
 
   showMatrix(row) {
-    this.router.navigate(['cslaborhours']);
+    this.router.navigate(['csLaborHours', this.selectedRegionId]);
   }
 
 }

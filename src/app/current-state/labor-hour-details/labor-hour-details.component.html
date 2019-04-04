@@ -14,15 +14,11 @@
     </div>
     <div class="col-md-6 text-right">
       <span> <b>Actions: </b></span>
-      <button mat-button color = "primary" [matMenuTriggerFor]="region">
-          <mat-icon>language</mat-icon>
-          Choose Region/Branch/District
-      </button>
 
-      <mat-menu #region="matMenu">
-        <button mat-menu-item *ngFor="let item of regionList"
-        (click)="chooseRegion(item.regionByRegionId.regionName)"> {{item.regionByRegionId.regionName}} </button>
-      </mat-menu>
+      <button mat-button color="primary" (click)="backToLandingPage()">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Landing Page
+      </button>
 
 
       <a mat-button color="primary" title="Provide Feedback" target="_new" href="https://deloittesurvey.deloitte.com/Community/se/3FC11B2638966086">
@@ -87,7 +83,7 @@
            {{element.taskName}}
          </td>
        </ng-container>
-       
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showTask(row)"></tr>
   </table>
