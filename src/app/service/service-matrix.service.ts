@@ -79,7 +79,7 @@ export class ServiceMatrixService {
 
 
     public getCsMatrixData = () => {
-        return this.http.get(this.API_URL+'service/csmatrix');
+        return this.http.get(this.API_URL+'cslaborhours');
      }
 
     public selectInput = (regionId: number, taskId: string, userId:string, approvedUserId:any) => {
