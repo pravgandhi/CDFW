@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'user', component: UserRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'service/:regionId', component:  MatrixDetailsComponent, canActivate: [AuthGuard]},
   { path: ':regionId/task/:taskId', component:  TaskDetailsComponent, canActivate: [AuthGuard]},
-  { path: 'currentState', component:  LaborClassComponent, canActivate: [AuthGuard]},
+  { path: 'currentState/:regionId', component:  LaborClassComponent, canActivate: [AuthGuard]},
   { path: 'cslaborhours', component:  LaborHourDetailsComponent, canActivate: [AuthGuard]},
   { path: 'login', component:  LoginFormComponent},
   { path: '', component:  LoginFormComponent},

@@ -48,7 +48,7 @@ export class LoginFormComponent implements OnInit {
           if (validUser) {
             var mappedRegions = self.userService.user != undefined ? self.userService.user['userRegionMappingsById'] : null;
             if (mappedRegions != null && mappedRegions.length > 0) {
-              let userRegion = mappedRegions[0]['regionByRegionId']['regionName'];
+              let userRegion = mappedRegions[0]['regionByRegionId'];
               if(self.userService.user['dataTypeByDataTypeId']['dataType'] == 'mission') {
                   self.router.navigate(['service', userRegion]);
               } else if (self.userService.user['dataTypeByDataTypeId']['dataType'] == 'current') {
@@ -92,9 +92,9 @@ export class LoginFormComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result.confirm == 'mission'){
-          this.router.navigate(['service', userRegion]);
+          this.router.navigate(['service', userRegion["regionName"]]);
         } else {
-          this.router.navigate(['currentState']);
+          this.router.navigate(['currentState', userRegion["regionId"]]);
         }
       });
 
