@@ -18,7 +18,7 @@ export class LaborClassComponent implements OnInit {
   user: any = null;
   displayedColumns: string[] = [];
   selectedRegionId: number;
-  selectedRegionObj: string;
+  selectedRegionObj: Object;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   regionList: [];

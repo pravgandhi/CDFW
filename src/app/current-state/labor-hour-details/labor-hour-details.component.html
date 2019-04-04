@@ -1,3 +1,4 @@
+<div align="center" class="mb-4">
 <mat-toolbar>
     <div class="row w-100 m-0">
     <div class="col-md-6 text-left">
@@ -9,7 +10,7 @@
       </button>
       <button mat-button color="primary" matTooltip="Region/Branch/District" style="cursor:default;">
           <mat-icon>language</mat-icon>
-          {{selectedRegion}}
+          {{selectedRegionObj.regionByRegionId.regionName}}
         </button>
     </div>
     <div class="col-md-6 text-right">
@@ -35,6 +36,24 @@
     </div>
     </div>
   </mat-toolbar>
+
+
+  <!--<mat-accordion>
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Self aware panel
+      </mat-panel-title>
+      <mat-panel-description>
+        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>I'm visible because I am open</p>
+  </mat-expansion-panel>
+</mat-accordion> -->
+
+
 
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)] = "globalFilter">
@@ -84,8 +103,19 @@
          </td>
        </ng-container>
 
+       <ng-container matColumnDef ="hoursSpent">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Spent</th>
+          <td mat-cell *matCellDef= "let element">
+            <button mat-button color="primary" matTooltip="Assign Hours" style="cursor:default;" >
+                <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showTask(row)"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="assignHours(row)"></tr>
   </table>
 <mat-paginator #paginator
   [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+
+</div>

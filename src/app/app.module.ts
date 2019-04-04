@@ -11,7 +11,7 @@ import { LoginModule } from './login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
+  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatExpansionModule,
   MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatPaginatorModule
 } from '@angular/material';
 
@@ -70,9 +70,10 @@ import { LaborHourDetailsComponent } from './current-state/labor-hour-details/la
     ServiceModule,
     LoginModule,
     MatSnackBarModule,
-    NgxSpinnerModule,  
-    MatPaginatorModule, 
-    MatSortModule
+    NgxSpinnerModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatExpansionModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
