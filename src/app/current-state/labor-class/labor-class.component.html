@@ -8,22 +8,22 @@
           <mat-icon>account_box</mat-icon>
           {{user.userName}}
         </button>
-        <!-- <button mat-button color="primary" matTooltip="Region/Branch/District" style="cursor:default;">
+        <button mat-button color="primary" matTooltip="Region/Branch/District" style="cursor:default;">
           <mat-icon>language</mat-icon>
-          {{selectedRegion}}
-        </button> -->
+          {{selectedRegionObj.regionByRegionId.regionName}}
+        </button>
       </div>
       <div class="col-md-6 text-right">
         <span> <b>Actions: </b></span>
-        <!-- <button mat-button color="primary" [matMenuTriggerFor]="region">
+        <button mat-button color="primary" [matMenuTriggerFor]="region">
           <mat-icon>language</mat-icon>
           Choose Region/Branch/District
         </button>
 
         <mat-menu #region="matMenu">
           <button mat-menu-item *ngFor="let item of regionList"
-            (click)="chooseRegion(item.regionByRegionId.regionName)"> {{item.regionByRegionId.regionName}} </button>
-        </mat-menu> -->
+            (click)="chooseRegion(item.regionId)"> {{item.regionByRegionId.regionName}} </button>
+        </mat-menu>
 
 
         <a mat-button color="primary" title="Provide Feedback" target="_new"
