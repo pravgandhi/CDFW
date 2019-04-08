@@ -77,6 +77,10 @@ export class ServiceMatrixService {
      return this.http.get(this.API_URL+'service/'+selectedRegion+ '/'+ userId);
     }
 
+    public getLaborMappingsData = (selectedRegion: number, userId:string ) => {
+      return this.http.get(this.API_URL+'csservice/'+selectedRegion+ '/'+ userId);
+    }
+
 
     public getCsMatrixData = () => {
         return this.http.get(this.API_URL+'cslaborhours');

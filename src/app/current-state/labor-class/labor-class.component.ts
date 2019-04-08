@@ -34,27 +34,23 @@ export class LaborClassComponent implements OnInit {
   }
 
   customInit(regionId) {
-    this.user = this.userService.user;
-    this.setRegionDetails(this.user);
-    if (this.user != null && this.user["laborClassMappingsById"].length > 0) {
-      this.setDatasource(this.selectedRegionId);
+    this.user = this.userService.user;    
+    this.regionList = this.user['userRegionMappingsById'];
+    this.selectedRegionObj = this.regionList.find(e => e["regionId"] == regionId);
+    if (this.user != null) {      
+      this.serviceMatrix.getLaborMappingsData(this.selectedRegionId, this.user["id"]).subscribe(res => {      
+        this.setDatasource(this.selectedRegionId, res);
+      });
     }
-  }
-
-  setRegionDetails(user: Object) {
-    this.regionList = user['userRegionMappingsById'];
   }
 
   chooseRegion(regionId: number){
      this.router.navigate(["currentState", regionId]);
   }
 
-  setDatasource(regionId){
+  setDatasource(regionId, userLsMappingByRegion){
     this.dataSource.data = [];
-    this.selectedRegionObj = this.regionList.find(e => e["regionId"] == regionId);
     this.displayedColumns = ["laborClassName", "hours"];
-    var userLsMappings = this.user["laborClassMappingsById"];
-    var userLsMappingByRegion = userLsMappings.filter(e => e.regionId == regionId);
     userLsMappingByRegion.forEach(element => {
       this.dataSource.data.push(element["laborClass"]);
     });
