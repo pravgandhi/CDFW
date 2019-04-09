@@ -53,6 +53,35 @@
   </mat-expansion-panel>
 </mat-accordion> -->
 
+<mat-card class = "labor-hours-card">
+  <mat-card-header>
+        <mat-card-title>Labor Classification Hours
+        </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+    <table *ngIf="assignedTasks.length>0">
+      <tr *ngFor="let task of assignedTasks">
+        <td>
+          {{task.taskId}}
+        </td>
+        <td>
+          {{task.taskId}}
+        </td>
+        <td>
+          {{task.taskId}}
+        </td>
+      </tr>
+    </table>
+
+    <ul *ngIf="assignedTasks.length>0">
+      <li *ngFor="let task of assignedTasks">
+        {{task.taskId}}
+      </li>
+    </ul>
+  <h6 *ngIf="assignedTasks.length==0" class="text-center">Hours yet to be assigned</h6>
+  </mat-card-content>
+</mat-card>
 
 
   <mat-form-field>
