@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceMatrixService } from 'src/app/service/service-matrix.service';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { UserService } from 'src/app/_services';
 import { useAnimation } from '@angular/animations';
 import { DataSource } from '@angular/cdk/table';
@@ -10,11 +11,19 @@ import { DataSource } from '@angular/cdk/table';
 @Component({
   selector: 'app-labor-class',
   templateUrl: './labor-class.component.html',
-  styleUrls: ['./labor-class.component.css']
+  styleUrls: ['./labor-class.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class LaborClassComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Object>();
+  expandedElement: Object | null;
   user: any = null;
   displayedColumns: string[] = [];
   selectedRegionId: number;
@@ -50,10 +59,8 @@ export class LaborClassComponent implements OnInit {
 
   setDatasource(regionId, userLsMappingByRegion){
     this.dataSource.data = [];
-    this.displayedColumns = ["laborClassName", "hours"];
-    userLsMappingByRegion.forEach(element => {
-      this.dataSource.data.push(element["laborClass"]);
-    });
+    this.displayedColumns = ["laborClassName", "hours", "inputHours"];
+    this.dataSource.data = userLsMappingByRegion as Object[];
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
@@ -64,6 +71,11 @@ export class LaborClassComponent implements OnInit {
 
   showMatrix(row) {
     this.router.navigate(['csLaborHours', this.selectedRegionId]);
+  }
+
+  expandRow(element) {
+    this.expandedElement = this.expandedElement === element ? null : element;
+    return false;
   }
 
 }
