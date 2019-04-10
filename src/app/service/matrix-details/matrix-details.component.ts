@@ -130,7 +130,9 @@ export class MatrixDetailsComponent implements OnInit{
         let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let countFound = data.inputReceived.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let fbReceivedFound = data.feedbackReceived.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
-        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound || fbReceivedFound;
+        let taskDescFound = data.taskDesc.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        let sgFound = data.serviceGlossary.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound || fbReceivedFound || taskDescFound || sgFound;
       }
 
       if (!globalMatch) {

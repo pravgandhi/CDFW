@@ -58,3 +58,9 @@ mat-toolbar  span, mat-toolbar  a  span {
 .help-text-icon {
   font-size: 14px;
 }
+
+.labor-hours-card {
+  max-width: 1000px;
+  margin-top: 10px;
+  margin-top: 10px;
+}

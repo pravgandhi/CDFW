@@ -14,6 +14,9 @@ export class LaborHourDetailsComponent implements OnInit {
   user: Object;
   selectedRegionId: number;
   selectedRegionObj: Object;
+  selectedTask:Object;
+  assignedTasks: Object[] = new Array();
+  taskCatalog: Object[];
   dataSource = new MatTableDataSource<Object>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -37,6 +40,7 @@ export class LaborHourDetailsComponent implements OnInit {
     this.selectedRegionObj = this.regionList.find(e => e["regionId"] == params['regionId']);
     this.serviceMatrix.getCsMatrixData()
     .subscribe(res => {
+      this.taskCatalog = res as Object[];
       this.setDataSource(res as Object[])
     });
   }
@@ -61,7 +65,10 @@ export class LaborHourDetailsComponent implements OnInit {
   }
 
   assignHours(row:any){
-    alert(row);
+    console.log(row);
+    this.selectedTask = row;
+    this.assignedTasks.push(row);
+    console.log(this.assignedTasks);
   }
 
 }
