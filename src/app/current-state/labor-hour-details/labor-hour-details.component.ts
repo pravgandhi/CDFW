@@ -3,6 +3,7 @@ import { ServiceMatrixService } from 'src/app/service/service-matrix.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { UserService } from 'src/app/_services';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SelectItem } from 'primeng/components/common/selectitem';
 
 
 @Component({
@@ -24,6 +25,12 @@ export class LaborHourDetailsComponent implements OnInit {
   displayedColumns = ["taskId", "serviceName", "program",
   "subProgram", "taskCategory", "taskName", "hoursSpent"];
 
+   csHoursData: any = [];
+   data: any = [];
+
+   fundingSources: SelectItem[];
+
+
   constructor( private serviceMatrix: ServiceMatrixService, private userService:UserService,
   private router: Router, private route: ActivatedRoute) { }
 
@@ -32,6 +39,14 @@ export class LaborHourDetailsComponent implements OnInit {
       this.selectedRegionId = params['regionId'];
       this.customInit(params);
     });
+  }
+
+
+  addRow(row:any) {
+    this.csHoursData = [...this.csHoursData];
+    this.csHoursData.push({taskId: row.taskId, taskName: row.taskName, isEditable:false});
+    this.data = [...this.data];
+    this.data.push({name: "", city: "", isEditable: true});
   }
 
   customInit(params){
@@ -43,6 +58,15 @@ export class LaborHourDetailsComponent implements OnInit {
       this.taskCatalog = res as Object[];
       this.setDataSource(res as Object[])
     });
+
+    this.fundingSources = [
+    {label: 'FS1', value: 'Funding Source 1'},
+    {label: 'FS2', value: 'Funding Source 2'},
+    {label: 'FS3', value: 'Funding Source 3'},
+    {label: 'FS4', value: 'Funding Source 4'},
+    {label: 'FS5', value: 'Funding Source 5'},
+    {label: 'FS6', value: 'Funding Source 6'},
+  ];
   }
 
   setRegionDetails(user: Object) {
@@ -68,7 +92,20 @@ export class LaborHourDetailsComponent implements OnInit {
     console.log(row);
     this.selectedTask = row;
     this.assignedTasks.push(row);
+    this.addRow(row);
     console.log(this.assignedTasks);
   }
+
+  onRowEditInit(csHoursData: any) {
+    alert('Inside edit' + csHoursData.taskId);
+  }
+
+onRowEditSave(csHoursData: any) {
+    alert('Inside Save');
+}
+
+onRowEditCancel(csHoursData: any, index: number) {
+    alert('Inside Cancel');
+}
 
 }
