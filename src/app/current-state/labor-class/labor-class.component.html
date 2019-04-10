@@ -43,23 +43,55 @@
     </div>
   </mat-toolbar>
 
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" multiTemplateDataRows>
+    <!-- <ng-container matColumnDef="expansion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background"></th>
+      <td mat-cell *matCellDef="let element" (click)="expandRow(element)">
+        <i class="material-icons" *ngIf="element == expandedElement" style="cursor: pointer" title="Collapse">remove_circle_outline</i>
+        <i class="material-icons" *ngIf="element != expandedElement" style="cursor: pointer" title="Expand">add_circle_outline</i>
+      </td>
+    </ng-container> -->
+    
     <ng-container matColumnDef="laborClassName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Labor Class Name</th>
       <td mat-cell *matCellDef="let element">
-        {{element.labor_class_name}}
+        {{element.laborClassName}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="hours">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Bank</th>
       <td mat-cell *matCellDef="let element">
         {{element.hours}}
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="inputHours">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Entered</th>
+      <td mat-cell *matCellDef="let element">
+        0
+      </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" class="example-detail-row-td">
+        <div class="example-element-detail"
+             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="example-element-description">
+            {{element.hours}}
+            <span class="example-element-description-attribution"> -- Test </span>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    
+      <!-- (click)="showMatrix(element)" -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showMatrix(row)"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;"   class="example-element-row"
+      (click)="expandedElement = expandedElement === element ? null : element"
+      [class.example-expanded-row]="expandedElement === element"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
   <mat-paginator #paginator [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>
