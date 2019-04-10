@@ -107,3 +107,17 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
+
+.expand-icon {
+  cursor: pointer; 
+  color: #1f4e79;
+}
+
+.lcsummary-table {
+  border-color: lightgray;
+  margin: 3px;
+}
+
+.lcsummary-table td, .lcsummary-table th {
+  padding: 3px;
+}
