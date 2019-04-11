@@ -59,7 +59,7 @@ export class LaborClassComponent implements OnInit {
 
   setDatasource(regionId, userLsMappingByRegion){
     this.dataSource.data = [];
-    this.displayedColumns = ["expansion", "laborClassName", "hours", "inputHours"];
+    this.displayedColumns = ["expansion", "positionId", "laborClassName", "hours", "inputHours", "actions"];
     this.dataSource.data = userLsMappingByRegion as Object[];
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -76,7 +76,7 @@ export class LaborClassComponent implements OnInit {
   expandRow(element, action) {
     this.expandedElement = this.expandedElement === element ? null : element;
     if(action == 'expand'){
-      this.serviceMatrix.getLaborClassSummary(this.selectedRegionId, this.user["id"], element.laborClassName).subscribe(res => {      
+      this.serviceMatrix.getLaborClassSummary(this.selectedRegionId, this.user["id"], element.positionId).subscribe(res => {      
         console.log(res);
         element.lcsummary = res;
       });
