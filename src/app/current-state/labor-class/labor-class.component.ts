@@ -59,7 +59,7 @@ export class LaborClassComponent implements OnInit {
 
   setDatasource(regionId, userLsMappingByRegion){
     this.dataSource.data = [];
-    this.displayedColumns = ["laborClassName", "hours", "inputHours"];
+    this.displayedColumns = ["expansion", "laborClassName", "hours", "inputHours"];
     this.dataSource.data = userLsMappingByRegion as Object[];
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -73,9 +73,14 @@ export class LaborClassComponent implements OnInit {
     this.router.navigate(['csLaborHours', this.selectedRegionId, row.laborClassName]);
   }
 
-  expandRow(element) {
+  expandRow(element, action) {
     this.expandedElement = this.expandedElement === element ? null : element;
-    return false;
+    if(action == 'expand'){
+      this.serviceMatrix.getLaborClassSummary(this.selectedRegionId, this.user["id"], element.laborClassName).subscribe(res => {      
+        console.log(res);
+        element.lcsummary = res;
+      });
+    }
   }
 
 }

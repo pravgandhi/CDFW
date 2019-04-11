@@ -44,31 +44,31 @@
   </mat-toolbar>
 
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" multiTemplateDataRows>
-    <!-- <ng-container matColumnDef="expansion">
+    <ng-container matColumnDef="expansion">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background"></th>
-      <td mat-cell *matCellDef="let element" (click)="expandRow(element)">
-        <i class="material-icons" *ngIf="element == expandedElement" style="cursor: pointer" title="Collapse">remove_circle_outline</i>
-        <i class="material-icons" *ngIf="element != expandedElement" style="cursor: pointer" title="Expand">add_circle_outline</i>
+      <td mat-cell *matCellDef="let element" style="width:20px;">
+        <i class="material-icons expand-icon" *ngIf="element == expandedElement" title="Collapse" (click)="expandRow(element, 'collapse')">remove_circle_outline</i>
+        <i class="material-icons expand-icon" *ngIf="element != expandedElement" title="Expand" (click)="expandRow(element, 'expand')">add_circle_outline</i>
       </td>
-    </ng-container> -->
+    </ng-container>
 
     <ng-container matColumnDef="laborClassName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Labor Class Name</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" (click)="showMatrix(element)">
         {{element.laborClassName}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="hours">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Bank</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" (click)="showMatrix(element)">
         {{element.hours}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="inputHours">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Entered</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" (click)="showMatrix(element)">
         0
       </td>
     </ng-container>
@@ -78,17 +78,35 @@
       <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" class="example-detail-row-td">
         <div class="example-element-detail"
              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <div class="example-element-description">
-            {{element.hours}}
-            <span class="example-element-description-attribution"> -- Test </span>
-          </div>
+             <table class="w-100 lcsummary-table" border="1">
+                <tr>
+                  <th>Task ID</th>
+                  <th>Service</th>
+                  <th>Program</th>
+                  <th>Sub Program</th>
+                  <th>Task Category</th>
+                  <th>Task Name</th>
+                  <th>Hours</th>
+                </tr>
+                <tr *ngFor="let summary of element.lcsummary">
+                  <td>{{summary.taskId}}</td>
+                  <td>{{summary.serviceMatrixByTaskId.serviceName}}</td>
+                  <td>{{summary.serviceMatrixByTaskId.program}}</td>
+                  <td>{{summary.serviceMatrixByTaskId.subProgram}}</td>
+                  <td>{{summary.serviceMatrixByTaskId.taskCategory}}</td>
+                  <td>{{summary.serviceMatrixByTaskId.taskName}}</td>
+                  <td>{{summary.inputHours}}</td>
+                </tr>
+             </table>
         </div>
       </td>
     </ng-container>
 
       <!-- (click)="showMatrix(element)" -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showMatrix(row)"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;"   class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
   <mat-paginator #paginator [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>
