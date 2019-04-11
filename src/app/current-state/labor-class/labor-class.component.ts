@@ -43,11 +43,11 @@ export class LaborClassComponent implements OnInit {
   }
 
   customInit(regionId) {
-    this.user = this.userService.user;    
+    this.user = this.userService.user;
     this.regionList = this.user['userRegionMappingsById'];
     this.selectedRegionObj = this.regionList.find(e => e["regionId"] == regionId);
-    if (this.user != null) {      
-      this.serviceMatrix.getLaborMappingsData(this.selectedRegionId, this.user["id"]).subscribe(res => {      
+    if (this.user != null) {
+      this.serviceMatrix.getLaborMappingsData(this.selectedRegionId, this.user["id"]).subscribe(res => {
         this.setDatasource(this.selectedRegionId, res);
       });
     }
@@ -70,7 +70,7 @@ export class LaborClassComponent implements OnInit {
   }
 
   showMatrix(row) {
-    this.router.navigate(['csLaborHours', this.selectedRegionId]);
+    this.router.navigate(['csLaborHours', this.selectedRegionId, row.laborClassName]);
   }
 
   expandRow(element) {

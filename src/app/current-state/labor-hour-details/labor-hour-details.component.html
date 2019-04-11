@@ -39,12 +39,11 @@
 
 <mat-card class = "labor-hours-card">
   <mat-card-header>
-        <mat-card-title>Labor Classification Hours
+        <mat-card-title>{{selectedLaborClassName}}
         </mat-card-title>
   </mat-card-header>
   <mat-card-content>
 
-<h3>Row Editing</h3>
 <p-table [value]="csHoursData" dataKey="taskId">
     <ng-template pTemplate="header">
         <tr>

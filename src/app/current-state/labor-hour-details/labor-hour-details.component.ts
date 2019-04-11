@@ -13,6 +13,7 @@ import { SelectItem } from 'primeng/components/common/selectitem';
 })
 export class LaborHourDetailsComponent implements OnInit {
   user: Object;
+  selectedLaborClassName: string;
   selectedRegionId: number;
   selectedRegionObj: Object;
   selectedTask:Object;
@@ -37,6 +38,7 @@ export class LaborHourDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.selectedRegionId = params['regionId'];
+      this.selectedLaborClassName = params['laborClassName'];
       this.customInit(params);
     });
   }
@@ -45,19 +47,22 @@ export class LaborHourDetailsComponent implements OnInit {
   addRow(row:any) {
     this.csHoursData = [...this.csHoursData];
     this.csHoursData.push({taskId: row.taskId, taskName: row.taskName, isEditable:false});
-    this.data = [...this.data];
-    this.data.push({name: "", city: "", isEditable: true});
   }
 
   customInit(params){
     this.user = this.userService.user;
     this.setRegionDetails(this.user);
     this.selectedRegionObj = this.regionList.find(e => e["regionId"] == params['regionId']);
-    this.serviceMatrix.getCsMatrixData()
-    .subscribe(res => {
-      this.taskCatalog = res as Object[];
-      this.setDataSource(res as Object[])
-    });
+    if(localStorage.getItem('csServiceMatrix') == null || localStorage.getItem('csServiceMatrix') == undefined){
+      this.serviceMatrix.getCsMatrixData()
+      .subscribe(res => {
+        this.taskCatalog = res as Object[];
+        this.setDataSource(res as Object[]);
+        localStorage.setItem('csServiceMatrix', JSON.stringify(res as Object[]));
+      });
+    } else {
+      this.setDataSource(JSON.parse(localStorage.getItem('csServiceMatrix')) as Object[]);
+    }
 
     this.fundingSources = [
     {label: 'FS1', value: 'Funding Source 1'},
