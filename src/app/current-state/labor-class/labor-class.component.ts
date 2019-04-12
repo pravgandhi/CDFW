@@ -46,9 +46,18 @@ export class LaborClassComponent implements OnInit {
     this.user = this.userService.user;    
     this.regionList = this.user['userRegionMappingsById'];
     this.selectedRegionObj = this.regionList.find(e => e["regionId"] == regionId);
-    if (this.user != null) {      
-      this.serviceMatrix.getLaborMappingsData(this.selectedRegionId, this.user["id"]).subscribe(res => {      
-        this.setDatasource(this.selectedRegionId, res);
+    if (this.user != null) {       
+      var result = [];   
+      this.serviceMatrix.getLaborMappingsData(this.selectedRegionId, this.user["id"]).subscribe(res => {
+        result = res as Object[];   
+        result.forEach(element => {
+          var inputHours = 0;
+          element["csUserLaborClassInputs"].forEach(e => {
+            inputHours = inputHours + e["inputHours"];
+          });
+          element["inputHours"] = inputHours;
+        });  
+        this.setDatasource(this.selectedRegionId, result);
       });
     }
   }
@@ -73,14 +82,8 @@ export class LaborClassComponent implements OnInit {
     this.router.navigate(['csLaborHours', this.selectedRegionId]);
   }
 
-  expandRow(element, action) {
+  expandRow(element) {
     this.expandedElement = this.expandedElement === element ? null : element;
-    if(action == 'expand'){
-      this.serviceMatrix.getLaborClassSummary(this.selectedRegionId, this.user["id"], element.positionId).subscribe(res => {      
-        console.log(res);
-        element.lcsummary = res;
-      });
-    }
   }
 
 }
