@@ -112,6 +112,7 @@ export class TaskDetailsComponent implements OnInit {
              if(fltr.length > 0){
               _self.task["nextTaskId"] = fltr[0].nextTaskId;
               _self.task["prevTaskId"] = fltr[0].prevTaskId;
+              _self.task["index"] = fltr[0].index;
             }
            }
 

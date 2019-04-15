@@ -144,7 +144,7 @@ export class Filters {
   pageIndex: number = 0;
   globalFilter : string = '';
   columnFilter : any;
-  selectedSubProgTasks: any[];
+  selectedSubProgTasks: any[] = [];
   pageSize : number = 50;
 
 /*  get pageIndex():number{
