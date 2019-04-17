@@ -25,7 +25,7 @@ export class TaskDetailsComponent implements OnInit {
   displayedColumns: string[] = ["title", "role", "time"];
   displayedColumnsJustification: string[] = ["categoryName"];
   selectedRegion:string;
-  selectedRegionId:string;
+  selectedRegionId:number;
   selectedTask:string;
   multiplier: number= 0;
   taskfeedback: string;
@@ -46,7 +46,8 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.customInit(params['regionId'], params['taskId']);
+      this.selectedRegionId = params['regionId'];
+      this.customInit(params['regionName'], params['taskId']);
     });
   }
 
@@ -54,11 +55,11 @@ export class TaskDetailsComponent implements OnInit {
 
   }
 
-  customInit(regionId:string,taskId: string){
+  customInit(regionName:string, taskId: string){
     this.user = this.userService.user;
-    this.getTaskInfo1(regionId, taskId);
+    this.getTaskInfo1(regionName, taskId);
     this.userRole = this.userService.userRole;
-    this.selectedRegion = regionId;
+    this.selectedRegion = regionName;
     this.inpuTaskId = taskId;
 
     if (this.serviceMatrix.filterStore.selectedSubProgTasks != undefined) {
@@ -176,7 +177,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   goBackToMatrix(){
-    this.router.navigate(["service", this.selectedRegion]);
+    this.router.navigate(["service", this.selectedRegion, this.selectedRegionId]);
   }
 
   viewInputs(){

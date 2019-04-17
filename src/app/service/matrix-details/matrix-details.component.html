@@ -22,7 +22,7 @@
 
           <mat-menu #region="matMenu">
             <button mat-menu-item *ngFor="let item of regionList"
-            (click)="chooseRegion(item.regionByRegionId.regionName)"> {{item.regionByRegionId.regionName}} </button>
+            (click)="chooseRegion(item.regionByRegionId.regionName, item.regionByRegionId.regionId)"> {{item.regionByRegionId.regionName}} </button>
           </mat-menu>
 
 

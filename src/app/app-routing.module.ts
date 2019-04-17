@@ -11,8 +11,8 @@ import { LaborHourDetailsComponent } from './current-state/labor-hour-details/la
 
 const routes: Routes = [
   { path: 'user', component: UserRegistrationComponent, canActivate: [AuthGuard] },
-  { path: 'service/:regionId', component:  MatrixDetailsComponent, canActivate: [AuthGuard]},
-  { path: ':regionId/task/:taskId', component:  TaskDetailsComponent, canActivate: [AuthGuard]},
+  { path: 'service/:regionName/:regionId', component:  MatrixDetailsComponent, canActivate: [AuthGuard]},
+  { path: ':regionName/:regionId/task/:taskId', component:  TaskDetailsComponent, canActivate: [AuthGuard]},
   { path: 'currentState/:regionId', component:  LaborClassComponent, canActivate: [AuthGuard]},
   { path: 'csLaborHours/:regionId', component:  LaborHourDetailsComponent, canActivate: [AuthGuard]},
   { path: 'login', component:  LoginFormComponent},

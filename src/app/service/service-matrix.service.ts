@@ -73,8 +73,8 @@ export class ServiceMatrixService {
     // this.matMtrixDataStore = new MatTableDataSource (response);
    }
 
-   public getData = (selectedRegion: string, userId:string ) => {
-     return this.http.get(this.API_URL+'service/'+selectedRegion+ '/'+ userId);
+   public getData = (selectedRegionId: number, userId:string ) => {
+     return this.http.get(this.API_URL+'service/'+selectedRegionId+ '/'+ userId);
     }
 
     public getLaborMappingsData = (selectedRegion: number, userId:string ) => {
