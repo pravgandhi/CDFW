@@ -47,7 +47,7 @@ export class MatrixDetailsComponent implements OnInit{
 
     customInit(params){
       this.user = this.userService.user;
-      this.displayedColumns = ["taskId", "serviceName", "program",
+      this.displayedColumns = ["viewTask", "taskId", "serviceName", "program",
       "subProgram", "taskCategory", "taskName", "myInput",  "statusCode", "inputCount"];
       this.displayedFilterColumns = [];
       this.displayedColumns.forEach(e => {
@@ -171,7 +171,8 @@ export class MatrixDetailsComponent implements OnInit{
     showTask(row) {
       this.storeFilterValues(this.paginator.pageIndex, this.paginator.pageSize);
       this.router.navigate([this.selectedRegion, "task", row.taskId ]);
-      var tasks = this.dataSource.data.filter(e => e['program'] == row.program);
+      //var tasks = this.dataSource.data.filter(e => e['program'] == row.program);
+      var tasks = this.dataSource.filteredData;
       this.serviceMatrix.filterStore.selectedSubProgTasks = [];
       if(tasks.length > 1){
         for(var i=0; i<tasks.length; i++){
@@ -186,6 +187,7 @@ export class MatrixDetailsComponent implements OnInit{
             sspt["prevTaskId"] = tasks[i-1]['taskId'];
             sspt["nextTaskId"] = tasks[i+1]['taskId'];
           }
+          sspt["index"]= i+1;
           this.serviceMatrix.filterStore.selectedSubProgTasks.push(sspt);
         }
       }
