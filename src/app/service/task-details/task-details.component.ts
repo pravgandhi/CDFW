@@ -128,7 +128,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   goToTask(taskId){
-    this.router.navigate([this.selectedRegion, "task", taskId ]);
+    this.router.navigate([this.selectedRegion, this.selectedRegionId, "task", taskId ]);
   }
 
   filterInputsByUserAndRegion(inputs:any, userId:number, regionName:string){
