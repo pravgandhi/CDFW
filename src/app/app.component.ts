@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from './_services';
+import { environment } from './../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import { UserService } from './_services';
 })
 export class AppComponent {
   title = 'Service Based Budgeting Project Data Collection Tool';
+  production: boolean = environment.production;
 
   constructor(private userService:UserService) {}
 

@@ -19,6 +19,7 @@
           </div>
           <div class="col-md-6 text-center vertical-middle text-bold">
             {{title}} {{getDataType()}}
+            <label style="color: red; font-weight: bold;" *ngIf="!production">***Test Environment***</label>
           </div>
           <div class="col-md-3 text-right vertical-middle">
               <img src="../assets/SBB.png" alt="" class="logo-sbb">
