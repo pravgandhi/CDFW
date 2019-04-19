@@ -182,7 +182,8 @@ export class TaskDetailsComponent implements OnInit {
 
   viewInputs(){
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '500px';
+    dialogConfig.width = '800px';
+    dialogConfig.maxHeight = '400px';
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
         regionName: this.selectedRegion,
