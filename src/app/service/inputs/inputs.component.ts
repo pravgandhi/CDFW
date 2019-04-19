@@ -22,6 +22,7 @@ export class InputsComponent implements OnInit  {
 
   errorMessage: string = null;
   successMessage: string = null;
+  userRole: string;
 
   constructor(private serviceMatrix : ServiceMatrixService,
               public dialogRef : MatDialogRef<InputsComponent>,
@@ -34,6 +35,7 @@ export class InputsComponent implements OnInit  {
 
   ngOnInit() {
     this.user = this.userService.user;
+    this.userRole = this.userService.userRole;
     this.selectedRegionObject = this.userService.getSelectedRegionObject(this.data.regionName);
     this.fetchInputs();
   }

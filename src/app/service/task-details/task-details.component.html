@@ -93,14 +93,12 @@
                         Save Response
                       </button>
 
-                    <button mat-button class="mx-2 text-dark bg-white task-input-multiplier-btn" (click)="viewInputs()" [disabled]="task['inputCount'] == 0"
-                    *ngIf="(userRole==='admin' || userRole==='m_lead')">
+                    <button mat-button class="mx-2 text-dark bg-white task-input-multiplier-btn" (click)="viewInputs()" [disabled]="task['inputCount'] == 0">
                     <mat-icon>touch_app</mat-icon>
                     Review Inputs ({{task['inputCount']}})
                   </button>
 
-                  <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewFeedbacks()" [disabled]="task['feedbackCount'] == undefined || task['feedbackCount'] == 0"
-                  *ngIf="(userRole==='admin' || userRole==='m_lead')">
+                  <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewFeedbacks()" [disabled]="task['feedbackCount'] == undefined || task['feedbackCount'] == 0">
                   <mat-icon>feedback</mat-icon>
                   View Feedback ({{task['feedbackCount']}})
                 </button>
