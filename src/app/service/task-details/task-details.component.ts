@@ -36,6 +36,7 @@ export class TaskDetailsComponent implements OnInit {
   approvedMsgResp: string = null;
   approvedMsgLead: string = null;
   subProgramTasks: any[] = [];
+  changeInputDetection: boolean = false;
 
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
     private router: Router, private dialog: MatDialog,
@@ -144,18 +145,21 @@ export class TaskDetailsComponent implements OnInit {
     if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
         status = 'A';
         if (this.task['missionUserInputsByTaskId'] != undefined && this.task['missionUserInputsByTaskId'].length > 0)  {
-          const dialogRef = this.dialog.open(SaveResponseConfirmDialog, {
-            width: '500px',
-            data: {confirm: 'No'}
-          });
+          var missionUserInputsByTaskIdByRegion = this.task['missionUserInputsByTaskId'].filter(e => e.regionByRegionId.regionName == this.selectedRegion);
+          if(missionUserInputsByTaskIdByRegion.length > 0) {
+            const dialogRef = this.dialog.open(SaveResponseConfirmDialog, {
+              width: '500px',
+              data: {confirm: 'No'}
+            });
 
-          dialogRef.afterClosed().subscribe(result => {
-            if (result.confirm == 'Yes'){
-              this.saveUserInput(status);
-            } else {
-              this.viewInputs();
-            }
-          });
+            dialogRef.afterClosed().subscribe(result => {
+              if (result.confirm == 'Yes'){
+                this.saveUserInput(status);
+              }
+            });
+          } else {
+            this.saveUserInput(status);
+          }
         } else {
           this.saveUserInput(status);
         }
@@ -168,6 +172,8 @@ export class TaskDetailsComponent implements OnInit {
   saveUserInput(stats){
     this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, this.taskfeedback).subscribe(res => {
         this.customInit(this.selectedRegion , this.inpuTaskId);
+        this.changeInputDetection = !this.changeInputDetection;
+        console.log(this.changeInputDetection);
         this.snackBar.openSnackBar( "Input saved successfully", 'Close', "green-snackbar");
       },
       err => {

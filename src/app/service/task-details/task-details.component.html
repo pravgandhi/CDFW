@@ -60,11 +60,89 @@
     </mat-card-header>
     <mat-divider matInset></mat-divider>
     <mat-card-content class="py-3">
+      <div class="row" style="background: #1f4e79;">
+        <div class="col-md-8">
+            <table class="text-white" style="background: #1f4e79; height: 80px; width: auto !important;">
+              <tr>
+                <td style="width: 150px;">
+                  <label for="inputmul" style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;">Input Multiplier<i
+                      class="material-icons help-text-icon"
+                      matTooltip="Displays the input recorded for this task. This is the only field that requires an input from respondents in this exercise. ">help</i></label>
+                </td>
+                <td class="w-50">
+                  <label style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;">Feedback</label>
+                </td>
+                <td style="width: 150px;">
+                </td>
+              </tr>
+              <tr>
+                  <td class="align-top">
+                      <input id="inputmul" type="number" name="test_name" min="0" class="task-input-multiplier align-top"
+                        oninput="validity.valid||(value='');" [(ngModel)]="multiplier" [disabled]="saveRespInputDisabled">
+                    </td>
+                
+                    <td>
+                      <textarea name="taskfeedback" [(ngModel)]="taskfeedback" rows="3" cols="20" maxlength="2000"
+                        class="input-task-feedback-area w-94" [disabled]="saveRespInputDisabled || multiplier == undefined"> </textarea>
+                    </td>
+                    <td class="text-center align-top">
+                      <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]="saveRespInputDisabled
+                                    || multiplier == undefined">
+                        <mat-icon>save</mat-icon>
+                        Save Response
+                      </button>
+                    </td>
+              </tr>
+
+            </table>
+          </div>
+            <div class="col-md-4 pt-3">
+              <table style="color: white; border: 1px solid white; float: right;">
+                <tr>
+                <td>
+                  <label style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;" for="frequency">Frequency <i
+                      class="material-icons help-text-icon"
+                      matTooltip="Number of times per year that the task needs to be accomplished (predefined).">help</i></label>
+                </td>
+                
+                <td class="align-top">
+                    <input id="frequency" value="{{task.frequency}}" readonly class="m-1">
+                  </td>
+                </tr>
+                  <tr>
+                <td>
+                  <label style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;" for="totallaborhours">Total time of Labor
+                    Hours <i class="material-icons help-text-icon"
+                      matTooltip="Sum of time per labor classification (predefined).">help</i></label>
+                </td>
+                <td class="align-top">
+                  <input id="totallaborhours" value="{{task.totalLaborHours}}" readonly class="m-1">
+                </td>
+              </tr>
+                <tr>
+                <td>
+                  <label style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;" for="totalhours">Total Hours <i
+                      class="material-icons help-text-icon"
+                      matTooltip="Product of multiplier (input), times the total time of labor hours, times the frequency (automatically calculated).">help</i></label>
+                </td>
+                <td class="align-top">
+                  <input id="totalhours" value="{{task.totalLaborHours * task.frequency * multiplier}}" readonly
+                    class="m-1">
+                </td>
+              </tr>
+            </table>
+        </div>
+      </div>
+      <div class="row" style="background: #1f4e79;">
+        <div class="col-md-12 pb-3">
+          <app-inputs [taskId]="inpuTaskId" [regionName]="selectedRegion" [totalHours]="task.totalLaborHours * task.frequency" [changeDetection]="changeInputDetection"></app-inputs>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-md-6">
-          <mat-card>
-            <mat-card-actions class="m-0 p-0 mb-3">
-              <table class="text-white w-100" style="background: #1f4e79; height: 80px;">
+        <div class="col-md-6 pt-3">
+          <mat-card style="min-height: 570px;">
+            <!-- <mat-card-actions class="m-0 p-0 mb-3"> -->
+              <!-- <table class="text-white w-100" style="background: #1f4e79; height: 80px;">
                 <tr>
                   <td>
                       <label for="inputmul" style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;">Input Multiplier<i class="material-icons help-text-icon"
@@ -97,14 +175,9 @@
                     <mat-icon>touch_app</mat-icon>
                     Review Inputs ({{task['inputCount']}})
                   </button>
-
-                  <!-- <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="viewFeedbacks()" [disabled]="task['feedbackCount'] == undefined || task['feedbackCount'] == 0">
-                  <mat-icon>feedback</mat-icon>
-                  View Feedback ({{task['feedbackCount']}})
-                </button> -->
                 </td>
                 </tr>
-              </table>
+              </table> -->
               <!-- <div class="row mx-0 text-white p-2" style="background: #1f4e79; ">
                 <div class="col-sm-4">
                       <label for="inputmul">Input Multiplier<i class="material-icons help-text-icon"
@@ -129,10 +202,10 @@
 
                     </div>
               </div> -->
-            </mat-card-actions>
-            <mat-divider matInset></mat-divider>
+            <!-- </mat-card-actions> -->
+            <!-- <mat-divider matInset></mat-divider> -->
             <mat-card-content>
-              <div class="row pt-3">
+              <div class="row pt-1">
                 <div class="col-sm-6">
                   <mat-form-field appearance="outline">
                     <mat-label>Task Description</mat-label>
@@ -173,10 +246,10 @@
             </mat-card-content>
           </mat-card>
         </div>
-        <div class="col-md-6">
-          <mat-card>
-            <mat-card-actions class="m-0 p-0 mb-3">
-              <div class="row mx-0" style="max-height:80px;">
+        <div class="col-md-6 pt-3">
+          <mat-card style="min-height: 570px;">
+            <!-- <mat-card-actions class="m-0 p-0 mb-3"> -->
+              <!-- <div class="row mx-0" style="max-height:80px;">
                   <div class="col-sm-3">
                 <mat-form-field>
                   <label for="frequency">Frequency <i class="material-icons help-text-icon"
@@ -197,11 +270,11 @@
                   <input id="totalhours" matInput value="{{task.totalLaborHours * task.frequency * multiplier}}"
                     readonly>
                 </mat-form-field></div>
-              </div>
-            </mat-card-actions>
-            <mat-divider matInset></mat-divider>
+              </div> -->
+            <!-- </mat-card-actions> -->
+            <!-- <mat-divider matInset></mat-divider> -->
             <mat-card-content>
-              <div class="row pt-3">
+              <div class="row pt-1">
                 <div class="col-sm-8">
                   <label for="laborTable">Labor Classification<i class="material-icons help-text-icon"
                       matTooltip="Displays the time that each labor classification would spend on the task in question, in the future state / at mission level (predefined). ">help</i></label>

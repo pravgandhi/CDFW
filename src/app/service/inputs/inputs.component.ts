@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, Input } from '@angular/core';
 import { ServiceMatrixService } from '../service-matrix.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { UserService } from 'src/app/_services';
@@ -17,17 +17,22 @@ export class InputsComponent implements OnInit  {
   selectedRegionObject: any;
   user: any;
   inputs = new MatTableDataSource<Object>();
-  inputDisplayedColumns: string[] = [ "value", "name", "status", "approverName", "feedback"];
+  inputDisplayedColumns: string[] = [ "value", "name", "status", "approverName", "feedback", "totalHours"];
   approvedInput: number;
 
   errorMessage: string = null;
   successMessage: string = null;
   userRole: string;
+  // data: any;
+  @Input('regionName') regionName: string;
+  @Input('taskId') taskId: string;
+  @Input('totalHours') totalHours: number;
+  @Input('changeDetection') changeDetection: boolean;
 
   constructor(private serviceMatrix : ServiceMatrixService,
-              public dialogRef : MatDialogRef<InputsComponent>,
+              // public dialogRef : MatDialogRef<InputsComponent>,
               private userService:UserService,
-            @Inject(MAT_DIALOG_DATA) public data: any,
+            // @Inject(MAT_DIALOG_DATA) public data: any,
           private router: Router, private snackBar: MatSnackBarComponent
          ) {
 
@@ -36,13 +41,19 @@ export class InputsComponent implements OnInit  {
   ngOnInit() {
     this.user = this.userService.user;
     this.userRole = this.userService.userRole;
-    this.selectedRegionObject = this.userService.getSelectedRegionObject(this.data.regionName);
+    this.selectedRegionObject = this.userService.getSelectedRegionObject(this.regionName);
+    this.fetchInputs();
+  }
+
+  ngOnChanges() {
+    console.log(this.taskId);
+    this.selectedRegionObject = this.userService.getSelectedRegionObject(this.regionName);
     this.fetchInputs();
   }
 
   fetchInputs(){
     let _self = this;
-    this.serviceMatrix.fetchInputs(this.selectedRegionObject.regionId, this.data.taskId ).subscribe(
+    this.serviceMatrix.fetchInputs(this.selectedRegionObject.regionId, this.taskId ).subscribe(
     data => {
       _self.inputs.data = data as Object[];
     },
@@ -54,11 +65,12 @@ export class InputsComponent implements OnInit  {
   approveResponse(){
     this.serviceMatrix.selectedRowIndex = this.selectedRowIndex;
     let _self = this;
-    this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.data.taskId,this.selectedRow.id, this.userService.userId).subscribe(
+    this.serviceMatrix.selectInput(this.selectedRegionObject.regionId, this.taskId,this.selectedRow.id, this.userService.userId).subscribe(
     data => {
       _self.approvedInput = Number(data);
       this.snackBar.openSnackBar( "Selected Input is approved", 'Close', "green-snackbar");
-      this.dialogRef.close(this.data);
+      this.fetchInputs();
+      // this.dialogRef.close(this.data);
     },
     err => {
         this.snackBar.openSnackBar( "Error saving selected input", 'Close', "red-snackbar");
@@ -77,7 +89,7 @@ export class InputsComponent implements OnInit  {
   }
 
   onClose() {
-    this.dialogRef.close();
+    // this.dialogRef.close();
   }
 
   /*openSnackBar(message: string, action: string) {
