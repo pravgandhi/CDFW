@@ -47,29 +47,46 @@
     <ng-container matColumnDef="expansion">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background"></th>
       <td mat-cell *matCellDef="let element" style="width:20px;">
-        <i class="material-icons expand-icon" *ngIf="element == expandedElement" title="Collapse" (click)="expandRow(element, 'collapse')">remove_circle_outline</i>
-        <i class="material-icons expand-icon" *ngIf="element != expandedElement" title="Expand" (click)="expandRow(element, 'expand')">add_circle_outline</i>
+        <i class="material-icons expand-icon" *ngIf="element == expandedElement" title="Collapse" (click)="expandRow(element)">remove_circle_outline</i>
+        <i class="material-icons expand-icon" *ngIf="element != expandedElement" title="Expand" (click)="expandRow(element)">add_circle_outline</i>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="positionId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Position ID</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.positionId}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="laborClassName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Labor Class Name</th>
-      <td mat-cell *matCellDef="let element" (click)="showMatrix(element)">
+      <td mat-cell *matCellDef="let element">
         {{element.laborClassName}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="hours">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Bank</th>
-      <td mat-cell *matCellDef="let element" (click)="showMatrix(element)">
+      <td mat-cell *matCellDef="let element">
         {{element.hours}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="inputHours">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Entered</th>
-      <td mat-cell *matCellDef="let element" (click)="showMatrix(element)">
-        0
+      <td mat-cell *matCellDef="let element">
+        {{element.inputHours}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <!-- <i class="material-icons" title="Add Hours" (click)="showMatrix(element)">add_circle_outline</i> -->
+        <button mat-stroked-button color="primary" (click)="showMatrix(element)">
+          Add Hours
+        </button>
       </td>
     </ng-container>
 
@@ -78,7 +95,7 @@
       <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" class="example-detail-row-td">
         <div class="example-element-detail"
              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-             <table class="w-100 lcsummary-table" border="1">
+             <table class="w-100 lcsummary-table" border="1" >
                 <tr>
                   <th>Task ID</th>
                   <th>Service</th>
@@ -88,7 +105,7 @@
                   <th>Task Name</th>
                   <th>Hours</th>
                 </tr>
-                <tr *ngFor="let summary of element.lcsummary">
+                <tr *ngFor="let summary of element.csUserLaborClassInputs">
                   <td>{{summary.taskId}}</td>
                   <td>{{summary.serviceMatrixByTaskId.serviceName}}</td>
                   <td>{{summary.serviceMatrixByTaskId.program}}</td>
@@ -96,6 +113,9 @@
                   <td>{{summary.serviceMatrixByTaskId.taskCategory}}</td>
                   <td>{{summary.serviceMatrixByTaskId.taskName}}</td>
                   <td>{{summary.inputHours}}</td>
+                </tr>
+                <tr *ngIf="element.csUserLaborClassInputs == null || element.csUserLaborClassInputs == undefined || element.csUserLaborClassInputs.length == 0">
+                  <td colspan="7" class="text-center">No records found</td>
                 </tr>
              </table>
         </div>

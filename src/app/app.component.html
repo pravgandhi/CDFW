@@ -18,7 +18,8 @@
               <img src="../assets/cdfw-logo.png" alt="" class="logo">
           </div>
           <div class="col-md-6 text-center vertical-middle text-bold">
-            {{title}} {{getDataType()}}
+            <p class="mb-0">{{title}} {{getDataType()}}</p>
+            <p class="mb-0" style="color: red; font-weight: bold;" *ngIf="!production">***Test Environment***</p>
           </div>
           <div class="col-md-3 text-right vertical-middle">
               <img src="../assets/SBB.png" alt="" class="logo-sbb">

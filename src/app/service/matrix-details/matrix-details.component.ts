@@ -22,6 +22,7 @@ export class MatrixDetailsComponent implements OnInit{
   displayedColumns: string[] = [];
   displayedFilterColumns: string[] = [];
   globalFilter = '';
+  selectedRegionId: number;
   selectedRegion:string;
   regionList;
   filteredValues = { taskId:'', serviceName:'', program:'',
@@ -39,7 +40,8 @@ export class MatrixDetailsComponent implements OnInit{
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-    this.selectedRegion = params['regionId'];
+      this.selectedRegionId = params['regionId'];
+      this.selectedRegion = params['regionName']
       this.customInit(params);
     });
     this.dataSource.filterPredicate = this.customFilterPredicate();
@@ -47,7 +49,7 @@ export class MatrixDetailsComponent implements OnInit{
 
     customInit(params){
       this.user = this.userService.user;
-      this.displayedColumns = ["taskId", "serviceName", "program",
+      this.displayedColumns = ["viewTask", "taskId", "serviceName", "program",
       "subProgram", "taskCategory", "taskName", "myInput",  "statusCode", "inputCount"];
       this.displayedFilterColumns = [];
       this.displayedColumns.forEach(e => {
@@ -66,16 +68,16 @@ export class MatrixDetailsComponent implements OnInit{
     }
 
     public getMatrixDetails = (userId:string ) => {
-        this.serviceMatrix.getData(this.selectedRegion, userId)
+        this.serviceMatrix.getData(this.selectedRegionId, userId)
         .subscribe(res => {
+          this.paginator.pageIndex = this.serviceMatrix.filterStore.pageIndex;
+          this.paginator.pageSize = this.serviceMatrix.filterStore.pageSize;
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
           this.dataSource.data = res as Object[];
           this.dataSource.data.forEach(e => {
             e["statusCode"] = e["taskStatus"];
-           })
-           this.paginator.pageIndex = this.serviceMatrix.filterStore.pageIndex;
-           this.paginator.pageSize = this.serviceMatrix.filterStore.pageSize;
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
+          })
           this.applyAllFilters(this.globalFilter, this.filteredValues);
         });
     }
@@ -170,8 +172,12 @@ export class MatrixDetailsComponent implements OnInit{
 
     showTask(row) {
       this.storeFilterValues(this.paginator.pageIndex, this.paginator.pageSize);
-      this.router.navigate([this.selectedRegion, "task", row.taskId ]);
-      var tasks = this.dataSource.data.filter(e => e['program'] == row.program);
+      this.router.navigate([this.selectedRegion, this.selectedRegionId, "task", row.taskId ]);
+      //var tasks = this.dataSource.data.filter(e => e['program'] == row.program);
+      var tasks = this.dataSource.filteredData;
+      if(tasks.length == this.dataSource.data.length){
+        tasks = this.dataSource.data.filter(e => e['program'] == row.program);
+      }
       this.serviceMatrix.filterStore.selectedSubProgTasks = [];
       if(tasks.length > 1){
         for(var i=0; i<tasks.length; i++){
@@ -186,13 +192,14 @@ export class MatrixDetailsComponent implements OnInit{
             sspt["prevTaskId"] = tasks[i-1]['taskId'];
             sspt["nextTaskId"] = tasks[i+1]['taskId'];
           }
+          sspt["index"]= i+1;
           this.serviceMatrix.filterStore.selectedSubProgTasks.push(sspt);
         }
       }
     }
 
-    chooseRegion(region: string){
-      this.router.navigate(["service", region]);
+    chooseRegion(regionName: string, regionId: number) {
+      this.router.navigate(["service", regionName, regionId]);
     }
 
     backToLogin(){

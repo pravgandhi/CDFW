@@ -41,3 +41,7 @@ mat-toolbar  span, mat-toolbar  a  span {
 .w-94{
   width: 94%;
 }
+
+.task-input-multiplier:disabled, .input-task-feedback-area:disabled {
+  background-color: #FEFEFE;
+}

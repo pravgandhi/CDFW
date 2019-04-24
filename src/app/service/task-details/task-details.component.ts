@@ -25,7 +25,7 @@ export class TaskDetailsComponent implements OnInit {
   displayedColumns: string[] = ["title", "role", "time"];
   displayedColumnsJustification: string[] = ["categoryName"];
   selectedRegion:string;
-  selectedRegionId:string;
+  selectedRegionId:number;
   selectedTask:string;
   multiplier: number= 0;
   taskfeedback: string;
@@ -36,6 +36,7 @@ export class TaskDetailsComponent implements OnInit {
   approvedMsgResp: string = null;
   approvedMsgLead: string = null;
   subProgramTasks: any[] = [];
+  changeInputDetection: boolean = false;
 
   constructor(private route: ActivatedRoute, private serviceMatrix : ServiceMatrixService,
     private router: Router, private dialog: MatDialog,
@@ -46,7 +47,8 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.customInit(params['regionId'], params['taskId']);
+      this.selectedRegionId = params['regionId'];
+      this.customInit(params['regionName'], params['taskId']);
     });
   }
 
@@ -54,11 +56,11 @@ export class TaskDetailsComponent implements OnInit {
 
   }
 
-  customInit(regionId:string,taskId: string){
+  customInit(regionName:string, taskId: string){
     this.user = this.userService.user;
-    this.getTaskInfo1(regionId, taskId);
+    this.getTaskInfo1(regionName, taskId);
     this.userRole = this.userService.userRole;
-    this.selectedRegion = regionId;
+    this.selectedRegion = regionName;
     this.inpuTaskId = taskId;
 
     if (this.serviceMatrix.filterStore.selectedSubProgTasks != undefined) {
@@ -112,6 +114,7 @@ export class TaskDetailsComponent implements OnInit {
              if(fltr.length > 0){
               _self.task["nextTaskId"] = fltr[0].nextTaskId;
               _self.task["prevTaskId"] = fltr[0].prevTaskId;
+              _self.task["index"] = fltr[0].index;
             }
            }
 
@@ -126,7 +129,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   goToTask(taskId){
-    this.router.navigate([this.selectedRegion, "task", taskId ]);
+    this.router.navigate([this.selectedRegion, this.selectedRegionId, "task", taskId ]);
   }
 
   filterInputsByUserAndRegion(inputs:any, userId:number, regionName:string){
@@ -142,18 +145,21 @@ export class TaskDetailsComponent implements OnInit {
     if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']) {
         status = 'A';
         if (this.task['missionUserInputsByTaskId'] != undefined && this.task['missionUserInputsByTaskId'].length > 0)  {
-          const dialogRef = this.dialog.open(SaveResponseConfirmDialog, {
-            width: '500px',
-            data: {confirm: 'No'}
-          });
+          var missionUserInputsByTaskIdByRegion = this.task['missionUserInputsByTaskId'].filter(e => e.regionByRegionId.regionName == this.selectedRegion);
+          if(missionUserInputsByTaskIdByRegion.length > 0) {
+            const dialogRef = this.dialog.open(SaveResponseConfirmDialog, {
+              width: '500px',
+              data: {confirm: 'No'}
+            });
 
-          dialogRef.afterClosed().subscribe(result => {
-            if (result.confirm == 'Yes'){
-              this.saveUserInput(status);
-            } else {
-              this.viewInputs();
-            }
-          });
+            dialogRef.afterClosed().subscribe(result => {
+              if (result.confirm == 'Yes'){
+                this.saveUserInput(status);
+              }
+            });
+          } else {
+            this.saveUserInput(status);
+          }
         } else {
           this.saveUserInput(status);
         }
@@ -166,6 +172,8 @@ export class TaskDetailsComponent implements OnInit {
   saveUserInput(stats){
     this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, this.taskfeedback).subscribe(res => {
         this.customInit(this.selectedRegion , this.inpuTaskId);
+        this.changeInputDetection = !this.changeInputDetection;
+        console.log(this.changeInputDetection);
         this.snackBar.openSnackBar( "Input saved successfully", 'Close', "green-snackbar");
       },
       err => {
@@ -175,12 +183,13 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   goBackToMatrix(){
-    this.router.navigate(["service", this.selectedRegion]);
+    this.router.navigate(["service", this.selectedRegion, this.selectedRegionId]);
   }
 
   viewInputs(){
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '500px';
+    dialogConfig.width = '800px';
+    dialogConfig.maxHeight = '400px';
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
         regionName: this.selectedRegion,

@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
     });
 
-    this.spinner.show()
+    setTimeout(() => this.spinner.show());
 
     this.count++;
 
