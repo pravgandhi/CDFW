@@ -105,8 +105,8 @@
                       matTooltip="Number of times per year that the task needs to be accomplished (predefined).">help</i></label>
                 </td>
                 
-                <td class="align-top">
-                    <input id="frequency" value="{{task.frequency}}" readonly class="m-1">
+                <td class="align-top" style="width: 150px;">
+                    <input id="frequency" matInput style="width:90%; border-bottom: 1px solid white;" value="{{task.frequency}}" readonly class="m-1">
                   </td>
                 </tr>
                   <tr>
@@ -116,7 +116,7 @@
                       matTooltip="Sum of time per labor classification (predefined).">help</i></label>
                 </td>
                 <td class="align-top">
-                  <input id="totallaborhours" value="{{task.totalLaborHours}}" readonly class="m-1">
+                  <input id="totallaborhours" matInput style="width:90%; border-bottom: 1px solid white;" value="{{task.totalLaborHours}}" readonly class="m-1">
                 </td>
               </tr>
                 <tr>
@@ -126,7 +126,7 @@
                       matTooltip="Product of multiplier (input), times the total time of labor hours, times the frequency (automatically calculated).">help</i></label>
                 </td>
                 <td class="align-top">
-                  <input id="totalhours" value="{{task.totalLaborHours * task.frequency * multiplier}}" readonly
+                  <input id="totalhours" matInput style="width:90%; border-bottom: 1px solid white;" value="{{task.totalLaborHours * task.frequency * multiplier}}" readonly
                     class="m-1">
                 </td>
               </tr>
