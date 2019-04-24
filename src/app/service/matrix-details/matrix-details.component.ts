@@ -219,4 +219,8 @@ export class MatrixDetailsComponent implements OnInit{
       this.serviceMatrix.filterStore.globalFilter = this.globalFilter;
       this.serviceMatrix.filterStore.columnFilter = this.filteredValues;
     }
+
+    public handlePage(e: any) {
+      window.scrollTo(0, 0);
+    }
 }
