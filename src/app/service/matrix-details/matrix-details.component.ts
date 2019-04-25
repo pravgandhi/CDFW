@@ -86,6 +86,14 @@ export class MatrixDetailsComponent implements OnInit{
       this.regionList =  user['userRegionMappingsById'];
     }
 
+    loadLastUsedFilter(){
+      var fstore = JSON.parse(this.user['filter']);
+      this.applyAllFilters(fstore.globalFilter, fstore.columnFilter);
+      this.paginator.pageIndex = fstore.pageIndex;
+      this.paginator.pageSize = fstore.pageSize;
+      this.dataSource.paginator = this.paginator;
+    }
+
     applyAllFilters(gFilter, fValues){
       this.applyFilter(gFilter);
       this.applyColumnFilter(fValues.taskId, 'taskId');

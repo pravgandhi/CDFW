@@ -69,6 +69,7 @@
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)] = "globalFilter">
   </mat-form-field>
   <button mat-button color="primary" (click)="clearAllFilters()">Clear All Filters</button>
+  <button mat-button color="primary" (click)="loadLastUsedFilter()" *ngIf="user['filter'] != null">Use Most Recent Filter</button>
 
 
 

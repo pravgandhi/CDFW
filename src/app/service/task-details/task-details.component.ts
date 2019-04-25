@@ -66,6 +66,18 @@ export class TaskDetailsComponent implements OnInit {
     if (this.serviceMatrix.filterStore.selectedSubProgTasks != undefined) {
       this.subProgramTasks = this.serviceMatrix.filterStore.selectedSubProgTasks;
     }
+    this.saveFilter(this.serviceMatrix.filterStore);
+  }
+
+  saveFilter(fstore){
+    var cf = '{"taskId":"","serviceName":"","program":"","subProgram":"","taskCategory":"","taskName":"","statusCode":"","myInput":"","inputCount":"","feedbackReceived":"","toBeEnteredBy":"","inputReceived":""}';
+    if(fstore.pageIndex !=0 || fstore.globalFilter != '' 
+    || fstore.pageSize != 50 || (fstore.columnFilter != undefined && JSON.stringify(fstore.columnFilter) != cf)){
+      console.log(fstore.toString());
+      if(this.user['filter'] != fstore.toString()){
+        this.serviceMatrix.saveFilter(this.user['id'], fstore.toString()).subscribe(data => {});
+      }
+    }
   }
 
 
