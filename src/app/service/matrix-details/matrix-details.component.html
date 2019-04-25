@@ -187,6 +187,15 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef ="toBeEnteredBy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">
+        To Be Entered By
+       </th>
+      <td mat-cell *matCellDef= "let element">
+        {{element.toBeEnteredBy}}
+      </td>
+    </ng-container>
+
      <!-- Task Id Filter Column -->
     <ng-container matColumnDef="taskId-filter">
         <th mat-header-cell *matHeaderCellDef>
@@ -273,6 +282,15 @@
       <th mat-header-cell *matHeaderCellDef>
         <input class="filter-input" value="{{filteredValues.feedbackReceived}}"
           (keyup)="applyColumnFilter($event.target.value, 'feedbackReceived')"
+          placeholder="Filter">
+      </th>
+    </ng-container>
+
+    <!-- To Be Entered By Filter Column -->
+    <ng-container matColumnDef="toBeEnteredBy-filter">
+      <th mat-header-cell *matHeaderCellDef>
+        <input class="filter-input" value="{{filteredValues.toBeEnteredBy}}"
+          (keyup)="applyColumnFilter($event.target.value, 'toBeEnteredBy')"
           placeholder="Filter">
       </th>
     </ng-container>

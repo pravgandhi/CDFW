@@ -27,7 +27,7 @@ export class MatrixDetailsComponent implements OnInit{
   regionList;
   filteredValues = { taskId:'', serviceName:'', program:'',
     subProgram:'', taskCategory: '', taskName : '', statusCode: '',
-    myInput:'', inputCount: '', feedbackReceived: ''//, topFilter: false
+    myInput:'', inputCount: '', feedbackReceived: '', toBeEnteredBy: ''//, topFilter: false
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -50,15 +50,15 @@ export class MatrixDetailsComponent implements OnInit{
     customInit(params){
       this.user = this.userService.user;
       this.displayedColumns = ["viewTask", "taskId", "serviceName", "program",
-      "subProgram", "taskCategory", "taskName", "myInput",  "statusCode", "inputCount"];
+      "subProgram", "taskCategory", "taskName", "myInput",  "statusCode", "inputCount", "feedbackReceived", "toBeEnteredBy"];
       this.displayedFilterColumns = [];
       this.displayedColumns.forEach(e => {
         this.displayedFilterColumns.push(e + '-filter');
       });
-      if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']){
-        this.displayedColumns.push("feedbackReceived");
-        this.displayedFilterColumns.push('feedbackReceived-filter');
-      }
+      // if('admin' === this.user['userRoleByRoleId']['roleName'] || 'm_lead' === this.user['userRoleByRoleId']['roleName']){
+      //   this.displayedColumns.push("feedbackReceived");
+      //   this.displayedFilterColumns.push('feedbackReceived-filter');
+      // }
       this.getMatrixDetails(this.userService.user['id']);
       this.getRegionDetails(this.user);
       this.globalFilter = this.serviceMatrix.filterStore.globalFilter;
@@ -98,6 +98,7 @@ export class MatrixDetailsComponent implements OnInit{
       this.applyColumnFilter(fValues.statusCode, 'statusCode');
       this.applyColumnFilter(fValues.inputCount, 'inputReceived');
       this.applyColumnFilter(fValues.feedbackReceived, 'feedbackReceived');
+      this.applyColumnFilter(fValues.toBeEnteredBy, 'toBeEnteredBy');
     }
 
     clearAllFilters(){
@@ -108,7 +109,7 @@ export class MatrixDetailsComponent implements OnInit{
       this.filteredValues = { taskId:'', serviceName:'', program:'',
         subProgram:'', taskCategory: '', taskName : '', statusCode: '',
         myInput:'', inputCount: '',
-        feedbackReceived:''
+        feedbackReceived:'', toBeEnteredBy: ''
       };
       this.serviceMatrix.filterStore.pageIndex = 0;
       this.serviceMatrix.filterStore.globalFilter = '';
@@ -134,7 +135,8 @@ export class MatrixDetailsComponent implements OnInit{
         let fbReceivedFound = data.feedbackReceived.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let taskDescFound = data.taskDesc.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let sgFound = data.serviceGlossary.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
-        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound || fbReceivedFound || taskDescFound || sgFound;
+        let toBeEnteredFound = data.toBeEnteredBy.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound || fbReceivedFound || taskDescFound || sgFound || toBeEnteredFound;
       }
 
       if (!globalMatch) {
@@ -151,8 +153,9 @@ export class MatrixDetailsComponent implements OnInit{
       let statusFound = data.taskStatus.toString().trim().toLowerCase().indexOf(searchString.statusCode.toString().toLowerCase()) !== -1;
       let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(searchString.myInput.toString().toLowerCase()) !== -1;
       let countFound = data.inputReceived.toString().trim().toLowerCase().indexOf(searchString.inputCount.toString().toLowerCase()) !== -1;
-      let fbReceivedFound = data.feedbackReceived.toString().trim().toLowerCase().indexOf(searchString.feedbackReceived.toString().toLowerCase()) !== -1;
-      return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound && fbReceivedFound;
+      let fbReceivedFound = data.feedbackReceived.toString().trim().toLowerCase().indexOf(searchString.feedbackReceived.toString().toLowerCase()) !== -1;      
+      let toBeEnteredFound = data.toBeEnteredBy.toString().trim().toLowerCase().indexOf(searchString.toBeEnteredBy.toString().toLowerCase()) !== -1;
+      return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound && fbReceivedFound && toBeEnteredFound;
     }
     return myFilterPredicate;
   }
