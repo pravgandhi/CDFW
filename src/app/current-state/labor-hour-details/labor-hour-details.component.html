@@ -37,49 +37,96 @@
     </div>
   </mat-toolbar>
 
-
-  <!--<mat-accordion>
-  <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Self aware panel
-      </mat-panel-title>
-      <mat-panel-description>
-        Currently I am {{panelOpenState ? 'open' : 'closed'}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
-  </mat-expansion-panel>
-</mat-accordion> -->
-
 <mat-card class = "labor-hours-card">
   <mat-card-header>
-        <mat-card-title>Labor Classification Hours
+        <mat-card-title>{{selectedLaborClassName}}
         </mat-card-title>
   </mat-card-header>
   <mat-card-content>
 
-    <table *ngIf="assignedTasks.length>0">
-      <tr *ngFor="let task of assignedTasks">
-        <td>
-          {{task.taskId}}
-        </td>
-        <td>
-          {{task.taskId}}
-        </td>
-        <td>
-          {{task.taskId}}
-        </td>
-      </tr>
-    </table>
+<p-table [value]="csHoursData" dataKey="taskId">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>TaskID</th>
+            <th>TaskName</th>
+            <th>Hours</th>
+            <th>Funding Source</th>
+            <th style="width:8em"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="rowData">
+            <td>
+                {{rowData.taskId}}
+            </td>
+            <td>
+            <td>
+                {{rowData.taskName}}
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="rowData.inputHours">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.inputHours}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-dropdown [options]="fundingSources" [(ngModel)]="rowData.fundingSource" [style]="{'width':'100%'}"></p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.fundingSource}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
 
-    <ul *ngIf="assignedTasks.length>0">
-      <li *ngFor="let task of assignedTasks">
-        {{task.taskId}}
-      </li>
-    </ul>
-  <h6 *ngIf="assignedTasks.length==0" class="text-center">Hours yet to be assigned</h6>
+            <td style="text-align:center">
+                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)">Edit</button>
+                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)">Save</button>
+                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)">Cancel</button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+    <!--<p-dataTable [value]="csHoursData" [editable]="true">
+    <p-column field="taskId" header="Task ID">
+      <ng-template let-row="rowData" pTemplate="body">
+        {{row.taskId}}
+    </ng-template>
+    </p-column>
+    <p-column field="taskName" header="Task Name">
+      <ng-template let-row="rowData" pTemplate="body">
+      {{row.taskName}}
+    </ng-template>
+    </p-column>
+    <p-column field="hours" header="Hours">
+      <ng-template let-row="rowData" pTemplate="body">
+          <input type="number" [(ngModel)]="row.hours">
+      </ng-template>
+    </p-column>
+    <p-column field="fundingSource" header="Funding Source">
+      <ng-template let-row="rowData" pTemplate="body">
+          <input type="number" [(ngModel)]="row.fundingSource">
+    </ng-template>
+    </p-column>
+    <p-column field="" header="" [style]="{'text-align':'center'}">
+      <ng-template let-row="rowData" pTemplate="body">
+        <button (click)="editRow(row)">Edit</button>
+      </ng-template>
+    </p-column>
+    <p-column field="" header="" [style]="{'text-align':'center'}">
+      <ng-template let-row="rowData" pTemplate="body">
+        <button (click)="save(row)">Save</button>
+      </ng-template>
+    </p-column>
+</p-dataTable> -->
+
+
   </mat-card-content>
 </mat-card>
 

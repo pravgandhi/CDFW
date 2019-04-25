@@ -51,7 +51,7 @@
         <i class="material-icons expand-icon" *ngIf="element != expandedElement" title="Expand" (click)="expandRow(element)">add_circle_outline</i>
       </td>
     </ng-container>
-    
+
     <ng-container matColumnDef="positionId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Position ID</th>
       <td mat-cell *matCellDef="let element">
@@ -121,7 +121,7 @@
         </div>
       </td>
     </ng-container>
-    
+
       <!-- (click)="showMatrix(element)" -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let element; columns: displayedColumns;"   class="example-element-row"

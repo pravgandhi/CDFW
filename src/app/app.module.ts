@@ -25,6 +25,9 @@ import { AuthenticationService } from './_services/authentication.service'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './_services';
+import { DataTableModule } from 'primeng/primeng';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 
 import 'hammerjs';
 import { HttpErrorInterceptor } from './_services/error-interceptor';
@@ -73,7 +76,10 @@ import { LaborHourDetailsComponent } from './current-state/labor-hour-details/la
     NgxSpinnerModule,
     MatPaginatorModule,
     MatSortModule,
-    MatExpansionModule
+    MatExpansionModule,
+    DataTableModule,
+    TableModule,
+    DropdownModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

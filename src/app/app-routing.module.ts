@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'service/:regionName/:regionId', component:  MatrixDetailsComponent, canActivate: [AuthGuard]},
   { path: ':regionName/:regionId/task/:taskId', component:  TaskDetailsComponent, canActivate: [AuthGuard]},
   { path: 'currentState/:regionId', component:  LaborClassComponent, canActivate: [AuthGuard]},
-  { path: 'csLaborHours/:regionId', component:  LaborHourDetailsComponent, canActivate: [AuthGuard]},
+  { path: 'csLaborHours/:regionId/:laborClassName', component:  LaborHourDetailsComponent, canActivate: [AuthGuard]},
   { path: 'login', component:  LoginFormComponent},
   { path: '', component:  LoginFormComponent},
   // otherwise redirect to home
