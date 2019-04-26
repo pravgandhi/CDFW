@@ -71,11 +71,15 @@ export class TaskDetailsComponent implements OnInit {
 
   saveFilter(fstore){
     var cf = '{"taskId":"","serviceName":"","program":"","subProgram":"","taskCategory":"","taskName":"","statusCode":"","myInput":"","inputCount":"","feedbackReceived":"","toBeEnteredBy":"","inputReceived":""}';
-    if(fstore.pageIndex !=0 || fstore.globalFilter != '' 
+    if(fstore.pageIndex !=0 || fstore.globalFilter != ''
     || fstore.pageSize != 50 || (fstore.columnFilter != undefined && JSON.stringify(fstore.columnFilter) != cf)){
       console.log(fstore.toString());
       if(this.user['filter'] != fstore.toString()){
-        this.serviceMatrix.saveFilter(this.user['id'], fstore.toString()).subscribe(data => {});
+        this.serviceMatrix.saveFilter(this.user['id'], fstore.toString()).subscribe(data => {
+          let user = JSON.parse(localStorage.getItem('currentUser'));
+          user['filter'] = fstore.toString();
+          localStorage.setItem('currentUser', JSON.stringify(user));
+        });
       }
     }
   }
