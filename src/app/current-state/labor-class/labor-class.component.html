@@ -104,15 +104,23 @@
                   <th>Task Category</th>
                   <th>Task Name</th>
                   <th>Hours</th>
+                  <th>Actions</th>
                 </tr>
-                <tr *ngFor="let summary of element.csUserLaborClassInputs">
+                <tr *ngFor="let summary of element.csUserLaborClassInputs" let i =index>
                   <td>{{summary.taskId}}</td>
                   <td>{{summary.serviceMatrixByTaskId.serviceName}}</td>
                   <td>{{summary.serviceMatrixByTaskId.program}}</td>
                   <td>{{summary.serviceMatrixByTaskId.subProgram}}</td>
                   <td>{{summary.serviceMatrixByTaskId.taskCategory}}</td>
                   <td>{{summary.serviceMatrixByTaskId.taskName}}</td>
-                  <td>{{summary.inputHours}}</td>
+                  <!--<td>{{summary.inputHours}}</td>-->
+                  <td><input [(ngModel)]="summary.inputHours"></td>
+                  <td>
+                    <div>
+                     <button (click)="editRow(summary)">Save</button>
+                     <button (click)="deleteRow(summary)">Delete</button>
+                    </div>
+                  </td>
                 </tr>
                 <tr *ngIf="element.csUserLaborClassInputs == null || element.csUserLaborClassInputs == undefined || element.csUserLaborClassInputs.length == 0">
                   <td colspan="7" class="text-center">No records found</td>

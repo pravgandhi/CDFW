@@ -81,7 +81,7 @@ export class ServiceMatrixService {
       return this.http.get(this.API_URL+'csservice/'+selectedRegion+ '/'+ userId);
     }
 
-    
+
   getLaborClassSummary(selectedRegion: number, userId: any, laborClassName: any) {
     return this.http.get(this.API_URL+'csservice/laborclasssummary/'+selectedRegion+ '/'+ userId+ '/'+ laborClassName);
   }
@@ -146,9 +146,15 @@ export class ServiceMatrixService {
 
     public saveUserInput(userId:number, regionName: string, taskId: string, inputValue: number, taskfeedback: string){
       return this.http.post(this.API_URL+'saveInput', {userId: userId, regionName: regionName, taskId: taskId, inputValue :inputValue,  feedback: taskfeedback });
-     }
+    }
 
+    public editCSInput(csInput: Object){
+      return this.http.post(this.API_URL+'editCsInput', {regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours :csInput['inputHours'] });
+    }
 
+    public deleteCSInput(csInput : Object){
+      return this.http.post(this.API_URL+'deleteCsInput', {regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours :csInput['inputHours'] });
+    }
 
 }
 

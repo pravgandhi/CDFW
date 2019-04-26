@@ -86,4 +86,17 @@ export class LaborClassComponent implements OnInit {
     this.expandedElement = this.expandedElement === element ? null : element;
   }
 
+  editRow(row){
+    this.serviceMatrix.editCSInput(row).subscribe(res => {
+      alert("Successfully Updated");
+    });
+  }
+
+
+  deleteRow(row){
+    this.serviceMatrix.deleteCSInput(row).subscribe(res => {
+      alert("Successfully Deleted");
+    });
+  }
+
 }
