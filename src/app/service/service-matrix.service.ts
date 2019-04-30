@@ -14,8 +14,8 @@ export class ServiceMatrixService {
   filterStore: Filters;
   //API_URL:string = "http://ec2-18-220-6-166.us-east-2.compute.amazonaws.com:8080/";
   API_URL: string = "http://localhost:8080/";
-  // API_URL:string = "https://prod.cdfw-sbb.com/";
-  // API_URL:string = "https://dev.cdfw-sbb.com/";
+  //API_URL:string = "https://prod.cdfw-sbb.com/";
+  //API_URL:string = "https://dev.cdfw-sbb.com/";
   @ViewChild(MatPaginator) paginator: MatPaginator;
   inputDataStore = [{
     id: 1,
@@ -48,6 +48,36 @@ export class ServiceMatrixService {
     name: "Bob"
   }
   ];
+
+  toBeEnteredBy = ["AQUA  Aquaculture",
+                   "ASB   Accounting Services Branch",
+                   "AUD   Audits Branch",
+                   "BDB   Biogeographic Data Branch",
+                   "BIZOPS		Business Operations",
+                   "BMB			Business Management Branch",
+                   "BUDGETS		Budget Branch",
+                   "CONENGR		Conservation Engineering",
+                   "EEO			Ofc of Equal Employment Opportunity",
+                   "FACENGR		Facilities Engineering",
+                   "FB			Fisheries Branch",
+                   "FGC			Fish & Game Commission",
+                   "HCPB		Habitat Conservation Planning Branch",
+                   "HRB			Human Resources Branch",
+                   "IT			IT Operations & Systems Branches",
+                   "LED			Law Enforcement (all)",
+                   "LEG			Legislative Office",
+                   "LRB			License & Revenue Branch",
+                   "OCEO		Ofc of Communication, Education & Outreach",
+                   "ODB			Organizational Development Branch",
+                   "OGC			Ofc of General Counsel",
+                   "OSPR		Ofc of Spill Prevention & Response",
+                   "REGION		Regions 1-7",
+                   "REGSUNIT	Regulations",
+                   "SCIINST		Science Institute",
+                   "WATER		Water Branch",
+                   "WLB			Wildlife Branch",
+                   "WRGB		Watershed Restoration Grants Branch"
+                  ];
 
   @ViewChild(MatSort) sort: MatSort;
 

@@ -17,7 +17,7 @@ export class InputsComponent implements OnInit  {
   selectedRegionObject: any;
   user: any;
   inputs = new MatTableDataSource<Object>();
-  inputDisplayedColumns: string[] = [ "value", "name", "status", "approverName", "feedback", "totalHours"];
+  inputDisplayedColumns: string[] = [  "name", "status", "approverName", "feedback", "value", "totalHours"];
   approvedInput: number;
 
   errorMessage: string = null;

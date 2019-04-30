@@ -45,3 +45,8 @@ mat-toolbar  span, mat-toolbar  a  span {
 .task-input-multiplier:disabled, .input-task-feedback-area:disabled {
   background-color: #FEFEFE;
 }
+
+::ng-deep .mat-tooltip  {
+ white-space: pre-line    !important;
+ font-size: 10px   !important;
+}
