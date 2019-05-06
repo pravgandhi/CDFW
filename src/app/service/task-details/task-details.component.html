@@ -81,12 +81,10 @@
                         oninput="validity.valid||(value='');" [(ngModel)]="multiplier" [disabled]="saveRespInputDisabled">
                       <label for="tobeenteredby" style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;">To be entered by<i
                             class="material-icons help-text-icon"
-                            matTooltip="{{serviceMatrix.toBeEnteredBy.join('\n')}}">help</i></label>
-                      <input id="tobeenteredby" matInput style="padding-left: 10px; width:90%; border-bottom: 1px solid white;" value="{{task.toBeEnteredBy}}" readonly class="m-1">
-
+                            matTooltip="{{serviceMatrix.toBeEnteredBy.join('\n')}}">help</i></label>              
+                      <textarea id="tobeenteredby" matInput value="{{task.toBeEnteredBy}}"></textarea>
                     </td>
-
-                    <td>
+                    <td class= "align-top">
                       <textarea name="taskfeedback" [(ngModel)]="taskfeedback" rows="3" cols="20" maxlength="2000"
                         class="input-task-feedback-area w-94" [disabled]="saveRespInputDisabled || multiplier == undefined"> </textarea>
                     </td>
