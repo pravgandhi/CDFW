@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Edit Input</h1>
+<div mat-dialog-content>
+  <mat-form-field class="px-1">
+    <input matInput placeholder="Position Id" value="{{data.task.positionId}}" disabled>
+  </mat-form-field>
+  <mat-form-field class="px-1">
+    <input matInput placeholder="Task Id" value="{{data.task.taskId}}" disabled>
+  </mat-form-field><br>
+  <mat-form-field class="px-1">
+    <input matInput placeholder="Input Hours" type="number" [(ngModel)]="data.task.inputHours">
+  </mat-form-field>
+  <mat-form-field class="px-1">
+    <textarea matInput placeholder="Feedback" [(ngModel)]="data.task.feedback"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="text-center">
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button color="primary" cdkFocusInitial (click)="onUpdate()">Update</button>
+</div>

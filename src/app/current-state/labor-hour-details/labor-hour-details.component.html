@@ -1,197 +1,167 @@
 <div align="center" class="mb-4">
-<mat-toolbar>
+  <mat-toolbar>
     <div class="row w-100 m-0">
-    <div class="col-md-6 text-left">
-    <span> <b>Task Catalog</b> </span>
+      <div class="col-md-6 text-left">
+        <span> <b>Task Catalog</b> </span>
 
-    <button mat-button color="primary" matTooltip="User Info" style="cursor:default;">
-        <mat-icon>account_box</mat-icon>
-        {{user.userName}}
-      </button>
-      <button mat-button color="primary" matTooltip="Region/Branch/District" style="cursor:default;">
+        <button mat-button color="primary" matTooltip="User Info" style="cursor:default;">
+          <mat-icon>account_box</mat-icon>
+          {{user.userName}}
+        </button>
+        <button mat-button color="primary" matTooltip="Region/Branch/District" style="cursor:default;">
           <mat-icon>language</mat-icon>
           {{selectedRegionObj.regionByRegionId.regionName}}
         </button>
-    </div>
-    <div class="col-md-6 text-right">
-      <span> <b>Actions: </b></span>
+      </div>
+      <div class="col-md-6 text-right">
+        <span> <b>Actions: </b></span>
 
-      <button mat-button color="primary" (click)="backToLandingPage()">
-        <mat-icon>arrow_back</mat-icon>
-        Back to Landing Page
-      </button>
+        <button mat-button color="primary" (click)="backToLandingPage()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Landing Page
+        </button>
 
 
-      <a mat-button color="primary" title="Provide Feedback" target="_new" href="https://deloittesurvey.deloitte.com/Community/se/3FC11B2638966086">
+        <a mat-button color="primary" title="Provide Feedback" target="_new"
+          href="https://deloittesurvey.deloitte.com/Community/se/3FC11B2638966086">
           <mat-icon>feedback</mat-icon>
-      </a>
-      <a mat-button color="primary" title="Respondent Resource Hub" target="_new" href="http://dfgintranet/portal/BusinessOperations/Budget/ServiceBasedBudgeting/Respondents/tabid/2880/Default.aspx">
+        </a>
+        <a mat-button color="primary" title="Respondent Resource Hub" target="_new"
+          href="http://dfgintranet/portal/BusinessOperations/Budget/ServiceBasedBudgeting/Respondents/tabid/2880/Default.aspx">
           <mat-icon>file_copy</mat-icon>
-      </a>
+        </a>
 
-      <button mat-button color = "primary" (click)="backToLogin()">
+        <button mat-button color="primary" (click)="backToLogin()">
           <mat-icon>power_settings_new</mat-icon>
           Logout
-      </button>
-    </div>
+        </button>
+      </div>
     </div>
   </mat-toolbar>
 
-<mat-card class = "labor-hours-card">
-  <mat-card-header>
-        <mat-card-title>{{selectedLaborClassName}}
-        </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
+  <mat-card class="labor-hours-card">
+    <mat-card-header>
+      <mat-card-title>{{selectedLaborClassName}}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
 
-<p-table [value]="csHoursData" dataKey="taskId">
-    <ng-template pTemplate="header">
-        <tr>
+      <p-table [value]="csHoursData" dataKey="taskId">
+        <ng-template pTemplate="header">
+          <tr>
             <th>TaskID</th>
             <th>TaskName</th>
             <th>Hours</th>
             <th>Funding Source</th>
             <th style="width:8em"></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
-        <tr [pEditableRow]="rowData">
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+          <tr [pEditableRow]="rowData">
             <td>
-                {{rowData.taskId}}
+              {{rowData.taskId}}
             </td>
             <td>
             <td>
-                {{rowData.taskName}}
-            </td>
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <input pInputText type="text" [(ngModel)]="rowData.inputHours">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{rowData.inputHours}}
-                    </ng-template>
-                </p-cellEditor>
+              {{rowData.taskName}}
             </td>
             <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">
-                        <p-dropdown [options]="fundingSources" [(ngModel)]="rowData.fundingSource" [style]="{'width':'100%'}"></p-dropdown>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{rowData.fundingSource}}
-                    </ng-template>
-                </p-cellEditor>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="rowData.inputHours">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{rowData.inputHours}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="fundingSources" [(ngModel)]="rowData.fundingSource" [style]="{'width':'100%'}">
+                  </p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{rowData.fundingSource}}
+                </ng-template>
+              </p-cellEditor>
             </td>
 
             <td style="text-align:center">
-                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)">Edit</button>
-                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)">Save</button>
-                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)">Cancel</button>
+              <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info"
+                (click)="onRowEditInit(rowData)">Edit</button>
+              <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)">Save</button>
+              <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)">Cancel</button>
             </td>
-        </tr>
-    </ng-template>
-</p-table>
-
-    <!--<p-dataTable [value]="csHoursData" [editable]="true">
-    <p-column field="taskId" header="Task ID">
-      <ng-template let-row="rowData" pTemplate="body">
-        {{row.taskId}}
-    </ng-template>
-    </p-column>
-    <p-column field="taskName" header="Task Name">
-      <ng-template let-row="rowData" pTemplate="body">
-      {{row.taskName}}
-    </ng-template>
-    </p-column>
-    <p-column field="hours" header="Hours">
-      <ng-template let-row="rowData" pTemplate="body">
-          <input type="number" [(ngModel)]="row.hours">
-      </ng-template>
-    </p-column>
-    <p-column field="fundingSource" header="Funding Source">
-      <ng-template let-row="rowData" pTemplate="body">
-          <input type="number" [(ngModel)]="row.fundingSource">
-    </ng-template>
-    </p-column>
-    <p-column field="" header="" [style]="{'text-align':'center'}">
-      <ng-template let-row="rowData" pTemplate="body">
-        <button (click)="editRow(row)">Edit</button>
-      </ng-template>
-    </p-column>
-    <p-column field="" header="" [style]="{'text-align':'center'}">
-      <ng-template let-row="rowData" pTemplate="body">
-        <button (click)="save(row)">Save</button>
-      </ng-template>
-    </p-column>
-</p-dataTable> -->
-
-
-  </mat-card-content>
-</mat-card>
+          </tr>
+        </ng-template>
+      </p-table>
+    </mat-card-content>
+  </mat-card>
 
 
   <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)] = "globalFilter">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)]="globalFilter">
   </mat-form-field>
   <button mat-button color="primary" (click)="clearAllFilters()">Clear All Filters</button>
 
-  <table mat-table [dataSource] = "dataSource" matSort class="mat-elevation-z8">
-    <ng-container matColumnDef ="taskId">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="taskId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task ID</th>
-      <td mat-cell *matCellDef= "let element">
+      <td mat-cell *matCellDef="let element">
         {{element.taskId}}
       </td>
     </ng-container>
 
-   <ng-container matColumnDef ="serviceName">
+    <ng-container matColumnDef="serviceName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Service</th>
-      <td mat-cell *matCellDef= "let element">
+      <td mat-cell *matCellDef="let element">
         {{element.serviceName}}
       </td>
     </ng-container>
 
-   <ng-container matColumnDef ="program">
+    <ng-container matColumnDef="program">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Program</th>
-      <td mat-cell *matCellDef= "let element">
+      <td mat-cell *matCellDef="let element">
         {{element.program}}
       </td>
     </ng-container>
 
-   <ng-container matColumnDef ="subProgram">
-       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Sub Program</th>
-       <td mat-cell *matCellDef= "let element">
-         {{element.subProgram}}
-       </td>
-     </ng-container>
+    <ng-container matColumnDef="subProgram">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Sub Program</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.subProgram}}
+      </td>
+    </ng-container>
 
-     <ng-container matColumnDef ="taskCategory">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task Category</th>
-        <td mat-cell *matCellDef= "let element">
-          {{element.taskCategory}}
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="taskCategory">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task Category</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.taskCategory}}
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef ="taskName">
-         <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task</th>
-         <td mat-cell *matCellDef= "let element">
-           {{element.taskName}}
-         </td>
-       </ng-container>
+    <ng-container matColumnDef="taskName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.taskName}}
+      </td>
+    </ng-container>
 
-       <ng-container matColumnDef ="hoursSpent">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Spent</th>
-          <td mat-cell *matCellDef= "let element">
-            <button mat-button color="primary" matTooltip="Assign Hours" style="cursor:default;" >
-                <mat-icon>edit</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+    <ng-container matColumnDef="hoursSpent">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Spent</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button color="primary" matTooltip="Assign Hours" style="cursor:default;">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="assignHours(row)"></tr>
   </table>
-<mat-paginator #paginator
-  [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator #paginator [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
 
 </div>

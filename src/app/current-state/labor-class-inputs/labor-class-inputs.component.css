@@ -1,0 +1,10 @@
+.info{
+    cursor: pointer;
+    color: #1f4e79;
+    font-size: 18px;
+    padding-top: 5px;
+}
+
+.text-primary{
+    color: #1f4e79 !important;
+}

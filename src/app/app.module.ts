@@ -11,7 +11,7 @@ import { LoginModule } from './login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatExpansionModule,
+  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatExpansionModule, MatTabsModule, MatSelectModule, MatAutocompleteModule, 
   MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatPaginatorModule
 } from '@angular/material';
 
@@ -37,6 +37,7 @@ import { ResestPasswordDialog, DataTypeSelectionDialog } from './login/login-for
 import { FeedbackComponent } from './service/feedback/feedback.component';
 import { LaborClassComponent } from './current-state/labor-class/labor-class.component';
 import { LaborHourDetailsComponent } from './current-state/labor-hour-details/labor-hour-details.component';
+import { LaborClassInputsComponent, DeleteCSInputDialog, EditCSInputDialog } from './current-state/labor-class-inputs/labor-class-inputs.component';
 
 @NgModule({
   declarations: [
@@ -44,8 +45,11 @@ import { LaborHourDetailsComponent } from './current-state/labor-hour-details/la
     MatSnackBarComponent,
     ResestPasswordDialog,
     DataTypeSelectionDialog,
+    EditCSInputDialog,
+    DeleteCSInputDialog,
     LaborClassComponent,
-    LaborHourDetailsComponent
+    LaborHourDetailsComponent,
+    LaborClassInputsComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +72,9 @@ import { LaborHourDetailsComponent } from './current-state/labor-hour-details/la
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatTooltipModule,
+    MatTabsModule, 
+    MatSelectModule, 
+    MatAutocompleteModule, 
     FlexLayoutModule,
     UserModule,
     ServiceModule,
@@ -93,6 +100,6 @@ import { LaborHourDetailsComponent } from './current-state/labor-hour-details/la
   },
     AuthenticationService, UserService, MatSnackBarComponent],
   bootstrap: [AppComponent],
-  entryComponents: [InputsComponent, ResestPasswordDialog, FeedbackComponent, DataTypeSelectionDialog]
+  entryComponents: [InputsComponent, ResestPasswordDialog, FeedbackComponent, DataTypeSelectionDialog, EditCSInputDialog, DeleteCSInputDialog]
 })
 export class AppModule { }

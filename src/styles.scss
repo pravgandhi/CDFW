@@ -90,3 +90,12 @@ body {
   height: auto !important;
   width: auto !important;
 }
+
+.mat-tab-body-content{
+  padding: 3px;
+}
+
+.mat-tab-label .mat-tab-label-content {
+  color: #1f4e79;
+  font-weight: bold;
+}

@@ -21,8 +21,8 @@
         </button>
 
         <mat-menu #region="matMenu">
-          <button mat-menu-item *ngFor="let item of regionList"
-            (click)="chooseRegion(item.regionId)"> {{item.regionByRegionId.regionName}} </button>
+          <button mat-menu-item *ngFor="let item of regionList" (click)="chooseRegion(item.regionId)">
+            {{item.regionByRegionId.regionName}} </button>
         </mat-menu>
 
 
@@ -47,8 +47,10 @@
     <ng-container matColumnDef="expansion">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background"></th>
       <td mat-cell *matCellDef="let element" style="width:20px;">
-        <i class="material-icons expand-icon" *ngIf="element == expandedElement" title="Collapse" (click)="expandRow(element)">remove_circle_outline</i>
-        <i class="material-icons expand-icon" *ngIf="element != expandedElement" title="Expand" (click)="expandRow(element)">add_circle_outline</i>
+        <i class="material-icons expand-icon" *ngIf="element == expandedElement" title="Collapse"
+          (click)="expandRow(element)">remove_circle_outline</i>
+        <i class="material-icons expand-icon" *ngIf="element != expandedElement" title="Expand"
+          (click)="expandRow(element)">add_circle_outline</i>
       </td>
     </ng-container>
 
@@ -80,6 +82,14 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="utilization">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Utilization</th>
+      <td mat-cell *matCellDef="let element">
+        <i class="material-icons text-success" *ngIf="element.hours >= element.inputHours">arrow_downward</i>
+        <i class="material-icons text-danger" *ngIf="element.hours < element.inputHours">arrow_upward</i>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Actions</th>
       <td mat-cell *matCellDef="let element">
@@ -93,46 +103,104 @@
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
       <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" class="example-detail-row-td">
-        <div class="example-element-detail"
-             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-             <table class="w-100 lcsummary-table" border="1" >
-                <tr>
-                  <th>Task ID</th>
-                  <th>Service</th>
-                  <th>Program</th>
-                  <th>Sub Program</th>
-                  <th>Task Category</th>
-                  <th>Task Name</th>
-                  <th>Hours</th>
-                  <th>Actions</th>
-                </tr>
-                <tr *ngFor="let summary of element.csUserLaborClassInputs" let i =index>
-                  <td>{{summary.taskId}}</td>
-                  <td>{{summary.serviceMatrixByTaskId.serviceName}}</td>
-                  <td>{{summary.serviceMatrixByTaskId.program}}</td>
-                  <td>{{summary.serviceMatrixByTaskId.subProgram}}</td>
-                  <td>{{summary.serviceMatrixByTaskId.taskCategory}}</td>
-                  <td>{{summary.serviceMatrixByTaskId.taskName}}</td>
-                  <!--<td>{{summary.inputHours}}</td>-->
-                  <td><input [(ngModel)]="summary.inputHours"></td>
-                  <td>
-                    <div>
-                     <button (click)="editRow(summary)">Save</button>
-                     <button (click)="deleteRow(summary)">Delete</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr *ngIf="element.csUserLaborClassInputs == null || element.csUserLaborClassInputs == undefined || element.csUserLaborClassInputs.length == 0">
-                  <td colspan="7" class="text-center">No records found</td>
-                </tr>
-             </table>
+        <div class="example-element-detail w-100"
+          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <mat-tab-group class="w-100">
+            <mat-tab label="Add Task">
+              <div class="row mx-0 pt-2">
+                <div class="col-md-3">
+                  <mat-form-field class="w-100">
+                    <mat-select (selectionChange)="filterServices()" [(value)]="servicename"
+                      placeholder="Select Service">
+                      <mat-option value="{{serviceName}}" *ngFor="let serviceName of serviceNames">{{serviceName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="w-100">
+                    <mat-select (selectionChange)="filterPrograms()" [(value)]="program" placeholder="Select Program"
+                      [disabled]="!servicename">
+                      <mat-option value="{{program}}" *ngFor="let program of programs">{{program}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="w-100">
+                    <mat-select (selectionChange)="filterSubPrograms()" [(value)]="subprogram"
+                      placeholder="Select Sub Program" [disabled]="!program">
+                      <mat-option value="{{subprogram}}" *ngFor="let subprogram of subprograms">{{subprogram}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="w-100">
+                    <mat-select (selectionChange)="filterTaskCategories()" [(value)]="taskcategory"
+                      placeholder="Select Task Category" [disabled]="!subprogram">
+                      <mat-option value="{{tc}}" *ngFor="let tc of taskcategories">{{tc}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row mx-0">
+                <div class="col-md-3">
+                  <mat-form-field class="w-100">
+                    <mat-select [(value)]="taskid" placeholder="Select Task" [disabled]="!servicename">
+                      <mat-option value="{{tn.id}}" *ngFor="let tn of tasks" title="{{tn.name}}">{{tn.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="w-100">
+                    <input matInput placeholder="Task ID" value="{{taskid}}" disabled>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="w-100">
+                    <input matInput type="number" placeholder="Hours" [(ngModel)]="taskhours" name="taskhours">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="w-100">
+                    <mat-select multiple placeholder="Select Funding Source" [(value)]="fundingsource">
+                      <mat-option value="1">Funding Source 1</mat-option>
+                      <mat-option value="2">Funding Source 2</mat-option>
+                      <mat-option value="3">Funding Source 3</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row mx-0">
+                <div class="col-md-3">
+                  <mat-form-field class="w-100">
+                    <textarea matInput placeholder="Feedback" [(ngModel)]="feedback" name="feedback"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row mx-0">
+                <div class="col-md-12 text-center">
+                  <button mat-raised-button (click)="resetAddTaskForm()">Reset</button>
+                  <button mat-raised-button color="primary" class="mx-1"
+                    [disabled]="!servicename || !taskid || taskhours == 0 || !fundingsource || fundingsource.length == 0"
+                    (click)="addTask()">Submit</button>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Inputs">
+              <ng-template matTabContent>
+                <app-labor-class-inputs [positionId]="element.positionId"
+                  [regionId]="selectedRegionObj.regionByRegionId.regionId"></app-labor-class-inputs>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
         </div>
       </td>
     </ng-container>
 
-      <!-- (click)="showMatrix(element)" -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let element; columns: displayedColumns;"   class="example-element-row"
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
       [class.example-expanded-row]="expandedElement === element"></tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>

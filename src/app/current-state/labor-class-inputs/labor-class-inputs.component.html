@@ -1,0 +1,38 @@
+<table class="w-100 lcsummary-table">
+  <tr class="border-bottom">
+    <th></th>
+    <th>Task ID</th>
+    <th>Task Name</th>
+    <th style="width: 150px;">User ID</th>
+    <th style="width: 100px;">Hours</th>
+    <th>Feedback</th>
+    <th style="width: 100px;">Actions</th>
+  </tr>
+  <tr *ngFor="let summary of result" class="border-bottom">
+    <td>
+      <i class="material-icons info text-primary"
+        title="{{summary.tasks[0].serviceMatrixByTaskId.serviceName+'/'+summary.tasks[0].serviceMatrixByTaskId.program+'/'+summary.tasks[0].serviceMatrixByTaskId.subProgram+'/'+summary.tasks[0].serviceMatrixByTaskId.taskCategory}}">info</i>
+    </td>
+    <td>{{summary.taskId}}</td>
+    <td>{{summary.tasks[0].serviceMatrixByTaskId.taskName}}</td>
+    <td colspan="4">
+      <table class="w-100">
+        <tr *ngFor="let task of summary.tasks; index as i" [class.border-top]="i>0">
+          <td style="width: 150px; height: 35px;">{{task.user.userName}}</td>
+          <td style="width: 100px;">{{task.inputHours}}</td>
+          <td>{{task.feedback}}</td>
+          <td style="width: 100px;">
+            <i class="material-icons info text-primary" title="Edit" *ngIf="task.userId == user.id"
+              (click)="editInput(task)">edit</i>
+            <i class="material-icons info text-danger" title="Remove" *ngIf="task.userId == user.id"
+              (click)="deleteInput(task)">delete</i>
+            <i class="material-icons info text-success" title="Approve" *ngIf="task.userId == 'lead'">check_circle</i>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr *ngIf="result == null || result == undefined || result.length == 0">
+    <td colspan="7" class="text-center">No records found</td>
+  </tr>
+</table>

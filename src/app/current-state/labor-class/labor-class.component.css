@@ -79,6 +79,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-detail {
   overflow: hidden;
   display: flex;
+  border: 1px solid #1f4e79;
 }
 
 .example-detail-row-td {
@@ -115,9 +116,12 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .lcsummary-table {
   border-color: lightgray;
-  margin: 3px;
 }
 
 .lcsummary-table td, .lcsummary-table th {
   padding: 3px;
+}
+
+.example-element-detail:hover {
+  background-color: white;
 }

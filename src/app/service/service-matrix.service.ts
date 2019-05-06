@@ -50,34 +50,34 @@ export class ServiceMatrixService {
   ];
 
   toBeEnteredBy = ["AQUA  Aquaculture",
-                   "ASB   Accounting Services Branch",
-                   "AUD   Audits Branch",
-                   "BDB   Biogeographic Data Branch",
-                   "BIZOPS		Business Operations",
-                   "BMB			Business Management Branch",
-                   "BUDGETS		Budget Branch",
-                   "CONENGR		Conservation Engineering",
-                   "EEO			Ofc of Equal Employment Opportunity",
-                   "FACENGR		Facilities Engineering",
-                   "FB			Fisheries Branch",
-                   "FGC			Fish & Game Commission",
-                   "HCPB		Habitat Conservation Planning Branch",
-                   "HRB			Human Resources Branch",
-                   "IT			IT Operations & Systems Branches",
-                   "LED			Law Enforcement (all)",
-                   "LEG			Legislative Office",
-                   "LRB			License & Revenue Branch",
-                   "OCEO		Ofc of Communication, Education & Outreach",
-                   "ODB			Organizational Development Branch",
-                   "OGC			Ofc of General Counsel",
-                   "OSPR		Ofc of Spill Prevention & Response",
-                   "REGION		Regions 1-7",
-                   "REGSUNIT	Regulations",
-                   "SCIINST		Science Institute",
-                   "WATER		Water Branch",
-                   "WLB			Wildlife Branch",
-                   "WRGB		Watershed Restoration Grants Branch"
-                  ];
+    "ASB   Accounting Services Branch",
+    "AUD   Audits Branch",
+    "BDB   Biogeographic Data Branch",
+    "BIZOPS		Business Operations",
+    "BMB			Business Management Branch",
+    "BUDGETS		Budget Branch",
+    "CONENGR		Conservation Engineering",
+    "EEO			Ofc of Equal Employment Opportunity",
+    "FACENGR		Facilities Engineering",
+    "FB			Fisheries Branch",
+    "FGC			Fish & Game Commission",
+    "HCPB		Habitat Conservation Planning Branch",
+    "HRB			Human Resources Branch",
+    "IT			IT Operations & Systems Branches",
+    "LED			Law Enforcement (all)",
+    "LEG			Legislative Office",
+    "LRB			License & Revenue Branch",
+    "OCEO		Ofc of Communication, Education & Outreach",
+    "ODB			Organizational Development Branch",
+    "OGC			Ofc of General Counsel",
+    "OSPR		Ofc of Spill Prevention & Response",
+    "REGION		Regions 1-7",
+    "REGSUNIT	Regulations",
+    "SCIINST		Science Institute",
+    "WATER		Water Branch",
+    "WLB			Wildlife Branch",
+    "WRGB		Watershed Restoration Grants Branch"
+  ];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -116,6 +116,10 @@ export class ServiceMatrixService {
     return this.http.get(this.API_URL + 'csservice/laborclasssummary/' + selectedRegion + '/' + userId + '/' + laborClassName);
   }
 
+  getLaborClassSummaryByPositionId(selectedRegion: number, laborClassName: any) {
+    return this.http.get(this.API_URL + 'csservice/laborclasssummary/' + selectedRegion + '/' + laborClassName);
+  }
+
   public getCsMatrixData = () => {
     return this.http.get(this.API_URL + 'cslaborhours');
   }
@@ -148,17 +152,22 @@ export class ServiceMatrixService {
     return this.http.get('../assets/data.json');
   }
 
-    public saveUserInput(userId:number, regionName: string, taskId: string, inputValue: number, taskfeedback: string){
-      return this.http.post(this.API_URL+'saveInput', {userId: userId, regionName: regionName, taskId: taskId, inputValue :inputValue,  feedback: taskfeedback });
-    }
+  public saveUserInput(userId: number, regionName: string, taskId: string, inputValue: number, taskfeedback: string) {
+    return this.http.post(this.API_URL + 'saveInput', { userId: userId, regionName: regionName, taskId: taskId, inputValue: inputValue, feedback: taskfeedback });
+  }
 
-    public editCSInput(csInput: Object){
-      return this.http.post(this.API_URL+'editCsInput', {regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours :csInput['inputHours'] });
-    }
 
-    public deleteCSInput(csInput : Object){
-      return this.http.post(this.API_URL+'deleteCsInput', {regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours :csInput['inputHours'] });
-    }
+  saveCsInput(selectedRegionId: number, userId: any, pid: any, taskid: string, taskhours: number, feedback: string) {
+    return this.http.post(this.API_URL + 'addCsInput', { regionId: selectedRegionId, userId: userId, positionId: pid, taskId: taskid, inputHours: taskhours, feedback: feedback });
+  }
+
+  public editCSInput(csInput: Object) {
+    return this.http.post(this.API_URL + 'editCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'] });
+  }
+
+  public deleteCSInput(csInput: Object) {
+    return this.http.post(this.API_URL + 'deleteCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'] });
+  }
   async getTaskInfo(taskId: string) {
     var self = this;
     await fetch('../assets/data.json')
@@ -179,7 +188,7 @@ export class ServiceMatrixService {
   }
 
   saveFilter(userId: number, filter: string) {
-    return this.http.post(this.API_URL + 'saveFilter', { userId: userId, filter: filter});
+    return this.http.post(this.API_URL + 'saveFilter', { userId: userId, filter: filter });
   }
 
   testBackend() {

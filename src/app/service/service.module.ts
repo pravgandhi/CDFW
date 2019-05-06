@@ -18,6 +18,7 @@ import { ServiceMatrixService } from './service-matrix.service';
 import { InputsComponent } from './inputs/inputs.component';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatTabsModule} from '@angular/material/tabs';
 import { FeedbackComponent } from './feedback/feedback.component';
 
 
@@ -31,6 +32,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
     MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
     MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatListModule,
     MatExpansionModule,  MatPaginatorModule, MatSortModule, MatSidenavModule, MatTooltipModule,
+    MatTabsModule,
     FormsModule,
     NgbModule.forRoot(),
     NgbTooltipModule

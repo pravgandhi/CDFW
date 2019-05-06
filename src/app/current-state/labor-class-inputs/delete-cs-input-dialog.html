@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Delete Input</h1>
+<div mat-dialog-content>
+    <p>Are you sure you want to delete below input?</p>
+    <p>Position Id: {{data.task.positionId}}</p>
+    <p>Task Id: {{data.task.taskId}}</p>
+    <p>Input Hours: {{data.task.inputHours}}</p>
+</div>
+<div mat-dialog-actions class="text-center">
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="onConfirm()">Confirm</button>
+</div>
