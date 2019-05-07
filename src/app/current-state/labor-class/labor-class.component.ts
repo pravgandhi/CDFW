@@ -140,7 +140,12 @@ export class LaborClassComponent implements OnInit {
       .subscribe(res => {
         this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
         console.log(res);
+        this.expandedElement['hoursEntered'] = this.expandedElement['hoursEntered'] + this.taskhours;
       });
+  }
+
+  updateHoursEntered(element, hours){
+    element['hoursEntered'] = hours;
   }
 
   resetAddTaskForm() {
@@ -162,13 +167,13 @@ export class LaborClassComponent implements OnInit {
       var result = [];
       this.serviceMatrix.getLaborMappingsData(this.selectedRegionId, this.user["id"]).subscribe(res => {
         result = res as Object[];
-        result.forEach(element => {
-          var inputHours = 0;
-          element["csUserLaborClassInputs"].forEach(e => {
-            inputHours = inputHours + e["inputHours"];
-          });
-          element["inputHours"] = inputHours;
-        });
+        // result.forEach(element => {
+        //   var inputHours = 0;
+        //   element["csUserLaborClassInputs"].forEach(e => {
+        //     inputHours = inputHours + e["inputHours"];
+        //   });
+        //   element["inputHours"] = inputHours;
+        // });
         this.setDatasource(this.selectedRegionId, result);
       });
     }
