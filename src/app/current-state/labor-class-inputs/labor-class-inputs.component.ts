@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
 import { UserService } from 'src/app/_services';
 import { ServiceMatrixService } from 'src/app/service/service-matrix.service';
 import * as _ from 'lodash';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSnackBarComponent } from 'src/app/service/mat-snack-bar/mat-snack-bar.component';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-labor-class-inputs',
@@ -14,6 +15,8 @@ export class LaborClassInputsComponent implements OnInit {
 
   @Input('positionId') positionId: string;
   @Input('regionId') regionId: number;
+  @Output() hoursEntered = new EventEmitter();
+
   result: any[];
   user: Object;
 
@@ -31,6 +34,12 @@ export class LaborClassInputsComponent implements OnInit {
         .groupBy(x => x['taskId'])
         .map((value, key) => ({ taskId: key, tasks: value }))
         .value();
+
+      let he = _.sumBy(res as [], function (e) { 
+          return e['inputHours'];   
+      });
+
+      this.hoursEntered.emit(he);
     });
   }
 

@@ -78,15 +78,15 @@
     <ng-container matColumnDef="inputHours">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Entered</th>
       <td mat-cell *matCellDef="let element">
-        {{element.inputHours}}
+        {{element.hoursEntered}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="utilization">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Utilization</th>
       <td mat-cell *matCellDef="let element">
-        <i class="material-icons text-success" *ngIf="element.hours >= element.inputHours">arrow_downward</i>
-        <i class="material-icons text-danger" *ngIf="element.hours < element.inputHours">arrow_upward</i>
+        <i class="material-icons text-success" *ngIf="element.hours >= element.hoursEntered">arrow_downward</i>
+        <i class="material-icons text-danger" *ngIf="element.hours < element.hoursEntered">arrow_upward</i>
       </td>
     </ng-container>
 
@@ -163,17 +163,13 @@
                   </mat-form-field>
                 </div>
                 <div class="col-md-3">
-                  <mat-form-field class="w-100">
+                  <!-- <mat-form-field class="w-100">
                     <mat-select multiple placeholder="Select Funding Source" [(value)]="fundingsource">
                       <mat-option value="1">Funding Source 1</mat-option>
                       <mat-option value="2">Funding Source 2</mat-option>
                       <mat-option value="3">Funding Source 3</mat-option>
                     </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row mx-0">
-                <div class="col-md-3">
+                  </mat-form-field> -->
                   <mat-form-field class="w-100">
                     <textarea matInput placeholder="Feedback" [(ngModel)]="feedback" name="feedback"></textarea>
                   </mat-form-field>
@@ -183,14 +179,14 @@
                 <div class="col-md-12 text-center">
                   <button mat-raised-button (click)="resetAddTaskForm()">Reset</button>
                   <button mat-raised-button color="primary" class="mx-1"
-                    [disabled]="!servicename || !taskid || taskhours == 0 || !fundingsource || fundingsource.length == 0"
+                    [disabled]="!servicename || !taskid || taskhours == 0"
                     (click)="addTask()">Submit</button>
                 </div>
               </div>
             </mat-tab>
             <mat-tab label="Inputs">
               <ng-template matTabContent>
-                <app-labor-class-inputs [positionId]="element.positionId"
+                <app-labor-class-inputs [positionId]="element.positionId" (hoursEntered)="updateHoursEntered(element, $event)"
                   [regionId]="selectedRegionObj.regionByRegionId.regionId"></app-labor-class-inputs>
               </ng-template>
             </mat-tab>
