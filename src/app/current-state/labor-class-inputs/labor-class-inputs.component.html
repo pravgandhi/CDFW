@@ -1,13 +1,13 @@
 <table class="w-100 lcsummary-table">
   <tr class="border-bottom">
     <th></th>
-    <th>Task ID</th>
+    <th style="width:175px;">Task ID</th>
     <th>Task Name</th>
-    <th style="width:150px;">Respondent name</th>
+    <th>Respondent name</th>
     <th style="width:100px;">Status</th>
-    <th style="width:150px;">Validated by</th>
+    <th style="width:100px;">Validated by</th>
     <th style="width:60px;">Hours</th>
-    <th style="width:250px;">Feedback</th>
+    <th style="width:100px;">Feedback</th>
     <th style="width:60px;">Actions</th>
   </tr>
   <tr *ngFor="let summary of result" class="border-bottom">
@@ -18,30 +18,30 @@
     <td>{{summary.taskId}}</td>
     <td>{{summary.tasks[0].serviceMatrixByTaskId.taskName}}</td>
     <td colspan="6">
-      <table>
+      <table class="w-100">
         <tbody>
-        <tr *ngFor="let task of summary.tasks; index as i">
-        <!--<tr *ngFor="let task of summary.tasks; index as i" [class.border-top]="i>0">-->
-          <td style="width:150px;">{{task.user.userName}}</td>
+        <!-- <tr *ngFor="let task of summary.tasks; index as i"> -->
+        <tr *ngFor="let task of summary.tasks; index as i" [class.border-top]="i>0">
+          <td>{{task.user.userName}}</td>
           <td style="width:100px;">
             <div *ngIf="task.statusBySttsId != null">
               {{task.statusBySttsId.statusCode}}
             </div>
           </td>
-          <td style="width:150px;">
+          <td style="width:100px;">
             <div *ngIf="task.userByApproverId != null">
               {{task.userByApproverId.userName}}
             </div>
           </td>
-          <td style="width:60px;">{{task.inputHours}}</td>
-          <td style="width:250px;">{{task.feedback}}</td>
+          <td style="width:60px;" class="text-center">{{task.inputHours}}</td>
+          <td style="width:100px;">{{task.feedback}}</td>
           <td style="width:60px;">
             <i class="material-icons info text-primary" title="Edit" *ngIf="task.userId == user.id"
               (click)="editInput(task)">edit</i>
             <i class="material-icons info text-danger" title="Remove" *ngIf="task.userId == user.id"
               (click)="deleteInput(task)">delete</i>
             <i class="material-icons info text-success" title="Approve"
-              (click)="approveCSInput(task)">check_circle</i>
+              (click)="approveCSInput(task)" *ngIf="user.userRoleByCsRoleId.roleName == 'c_lead'">check_circle</i>
           </td>
         </tr>
         </tbody>
@@ -49,6 +49,6 @@
     </td>
   </tr>
   <tr *ngIf="result == null || result == undefined || result.length == 0">
-    <td colspan="7" class="text-center">No records found</td>
+    <td colspan="8" class="text-center">No records found</td>
   </tr>
 </table>
