@@ -200,6 +200,7 @@ export class LaborClassComponent implements OnInit {
   }
 
   expandRow(element) {
+    this.resetAddTaskForm();
     this.expandedElement = this.expandedElement === element ? null : element;
   }
 
