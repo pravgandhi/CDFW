@@ -25,8 +25,9 @@ export class LaborClassInputsComponent implements OnInit {
   }
 
   customInit() {
+    let _self = this;
     this.serviceMatrix.getLaborClassSummaryByPositionId(this.regionId, this.positionId).subscribe(res => {
-      this.result = _(res)
+      _self.result = _(res)
         .groupBy(x => x['taskId'])
         .map((value, key) => ({ taskId: key, tasks: value }))
         .value();
@@ -56,6 +57,19 @@ export class LaborClassInputsComponent implements OnInit {
       }
     });
   }
+
+  approveCSInput(task) {
+    const dialogRef = this.dialog.open(ApproveCSInputDialog, {
+      data: { task: task }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.customInit();
+      }
+    });
+  }
+
 }
 
 @Component({
@@ -74,7 +88,6 @@ export class EditCSInputDialog {
 
   onUpdate() {
     this.serviceMatrix.editCSInput(this.data.task).subscribe(res => {
-      
       if (res) {
         this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
         this.dialogRef.close(res);
@@ -83,7 +96,6 @@ export class EditCSInputDialog {
       }
     });
   }
-
 }
 
 @Component({
@@ -110,5 +122,34 @@ export class DeleteCSInputDialog {
       }
     });
   }
+}
 
+
+@Component({
+  selector: 'approve-cs-input-dialog',
+  templateUrl: 'approve-cs-input-dialog.html',
+})
+export class ApproveCSInputDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DeleteCSInputDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private serviceMatrix: ServiceMatrixService,
+    private snackBar: MatSnackBarComponent,
+    private userService :UserService) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onConfirm() {
+    this.serviceMatrix.approveCSInput(this.data.task, this.userService.userId).subscribe(res => {
+      if (res) {
+        this.snackBar.openSnackBar("Input approved successfully", 'Close', "green-snackbar");
+        this.dialogRef.close(res);
+      } else {
+        this.snackBar.openSnackBar("Error approving input", 'Close', "red-snackbar");
+      }
+    });
+  }
 }

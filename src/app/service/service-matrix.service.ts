@@ -162,12 +162,18 @@ export class ServiceMatrixService {
   }
 
   public editCSInput(csInput: Object) {
-    return this.http.post(this.API_URL + 'editCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'] });
+    return this.http.post(this.API_URL + 'editCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], feedback : csInput['feedback'] });
   }
 
   public deleteCSInput(csInput: Object) {
     return this.http.post(this.API_URL + 'deleteCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'] });
   }
+
+  public approveCSInput(csInput: Object, approverId: number){
+    return this.http.post(this.API_URL + 'approveCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], approverId: approverId});
+  }
+
+
   async getTaskInfo(taskId: string) {
     var self = this;
     await fetch('../assets/data.json')

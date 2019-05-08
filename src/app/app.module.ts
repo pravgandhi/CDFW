@@ -11,7 +11,7 @@ import { LoginModule } from './login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatExpansionModule, MatTabsModule, MatSelectModule, MatAutocompleteModule, 
+  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatExpansionModule, MatTabsModule, MatSelectModule, MatAutocompleteModule,
   MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatPaginatorModule
 } from '@angular/material';
 
@@ -37,7 +37,7 @@ import { ResestPasswordDialog, DataTypeSelectionDialog } from './login/login-for
 import { FeedbackComponent } from './service/feedback/feedback.component';
 import { LaborClassComponent } from './current-state/labor-class/labor-class.component';
 import { LaborHourDetailsComponent } from './current-state/labor-hour-details/labor-hour-details.component';
-import { LaborClassInputsComponent, DeleteCSInputDialog, EditCSInputDialog } from './current-state/labor-class-inputs/labor-class-inputs.component';
+import { LaborClassInputsComponent, DeleteCSInputDialog, ApproveCSInputDialog, EditCSInputDialog } from './current-state/labor-class-inputs/labor-class-inputs.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import { LaborClassInputsComponent, DeleteCSInputDialog, EditCSInputDialog } fro
     DataTypeSelectionDialog,
     EditCSInputDialog,
     DeleteCSInputDialog,
+    ApproveCSInputDialog,
     LaborClassComponent,
     LaborHourDetailsComponent,
     LaborClassInputsComponent
@@ -72,9 +73,9 @@ import { LaborClassInputsComponent, DeleteCSInputDialog, EditCSInputDialog } fro
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatTooltipModule,
-    MatTabsModule, 
-    MatSelectModule, 
-    MatAutocompleteModule, 
+    MatTabsModule,
+    MatSelectModule,
+    MatAutocompleteModule,
     FlexLayoutModule,
     UserModule,
     ServiceModule,
@@ -100,6 +101,6 @@ import { LaborClassInputsComponent, DeleteCSInputDialog, EditCSInputDialog } fro
   },
     AuthenticationService, UserService, MatSnackBarComponent],
   bootstrap: [AppComponent],
-  entryComponents: [InputsComponent, ResestPasswordDialog, FeedbackComponent, DataTypeSelectionDialog, EditCSInputDialog, DeleteCSInputDialog]
+  entryComponents: [InputsComponent, ResestPasswordDialog, FeedbackComponent, DataTypeSelectionDialog, EditCSInputDialog, DeleteCSInputDialog, ApproveCSInputDialog]
 })
 export class AppModule { }

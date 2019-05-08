@@ -79,10 +79,12 @@
                   <td class="align-top">
                       <input id="inputmul" type="number" name="test_name" min="0" class="task-input-multiplier align-top"
                         oninput="validity.valid||(value='');" [(ngModel)]="multiplier" [disabled]="saveRespInputDisabled">
-                      <label for="tobeenteredby" style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;">To be entered by<i
-                            class="material-icons help-text-icon"
-                            matTooltip="{{serviceMatrix.toBeEnteredBy.join('\n')}}">help</i></label>              
-                      <textarea id="tobeenteredby" matInput value="{{task.toBeEnteredBy}}"></textarea>
+                      <div>
+                        <label for="tobeenteredby" style="margin-left:10px; margin-bottom: 0px; margin-top: 5px;">To be entered by<i
+                              class="material-icons help-text-icon"
+                              matTooltip="{{serviceMatrix.toBeEnteredBy.join('\n')}}">help</i></label>
+                        <textarea id="tobeenteredby" matInput value="{{task.toBeEnteredBy}}"></textarea>
+                      </div>
                     </td>
                     <td class= "align-top">
                       <textarea name="taskfeedback" [(ngModel)]="taskfeedback" rows="3" cols="20" maxlength="2000"

@@ -11,7 +11,7 @@ export class UserService {
       return JSON.parse(localStorage.getItem('currentUser'));
     }
 
-    get userId():Object{
+    get userId():number{
       return JSON.parse(localStorage.getItem('currentUser'))['id'];
     }
 
