@@ -61,24 +61,24 @@ export class MatrixDetailsComponent implements OnInit{
       // }
       this.getMatrixDetails(this.userService.user['id']);
       this.getRegionDetails(this.user);
-      this.globalFilter = this.serviceMatrix.filterStore.globalFilter;
-      if(this.serviceMatrix.filterStore.columnFilter != undefined){
-        this.filteredValues = this.serviceMatrix.filterStore.columnFilter;
-      }
     }
 
     public getMatrixDetails = (userId:string ) => {
         this.serviceMatrix.getData(this.selectedRegionId, userId)
         .subscribe(res => {
-          this.paginator.pageIndex = this.serviceMatrix.filterStore.pageIndex;
-          this.paginator.pageSize = this.serviceMatrix.filterStore.pageSize;
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
+          this.globalFilter = this.serviceMatrix.filterStore.globalFilter;
+          if(this.serviceMatrix.filterStore.columnFilter != undefined){
+            this.filteredValues = this.serviceMatrix.filterStore.columnFilter;
+          }
           this.dataSource.data = res as Object[];
           this.dataSource.data.forEach(e => {
             e["statusCode"] = e["taskStatus"];
-          })
+          });
           this.applyAllFilters(this.globalFilter, this.filteredValues);
+          this.paginator.pageIndex = this.serviceMatrix.filterStore.pageIndex;
+          this.paginator.pageSize = this.serviceMatrix.filterStore.pageSize;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         });
     }
 
@@ -161,7 +161,7 @@ export class MatrixDetailsComponent implements OnInit{
       let statusFound = data.taskStatus.toString().trim().toLowerCase().indexOf(searchString.statusCode.toString().toLowerCase()) !== -1;
       let inputFound = data.myInput.toString().trim().toLowerCase().indexOf(searchString.myInput.toString().toLowerCase()) !== -1;
       let countFound = data.inputReceived.toString().trim().toLowerCase().indexOf(searchString.inputCount.toString().toLowerCase()) !== -1;
-      let fbReceivedFound = data.feedbackReceived.toString().trim().toLowerCase().indexOf(searchString.feedbackReceived.toString().toLowerCase()) !== -1;      
+      let fbReceivedFound = data.feedbackReceived.toString().trim().toLowerCase().indexOf(searchString.feedbackReceived.toString().toLowerCase()) !== -1;
       let toBeEnteredFound = data.toBeEnteredBy.toString().trim().toLowerCase().indexOf(searchString.toBeEnteredBy.toString().toLowerCase()) !== -1;
       return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound && fbReceivedFound && toBeEnteredFound;
     }
