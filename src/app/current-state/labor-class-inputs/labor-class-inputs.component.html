@@ -36,9 +36,9 @@
           <td style="width:60px;" class="text-center">{{task.inputHours}}</td>
           <td style="width:100px;">{{task.feedback}}</td>
           <td style="width:60px;">
-            <i class="material-icons info text-primary" title="Edit" *ngIf="task.userId == user.id"
+            <i class="material-icons info text-primary" title="Edit" *ngIf="task.userId == user.id || user.userRoleByCsRoleId.roleName == 'c_lead'"
               (click)="editInput(task)">edit</i>
-            <i class="material-icons info text-danger" title="Remove" *ngIf="task.userId == user.id"
+            <i class="material-icons info text-danger" title="Remove" *ngIf="task.userId == user.id || user.userRoleByCsRoleId.roleName == 'c_lead'"
               (click)="deleteInput(task)">delete</i>
             <i class="material-icons info text-success" title="Approve"
               (click)="approveCSInput(task)" *ngIf="user.userRoleByCsRoleId.roleName == 'c_lead'">check_circle</i>
@@ -49,6 +49,6 @@
     </td>
   </tr>
   <tr *ngIf="result == null || result == undefined || result.length == 0">
-    <td colspan="8" class="text-center">No records found</td>
+    <td colspan="9" class="text-center">No records found</td>
   </tr>
 </table>

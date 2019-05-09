@@ -107,6 +107,7 @@
           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
           <mat-tab-group class="w-100">
             <mat-tab label="Add Task">
+                <ng-template matTabContent>
               <div class="row mx-0 pt-2">
                 <div class="col-md-3">
                   <mat-form-field class="w-100">
@@ -183,6 +184,7 @@
                     (click)="addTask()">Submit</button>
                 </div>
               </div>
+              </ng-template>
             </mat-tab>
             <mat-tab label="Inputs">
               <ng-template matTabContent>
