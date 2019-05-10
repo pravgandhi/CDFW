@@ -1,0 +1,123 @@
+<div>
+  <div class="text-center">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)]="globalFilter">
+  </mat-form-field>
+  <button mat-button color="primary" (click)="clearAllFilters()">Clear All Filters</button>
+  <!-- <button mat-button color="primary" (click)="loadLastUsedFilter()" *ngIf="user['filter'] != null">Use Most Recent
+    Filter</button> -->
+  </div>
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+    <ng-container matColumnDef="viewTask">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Actions</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-button color="primary" (click)="addInput(row)" title="Add Hours">
+          <mat-icon>add_box</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="viewTask-filter">
+      <th mat-header-cell *matHeaderCellDef>
+
+      </th>
+    </ng-container>
+
+
+    <ng-container matColumnDef="taskId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task ID</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.taskId}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="serviceName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Service</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.serviceName}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="program">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Program</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.program}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="subProgram">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Sub Program</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.subProgram}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="taskCategory">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task Category</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.taskCategory}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="taskName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Task</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.taskName}}
+      </td>
+    </ng-container>
+
+    <!-- Task Id Filter Column -->
+    <ng-container matColumnDef="taskId-filter">
+      <th mat-header-cell *matHeaderCellDef>
+        <input class="filter-input" value="{{filteredValues.taskId}}"
+          (keyup)="applyColumnFilter($event.target.value, 'taskId')" placeholder="Filter">
+      </th>
+    </ng-container>
+
+    <!-- Service Filter Column -->
+    <ng-container matColumnDef="serviceName-filter">
+      <th mat-header-cell *matHeaderCellDef>
+        <input class="filter-input" value="{{filteredValues.serviceName}}"
+          (keyup)="applyColumnFilter($event.target.value, 'serviceName')" placeholder="Filter">
+      </th>
+    </ng-container>
+
+    <!-- Program Filter Column -->
+    <ng-container matColumnDef="program-filter">
+      <th mat-header-cell *matHeaderCellDef>
+        <input class="filter-input" value="{{filteredValues.program}}"
+          (keyup)="applyColumnFilter($event.target.value, 'program')" placeholder="Filter">
+      </th>
+    </ng-container>
+
+    <!-- Sub Program Filter Column -->
+    <ng-container matColumnDef="subProgram-filter">
+      <th mat-header-cell *matHeaderCellDef>
+        <input class="filter-input" value="{{filteredValues.subProgram}}"
+          (keyup)="applyColumnFilter($event.target.value, 'subProgram')" placeholder="Filter">
+      </th>
+    </ng-container>
+
+    <!-- Task Category Filter Column -->
+    <ng-container matColumnDef="taskCategory-filter">
+      <th mat-header-cell *matHeaderCellDef>
+        <input class="filter-input" value="{{filteredValues.taskCategory}}"
+          (keyup)="applyColumnFilter($event.target.value, 'taskCategory')" placeholder="Filter">
+      </th>
+    </ng-container>
+
+    <!-- Task Filter Column -->
+    <ng-container matColumnDef="taskName-filter">
+      <th mat-header-cell *matHeaderCellDef>
+        <input class="filter-input" value="{{filteredValues.taskName}}"
+          (keyup)="applyColumnFilter($event.target.value, 'taskName')" placeholder="Filter">
+      </th>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedFilterColumns" class="example-second-header-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+</div>

@@ -1,0 +1,56 @@
+<div>
+  <p style="font-size: 20px; font-weight: 600; margin-bottom: 0;">{{data.task.taskName}}({{data.task.taskId}}) - {{data.positionId}}</p>
+  <p style="font-size: 14px;">{{data.task.serviceName}} / {{data.task.program}} / {{data.task.subProgram}}
+    /{{data.task.taskCategory}}
+  </p>
+</div>
+<div class="pt-4 row">
+  <div class="col-12">
+    <table class="text-white" style="background: #1f4e79; height: 80px; width: auto !important;">
+      <tr>
+        <td rowspan="3" style="background-color: white;">
+            <mat-form-field class="px-1">
+              <input matInput style="color:black;" placeholder="Input Hours" type="number" [(ngModel)]="data.hours">
+            </mat-form-field>
+            <mat-form-field class="px-1">
+              <textarea matInput placeholder="Feedback" [(ngModel)]="data.feedback"></textarea>
+            </mat-form-field>
+          <button mat-raised-button color="primary"cdkFocusInitial (click)="onAdd()" class="m-1" style="width: 70px;">Add</button>
+            <button mat-raised-button  (click)="onNoClick()" class="m-1" style="width: 70px;">Cancel</button></td>
+        <td rowspan="3" style="width: 75px;"></td>
+        <td>Hours bank for the position</td>
+        <td style="width: 75px; border-bottom: 1px solid white;">{{data.hoursBank}}</td>
+      </tr>
+      <tr>
+        <td>Total hours allocated</td>
+        <td style="border-bottom: 1px solid white;">{{data.hoursEntered+data.hours}}</td>
+      </tr>
+      <tr>
+        <td>Hours remaining to be allocated</td>
+        <td style="border-bottom: 1px solid white;">{{data.hoursBank-data.hoursEntered-data.hours}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="row pt-3">
+  <div class="col-3">
+    <mat-form-field class="w-100">
+      <textarea matInput placeholder="Description" disabled style="min-height: 100px;">{{data.task.taskDesc}}</textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field class="w-100">
+      <textarea matInput placeholder="Desired Performance" disabled style="min-height: 100px;">{{data.task.desiredPerf}}</textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field class="w-100">
+      <textarea matInput placeholder="Glossary" disabled style="min-height: 100px;">{{data.task.serviceGlossary}}</textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field class="w-100">
+      <textarea matInput placeholder="Additional Budget Factors" disabled style="min-height: 100px;">{{data.task.addtnlBudgetFator}}</textarea>
+    </mat-form-field>
+  </div>
+</div>

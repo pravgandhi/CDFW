@@ -1,0 +1,61 @@
+mat-cell,
+.mat-cell,
+mat-footer-cell,
+.mat-footer-cell,
+mat-header-cell, .mat-header-cell {
+  padding: 0.75rem !important;
+}
+
+mat-header-cell {
+  display:flex;
+  justify-content:flex-end;
+ }
+
+ .mat-form-field {
+   font-size: 14px;
+   width: 50%;
+ }
+
+ .mat-row:hover {
+  background-color: #DDD;
+}
+
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+mat-toolbar  span, mat-toolbar  a  span {
+  font-size: 10pt;
+}
+
+.table-col-title {
+  font-weight: 500;
+  color: black;
+  font-size: 14px;
+}
+
+.table-col-header {
+  font-size: 12px;
+}
+
+.filter-input{
+  width: 75%;
+  text-align: left;
+}
+
+.th-header-background{
+  background: #1f4e79;
+  color: white;
+  font-size: 14px;
+}
+
+.help-text-icon {
+  font-size: 14px;
+}
+
+::ng-deep .mat-tooltip  {
+ white-space: pre-line    !important;
+ font-size: 10px   !important;
+}
