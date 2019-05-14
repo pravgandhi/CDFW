@@ -305,6 +305,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 <mat-paginator #paginator
-  [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons
+  [pageSizeOptions]="[5, 20, 50, 100, 500, 1000]" showFirstLastButtons
   (page)="pageEvent = handlePage($event)"></mat-paginator>
 </div>
