@@ -35,8 +35,8 @@ export class LaborClassInputsComponent implements OnInit {
         .map((value, key) => ({ taskId: key, tasks: value }))
         .value();
 
-      let he = _.sumBy(res as [], function (e) { 
-          return e['inputHours'];   
+      let he = _.sumBy(res as [], function (e) {
+          return e['inputHours'];
       });
 
       this.hoursEntered.emit(he);
@@ -89,14 +89,15 @@ export class EditCSInputDialog {
 
   constructor(
     public dialogRef: MatDialogRef<EditCSInputDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private serviceMatrix: ServiceMatrixService, private snackBar: MatSnackBarComponent) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private serviceMatrix: ServiceMatrixService, private snackBar: MatSnackBarComponent,
+    private userService :UserService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   onUpdate() {
-    this.serviceMatrix.editCSInput(this.data.task).subscribe(res => {
+    this.serviceMatrix.editCSInput(this.data.task, this.userService.userId).subscribe(res => {
       if (res) {
         this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
         this.dialogRef.close(res);

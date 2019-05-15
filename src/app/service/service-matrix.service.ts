@@ -161,8 +161,8 @@ export class ServiceMatrixService {
     return this.http.post(this.API_URL + 'addCsInput', { regionId: selectedRegionId, userId: userId, positionId: pid, taskId: taskid, inputHours: taskhours, feedback: feedback });
   }
 
-  public editCSInput(csInput: Object) {
-    return this.http.post(this.API_URL + 'editCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], feedback: csInput['feedback'] });
+  public editCSInput(csInput: Object, editedBy: number) {
+    return this.http.post(this.API_URL + 'editCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], feedback: csInput['feedback'], editedBy: editedBy });
   }
 
   public deleteCSInput(csInput: Object) {

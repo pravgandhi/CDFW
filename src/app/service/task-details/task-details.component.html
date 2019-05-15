@@ -286,6 +286,7 @@
                   <table id="laborTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1 w-100">
                     <ng-container matColumnDef="title">
                       <th mat-header-cell *matHeaderCellDef> Title </th>
+                      <!--<td mat-cell *matCellDef="let element"> {{element.laborClassLookupByRoleId.title}} </td>-->
                       <td mat-cell *matCellDef="let element"> {{element.title}} </td>
                     </ng-container>
                     <ng-container matColumnDef="role">
