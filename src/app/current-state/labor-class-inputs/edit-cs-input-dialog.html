@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Edit Input</h1>
+<!-- <h1 mat-dialog-title>Edit Input</h1>
 <div mat-dialog-content>
   <mat-form-field class="px-1">
     <input matInput placeholder="Position Id" value="{{data.task.positionId}}" disabled>
@@ -16,4 +16,62 @@
 <div mat-dialog-actions class="text-center">
   <button mat-raised-button (click)="onNoClick()">Cancel</button>
   <button mat-raised-button color="primary" cdkFocusInitial (click)="onUpdate()">Update</button>
+</div>  -->
+
+
+<div>
+  <p style="font-size: 20px; font-weight: 600; margin-bottom: 0;">{{data.task.serviceMatrixByTaskId.taskName}}({{data.task.taskId}}) - {{data.task.positionId}}</p>
+  <p style="font-size: 14px;">{{data.task.serviceMatrixByTaskId.serviceName}} / {{data.task.serviceMatrixByTaskId.program}} / {{data.task.serviceMatrixByTaskId.subProgram}}
+    /{{data.task.serviceMatrixByTaskId.taskCategory}}
+  </p>
+</div>
+<div class="pt-4 row">
+  <div class="col-12">
+    <table class="text-white" style="background: #1f4e79; height: 80px; width: auto !important; border-collapse: separate; border-spacing: 5px;">
+      <tr>
+        <td rowspan="3" style="background-color: white;">
+            <mat-form-field class="px-1">
+              <input matInput style="color:black;" placeholder="Input Hours" type="number" [(ngModel)]="data.task.inputHours">
+            </mat-form-field>
+            <mat-form-field class="px-1">
+              <textarea matInput placeholder="Feedback" [(ngModel)]="data.task.feedback" style="color: black;"></textarea>
+            </mat-form-field>
+          <button mat-raised-button color="primary"cdkFocusInitial (click)="onUpdate()" class="m-1" style="width: 75px;">Update</button>
+            <button mat-raised-button  (click)="onNoClick()" class="m-1" style="width: 75px;">Cancel</button></td>
+        <td rowspan="3" style="width: 75px;"></td>
+        <td>Hours bank for the position</td>
+        <td style="width: 75px; border-bottom: 1px solid white;">{{data.hoursBank}}</td>
+      </tr>
+      <tr>
+        <td>Total hours allocated</td>
+        <td style="border-bottom: 1px solid white;">{{data.hoursEntered+data.task.inputHours-staticInputHours}}</td>
+      </tr>
+      <tr>
+        <td>Hours remaining to be allocated</td>
+        <td style="border-bottom: 1px solid white;">{{data.hoursBank-data.hoursEntered-data.task.inputHours-staticInputHours}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="row pt-3">
+  <div class="col-3">
+    <mat-form-field class="w-100">
+      <textarea matInput placeholder="Description" disabled style="min-height: 100px;">{{data.task.serviceMatrixByTaskId.taskDesc}}</textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field class="w-100">
+      <textarea matInput placeholder="Desired Performance" disabled style="min-height: 100px;">{{data.task.serviceMatrixByTaskId.desiredPerf}}</textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field class="w-100">
+      <textarea matInput placeholder="Glossary" disabled style="min-height: 100px;">{{data.task.serviceMatrixByTaskId.serviceGlossary}}</textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field class="w-100">
+      <textarea matInput placeholder="Additional Budget Factors" disabled style="min-height: 100px;">{{data.task.serviceMatrixByTaskId.addtnlBudgetFator}}</textarea>
+    </mat-form-field>
+  </div>
 </div>

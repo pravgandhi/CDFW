@@ -190,7 +190,8 @@
             </mat-tab> -->
             <mat-tab label="Inputs">
               <ng-template matTabContent>
-                <app-labor-class-inputs [positionId]="element.positionId" (hoursEntered)="updateHoursEntered(element, $event)"
+                <app-labor-class-inputs [positionId]="element.positionId" [hoursBank]="element.hours" 
+                  [hoursEntered]="element.hoursEntered" (hoursEntered)="updateHoursEntered(element, $event)"
                   [regionId]="selectedRegionObj.regionByRegionId.regionId"></app-labor-class-inputs>
               </ng-template>
             </mat-tab>

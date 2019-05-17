@@ -16,6 +16,9 @@ export class LaborClassInputsComponent implements OnInit {
   @Input('positionId') positionId: string;
   @Input('regionId') regionId: number;
   @Output() hoursEntered = new EventEmitter();
+  
+  @Input("hoursEntered") hoursEnterd: number;
+  @Input("hoursBank") hoursBank: number;
 
   result: any[];
   user: Object;
@@ -45,7 +48,7 @@ export class LaborClassInputsComponent implements OnInit {
 
   editInput(task) {
     const dialogRef = this.dialog.open(EditCSInputDialog, {
-      data: { task: task }
+      data: { task: task, hoursBank: this.hoursBank, hoursEntered: this.hoursEnterd }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -86,6 +89,8 @@ export class LaborClassInputsComponent implements OnInit {
   templateUrl: 'edit-cs-input-dialog.html',
 })
 export class EditCSInputDialog {
+
+  staticInputHours: number = this.data.task.inputHours;
 
   constructor(
     public dialogRef: MatDialogRef<EditCSInputDialog>,
