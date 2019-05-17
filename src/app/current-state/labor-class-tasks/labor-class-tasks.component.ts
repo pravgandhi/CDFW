@@ -3,6 +3,7 @@ import { UserService } from 'src/app/_services';
 import { ServiceMatrixService } from 'src/app/service/service-matrix.service';
 import { MatDialog, MatTableDataSource, MatPaginator, MatSort, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MatSnackBarComponent } from 'src/app/service/mat-snack-bar/mat-snack-bar.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-labor-class-tasks',
@@ -21,6 +22,7 @@ export class LaborClassTasksComponent implements OnInit {
   user: Object;
 
   @Input("taskCatalog") taskCatalog: any;
+  addedTasks: any = [];
 
   dataSource = new MatTableDataSource<Object>();
   searchInput: string;
@@ -39,17 +41,25 @@ export class LaborClassTasksComponent implements OnInit {
 
   ngOnInit(){
     this.user = this.userService.user;
+    this.loadLaborClassInputs();
     // this.taskCatalog = JSON.parse(localStorage.getItem('csServiceMatrix'));
     this.displayedColumns.forEach(e => {
       this.displayedFilterColumns.push(e + '-filter');
     });
-      this.dataSource.data = this.taskCatalog as Object[];
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.filterPredicate = this.customFilterPredicate();
+    this.dataSource.data = this.taskCatalog as Object[];
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.filterPredicate = this.customFilterPredicate();
   }
 
-  ngOnChanges(){
-    
+  loadLaborClassInputs(){
+    this.serviceMatrix.getLaborClassSummaryByPositionId(this.regionId, this.positionId).subscribe(res => {
+      this.addedTasks = res as [];
+    });
+  }
+
+  isTaskAdded(taskId){
+    let index = _.findIndex(this.addedTasks, function(ele) {return ele['taskId'] == taskId});
+    return index;
   }
 
   applyAllFilters(gFilter, fValues) {
