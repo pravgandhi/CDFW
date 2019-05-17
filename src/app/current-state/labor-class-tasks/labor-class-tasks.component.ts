@@ -17,7 +17,8 @@ export class LaborClassTasksComponent implements OnInit {
   @Input("hoursBank") hoursBank: number;
 
   user: Object;
-  taskCatalog: any;
+
+  @Input("taskCatalog") taskCatalog: any;
 
   dataSource = new MatTableDataSource<Object>();
   searchInput: string;
@@ -34,17 +35,20 @@ export class LaborClassTasksComponent implements OnInit {
 
   constructor(private userService: UserService, private serviceMatrix: ServiceMatrixService, public dialog: MatDialog, private snackBar: MatSnackBarComponent) { }
 
-  ngOnInit() {
+  ngOnInit(){
     this.user = this.userService.user;
-    this.taskCatalog = JSON.parse(localStorage.getItem('csServiceMatrix'));
+    // this.taskCatalog = JSON.parse(localStorage.getItem('csServiceMatrix'));
     this.displayedColumns.forEach(e => {
       this.displayedFilterColumns.push(e + '-filter');
     });
-    this.dataSource.data = this.taskCatalog as Object[];
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.filterPredicate = this.customFilterPredicate();
+      this.dataSource.data = this.taskCatalog as Object[];
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.filterPredicate = this.customFilterPredicate();
   }
 
+  ngOnChanges(){
+    
+  }
 
   applyAllFilters(gFilter, fValues) {
     this.applyFilter(gFilter);
