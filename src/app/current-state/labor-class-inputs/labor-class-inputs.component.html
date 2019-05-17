@@ -1,7 +1,7 @@
 <table class="w-100 lcsummary-table">
-  <tr class="border-bottom">
+  <tr class="border-bottom" style="background-color: #1f4e79; color: white;">
     <th></th>
-    <th style="width:175px;">Task ID</th>
+    <th style="width:175px; height: 40px;">Task ID</th>
     <th>Task Name</th>
     <th style="width:150px;">Respondent name</th>
     <th style="width:100px;">Status</th>
@@ -23,7 +23,7 @@
         <tbody>
         <!-- <tr *ngFor="let task of summary.tasks; index as i"> -->
         <tr *ngFor="let task of summary.tasks; index as i" [class.border-top]="i>0">
-          <td style="width:150px;">{{task.user.userName}}</td>
+          <td style="width:150px; height: 35px;">{{task.user.userName}}</td>
           <td style="width:100px;">
             <div *ngIf="task.statusBySttsId != null">
               {{task.statusBySttsId.statusCode}}

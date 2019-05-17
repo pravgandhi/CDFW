@@ -16,6 +16,8 @@ export class LaborClassTasksComponent implements OnInit {
   @Input("hoursEntered") hoursEntered: number;
   @Input("hoursBank") hoursBank: number;
 
+  @Output() updateHoursEntered = new EventEmitter();
+
   user: Object;
 
   @Input("taskCatalog") taskCatalog: any;
@@ -120,8 +122,9 @@ export class LaborClassTasksComponent implements OnInit {
       , hoursBank: this.hoursBank, hoursEntered: this.hoursEntered }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    dialogRef.afterClosed().subscribe(res => {
+      if (res.result) {
+        this.updateHoursEntered.emit(res.hours)
       }
     });
   }
@@ -148,7 +151,7 @@ export class AddCSInputDialog {
     this.serviceMatrix.saveCsInput(this.data.selectedRegionId, this.data.userId, this.data.positionId, this.data.task.taskId, this.data.hours, this.data.feedback).subscribe(res => {
       if (res) {
         this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
-        this.dialogRef.close(res);
+        this.dialogRef.close({"result":res, "hours":this.data.hours});
       } else {
         this.snackBar.openSnackBar("Error saving input value", 'Close', "red-snackbar");
       }

@@ -35,11 +35,11 @@ export class LaborClassComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   regionList: [];
   taskCatalog: [];
-  serviceNames = new Set();
-  programs = new Set();
-  subprograms = new Set();
-  taskcategories = new Set();
-  tasks: Object[];
+  // serviceNames = new Set();
+  // programs = new Set();
+  // subprograms = new Set();
+  // taskcategories = new Set();
+  // tasks: Object[];
   filteredtasks: Object[];
 
   servicename: string;
@@ -77,62 +77,63 @@ export class LaborClassComponent implements OnInit {
       this.serviceMatrix.getCsMatrixData()
         .subscribe(res => {
           this.taskCatalog = res as [];
-          this.taskCatalog.forEach(e => this.serviceNames.add(e["serviceName"]));
+          // this.taskCatalog.forEach(e => this.serviceNames.add(e["serviceName"]));
           localStorage.setItem('csServiceMatrix', JSON.stringify(res as []));
         });
-    } else {
-      this.taskCatalog.forEach(e => this.serviceNames.add(e["serviceName"]));
-    }
+    } 
+    // else {
+    //   this.taskCatalog.forEach(e => this.serviceNames.add(e["serviceName"]));
+    // }
   }
 
-  private _filter(value: string) {
-    const filterValue = value.toLowerCase();
-    return this.tasks.filter(e => e['name'].toLowerCase().includes(filterValue));
-  }
+  // private _filter(value: string) {
+  //   const filterValue = value.toLowerCase();
+  //   return this.tasks.filter(e => e['name'].toLowerCase().includes(filterValue));
+  // }
 
-  filterServices() {
-    let fltr = this.taskCatalog.filter(e => e["serviceName"] == this.servicename);
-    this.programs = new Set();
-    this.tasks = [];
-    this.taskid = "";
-    fltr.forEach(e => {
-      this.programs.add(e["program"]);
-      this.tasks.push({ "id": e["taskId"], "name": e["taskName"] });
-    });
-  }
+  // filterServices() {
+  //   let fltr = this.taskCatalog.filter(e => e["serviceName"] == this.servicename);
+  //   this.programs = new Set();
+  //   this.tasks = [];
+  //   this.taskid = "";
+  //   fltr.forEach(e => {
+  //     this.programs.add(e["program"]);
+  //     this.tasks.push({ "id": e["taskId"], "name": e["taskName"] });
+  //   });
+  // }
 
-  filterPrograms() {
-    let fltr = this.taskCatalog.filter(e => e["program"] == this.program);
-    this.subprograms = new Set();
-    this.tasks = [];
-    this.taskid = "";
-    fltr.forEach(e => {
-      this.subprograms.add(e["subProgram"]);
-      this.tasks.push({ "id": e["taskId"], "name": e["taskName"] });
-    });
-  }
+  // filterPrograms() {
+  //   let fltr = this.taskCatalog.filter(e => e["program"] == this.program);
+  //   this.subprograms = new Set();
+  //   this.tasks = [];
+  //   this.taskid = "";
+  //   fltr.forEach(e => {
+  //     this.subprograms.add(e["subProgram"]);
+  //     this.tasks.push({ "id": e["taskId"], "name": e["taskName"] });
+  //   });
+  // }
 
-  filterSubPrograms() {
-    let fltr = this.taskCatalog.filter(e => e["subProgram"] == this.subprogram);
-    this.taskcategories = new Set();
-    this.tasks = [];
-    this.taskid = "";
-    fltr.forEach(e => {
-      this.taskcategories.add(e["taskCategory"]);
-      this.tasks.push({ "id": e["taskId"], "name": e["taskName"] });
-    });
-  }
+  // filterSubPrograms() {
+  //   let fltr = this.taskCatalog.filter(e => e["subProgram"] == this.subprogram);
+  //   this.taskcategories = new Set();
+  //   this.tasks = [];
+  //   this.taskid = "";
+  //   fltr.forEach(e => {
+  //     this.taskcategories.add(e["taskCategory"]);
+  //     this.tasks.push({ "id": e["taskId"], "name": e["taskName"] });
+  //   });
+  // }
 
-  filterTaskCategories() {
-    let fltr = this.taskCatalog.filter(e => e["taskCategory"] == this.taskcategory);
-    this.tasks = [];
-    this.taskid = "";
-    fltr.forEach(e => this.tasks.push({ "id": e["taskId"], "name": e["taskName"] }));
-  }
+  // filterTaskCategories() {
+  //   let fltr = this.taskCatalog.filter(e => e["taskCategory"] == this.taskcategory);
+  //   this.tasks = [];
+  //   this.taskid = "";
+  //   fltr.forEach(e => this.tasks.push({ "id": e["taskId"], "name": e["taskName"] }));
+  // }
 
-  filterTasks(searchVal) {
-    this.filteredtasks = this._filter(searchVal);
-  }
+  // filterTasks(searchVal) {
+  //   this.filteredtasks = this._filter(searchVal);
+  // }
 
   addTask() {
     var pid = this.expandedElement['positionId'];
@@ -146,6 +147,10 @@ export class LaborClassComponent implements OnInit {
 
   updateHoursEntered(element, hours){
     element['hoursEntered'] = hours;
+  }
+
+  updateHoursEnteredFromAdd(element, hours){
+    element['hoursEntered'] = element['hoursEntered'] + hours;
   }
 
   resetAddTaskForm() {
