@@ -134,6 +134,7 @@ export class LaborClassTasksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res.result) {
+        this.loadLaborClassInputs();
         this.updateHoursEntered.emit(res.hours)
       }
     });
