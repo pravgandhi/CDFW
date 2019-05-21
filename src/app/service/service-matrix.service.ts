@@ -160,6 +160,10 @@ export class ServiceMatrixService {
   saveCsInput(selectedRegionId: number, userId: any, pid: any, taskid: string, taskhours: number, feedback: string) {
     return this.http.post(this.API_URL + 'addCsInput', { regionId: selectedRegionId, userId: userId, positionId: pid, taskId: taskid, inputHours: taskhours, feedback: feedback });
   }
+  
+  public getCSInput(regionId: number, userId: number, positionId: string, taskid: string) {
+    return this.http.get(this.API_URL + 'getCsInput/'+regionId+'/'+userId+'/'+positionId+'/'+taskid);
+  }
 
   public editCSInput(csInput: Object, editedBy: number) {
     return this.http.post(this.API_URL + 'editCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], feedback: csInput['feedback'], editedBy: editedBy });

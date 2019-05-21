@@ -15,8 +15,9 @@
             <mat-form-field class="px-1">
               <textarea matInput placeholder="Feedback" [(ngModel)]="data.feedback" style="color: black;"></textarea>
             </mat-form-field>
-          <button mat-raised-button color="primary"cdkFocusInitial (click)="onAdd()" class="m-1" style="width: 70px;">Add</button>
-            <button mat-raised-button  (click)="onNoClick()" class="m-1" style="width: 70px;">Cancel</button></td>
+          <button mat-raised-button color="primary" cdkFocusInitial (click)="onAdd()" class="m-1" style="width: 70px;">Add</button>
+          <button mat-raised-button  (click)="onNoClick()" class="m-1" style="width: 70px;">Cancel</button>
+        </td>
         <td rowspan="3" style="width: 75px;"></td>
         <td>Hours bank for the position</td>
         <td style="width: 75px; border-bottom: 1px solid white;">{{data.hoursBank}}</td>

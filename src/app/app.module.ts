@@ -38,7 +38,7 @@ import { FeedbackComponent } from './service/feedback/feedback.component';
 import { LaborClassComponent } from './current-state/labor-class/labor-class.component';
 import { LaborHourDetailsComponent } from './current-state/labor-hour-details/labor-hour-details.component';
 import { LaborClassInputsComponent, DeleteCSInputDialog, ApproveCSInputDialog, EditCSInputDialog } from './current-state/labor-class-inputs/labor-class-inputs.component';
-import { LaborClassTasksComponent, AddCSInputDialog } from './current-state/labor-class-tasks/labor-class-tasks.component';
+import { LaborClassTasksComponent, AddCSInputDialog, CSInputTaskExistDialog } from './current-state/labor-class-tasks/labor-class-tasks.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +50,7 @@ import { LaborClassTasksComponent, AddCSInputDialog } from './current-state/labo
     EditCSInputDialog,
     DeleteCSInputDialog,
     ApproveCSInputDialog,
+    CSInputTaskExistDialog,
     LaborClassComponent,
     LaborHourDetailsComponent,
     LaborClassInputsComponent,
@@ -104,6 +105,6 @@ import { LaborClassTasksComponent, AddCSInputDialog } from './current-state/labo
   },
     AuthenticationService, UserService, MatSnackBarComponent],
   bootstrap: [AppComponent],
-  entryComponents: [InputsComponent, ResestPasswordDialog, FeedbackComponent, DataTypeSelectionDialog, AddCSInputDialog, EditCSInputDialog, DeleteCSInputDialog, ApproveCSInputDialog]
+  entryComponents: [InputsComponent, ResestPasswordDialog, FeedbackComponent, DataTypeSelectionDialog, AddCSInputDialog, EditCSInputDialog, DeleteCSInputDialog, ApproveCSInputDialog, CSInputTaskExistDialog]
 })
 export class AppModule { }

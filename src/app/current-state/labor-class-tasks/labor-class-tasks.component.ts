@@ -124,24 +124,44 @@ export class LaborClassTasksComponent implements OnInit {
   }
 
   addInput(task) {
-    const dialogRef = this.dialog.open(AddCSInputDialog, {
-      // height: "450px",
-      // width: "700px",
-      data: { positionId: this.positionId, task: task, hours: 0, feedback: ""
-      , userId: this.user['id'], selectedRegionId: this.regionId
-      , hoursBank: this.hoursBank, hoursEntered: this.hoursEntered }
-    });
 
-    dialogRef.afterClosed().subscribe(res => {
-      if (res != undefined && res.result) {
-        // this.loadLaborClassInputs();
-        this.updateHoursEntered.emit(res.hours)
+    this.serviceMatrix.getCSInput(this.regionId, this.userService.userId, this.positionId, task.taskId).subscribe(res => {
+      if(res != null && res['inputHours'] > 0){
+        this.dialog.open(CSInputTaskExistDialog, {});
+      } else {
+        const dialogRef = this.dialog.open(AddCSInputDialog, {
+          data: { positionId: this.positionId, task: task, hours: 0, feedback: ""
+          , userId: this.user['id'], selectedRegionId: this.regionId
+          , hoursBank: this.hoursBank, hoursEntered: this.hoursEntered }
+        });
+
+        dialogRef.afterClosed().subscribe(res => {
+          if (res != undefined && res.result) {
+            // this.loadLaborClassInputs();
+            this.updateHoursEntered.emit(res.hours)
+          }
+        });
       }
-    });
+    })
   }
 
 }
 
+@Component({
+  selector: 'cs-input-task-exist-dialog',
+  templateUrl: 'cs-input-taskexist-dialog.html',
+})
+export class CSInputTaskExistDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<CSInputTaskExistDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
 
 @Component({
   selector: 'add-cs-input-dialog',
