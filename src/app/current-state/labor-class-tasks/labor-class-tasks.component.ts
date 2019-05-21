@@ -41,7 +41,7 @@ export class LaborClassTasksComponent implements OnInit {
 
   ngOnInit(){
     this.user = this.userService.user;
-    this.loadLaborClassInputs();
+    // this.loadLaborClassInputs();
     // this.taskCatalog = JSON.parse(localStorage.getItem('csServiceMatrix'));
     this.displayedColumns.forEach(e => {
       this.displayedFilterColumns.push(e + '-filter');
@@ -134,7 +134,7 @@ export class LaborClassTasksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res != undefined && res.result) {
-        this.loadLaborClassInputs();
+        // this.loadLaborClassInputs();
         this.updateHoursEntered.emit(res.hours)
       }
     });

@@ -193,6 +193,7 @@ export class LaborClassComponent implements OnInit {
     this.displayedColumns = ["expansion", "positionId", "laborClassName", "hours", "inputHours", "utilization"];
     this.dataSource.data = userLsMappingByRegion as Object[];
     this.dataSource.sort = this.sort;
+    this.paginator.pageSize = 10;
     this.dataSource.paginator = this.paginator;
   }
 

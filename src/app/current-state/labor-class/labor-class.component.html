@@ -2,7 +2,7 @@
   <mat-toolbar>
     <div class="row w-100 m-0">
       <div class="col-md-6 text-left">
-        <span> <b>Labor Classifications</b> </span>
+        <span> <b>My Reports</b> </span>
 
         <button mat-button color="primary" matTooltip="User Info" style="cursor:default;">
           <mat-icon>account_box</mat-icon>
@@ -132,5 +132,5 @@
       [class.example-expanded-row]="expandedElement === element"></tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
-  <mat-paginator #paginator [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>
