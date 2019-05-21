@@ -24,6 +24,8 @@ export class AppComponent {
         return ' - Mission Level';
       } else if(this.userService.user['dataTypeByDataTypeId']['dataType'] == 'current'){
         return ' - Current State'
+      } else if(this.userService.user['dataTypeByDataTypeId']['dataType'] == 'both'){
+        return sessionStorage.getItem("tool-access");
       } 
     } 
     return '';

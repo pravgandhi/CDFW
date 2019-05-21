@@ -92,8 +92,10 @@ export class LoginFormComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result.confirm == 'mission'){
+          sessionStorage.setItem("tool-access", " - Mission Level");
           this.router.navigate(['service', userRegion["regionName"], userRegion["regionId"]]);
         } else {
+          sessionStorage.setItem("tool-access", " - Current State");
           this.router.navigate(['currentState', userRegion["regionId"]]);
         }
       });
