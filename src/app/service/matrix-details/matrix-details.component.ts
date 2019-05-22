@@ -186,9 +186,9 @@ export class MatrixDetailsComponent implements OnInit{
       this.router.navigate([this.selectedRegion, this.selectedRegionId, "task", row.taskId ]);
       //var tasks = this.dataSource.data.filter(e => e['program'] == row.program);
       var tasks = this.dataSource.filteredData;
-      if(tasks.length == this.dataSource.data.length){
+      /*if(tasks.length == this.dataSource.data.length){
         tasks = this.dataSource.data.filter(e => e['program'] == row.program);
-      }
+      }*/
       this.serviceMatrix.filterStore.selectedSubProgTasks = [];
       if(tasks.length > 1){
         for(var i=0; i<tasks.length; i++){
