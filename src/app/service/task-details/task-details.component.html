@@ -140,7 +140,10 @@
       </div>
       <div class="row" style="background: #1f4e79;">
         <div class="col-md-12 pb-3">
-          <app-inputs [taskId]="inpuTaskId" [regionName]="selectedRegion" [totalHours]="task.totalLaborHours * task.frequency" [changeDetection]="changeInputDetection"></app-inputs>
+          <app-inputs [taskId]="inpuTaskId" [regionName]="selectedRegion" 
+          [totalHours]="task.totalLaborHours * task.frequency" 
+          [changeDetection]="changeInputDetection"
+          (approved)="onApproval(task, $event)"></app-inputs>
         </div>
       </div>
       <div class="row">

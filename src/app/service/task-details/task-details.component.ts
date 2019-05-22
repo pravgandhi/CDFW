@@ -185,6 +185,12 @@ export class TaskDetailsComponent implements OnInit {
      }
   }
 
+  onApproval(task, status){
+    let _self = this;
+    _self.approved = true;
+    _self.approvedMsgLead = "The multiplier input for this task has been validated.";
+  }
+
   saveUserInput(stats){
     this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, this.taskfeedback).subscribe(res => {
         this.customInit(this.selectedRegion , this.inpuTaskId);

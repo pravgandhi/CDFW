@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { ServiceMatrixService } from '../service-matrix.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { UserService } from 'src/app/_services';
@@ -28,6 +28,8 @@ export class InputsComponent implements OnInit  {
   @Input('taskId') taskId: string;
   @Input('totalHours') totalHours: number;
   @Input('changeDetection') changeDetection: boolean;
+
+  @Output() approved = new EventEmitter();
 
   constructor(private serviceMatrix : ServiceMatrixService,
               // public dialogRef : MatDialogRef<InputsComponent>,
@@ -70,6 +72,7 @@ export class InputsComponent implements OnInit  {
       _self.approvedInput = Number(data);
       this.snackBar.openSnackBar( "Selected Input is approved", 'Close', "green-snackbar");
       this.fetchInputs();
+      this.approved.emit("approved");
       // this.dialogRef.close(this.data);
     },
     err => {
