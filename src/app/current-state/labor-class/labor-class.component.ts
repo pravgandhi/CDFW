@@ -147,10 +147,12 @@ export class LaborClassComponent implements OnInit {
 
   updateHoursEntered(element, hours){
     element['hoursEntered'] = hours;
+    element['hoursRemaining'] = element['hours'] - element['hoursEntered'];
   }
 
   updateHoursEnteredFromAdd(element, hours){
     element['hoursEntered'] = element['hoursEntered'] + hours;
+    element['hoursRemaining'] = element['hours'] - element['hoursEntered'];
   }
 
   resetAddTaskForm() {
@@ -172,13 +174,9 @@ export class LaborClassComponent implements OnInit {
       var result = [];
       this.serviceMatrix.getLaborMappingsData(this.selectedRegionId, this.user["id"]).subscribe(res => {
         result = res as Object[];
-        // result.forEach(element => {
-        //   var inputHours = 0;
-        //   element["csUserLaborClassInputs"].forEach(e => {
-        //     inputHours = inputHours + e["inputHours"];
-        //   });
-        //   element["inputHours"] = inputHours;
-        // });
+        result.forEach(element => {
+          element.hoursRemaining = element.hours - element.hoursEntered;
+        });
         this.setDatasource(this.selectedRegionId, result);
       });
     }
@@ -190,7 +188,7 @@ export class LaborClassComponent implements OnInit {
 
   setDatasource(regionId, userLsMappingByRegion) {
     this.dataSource.data = [];
-    this.displayedColumns = ["expansion", "positionId", "laborClassName", "hours", "inputHours", "utilization"];
+    this.displayedColumns = ["expansion", "positionId", "laborClassName", "hours", "inputHours", "hoursRemaining"];
     this.dataSource.data = userLsMappingByRegion as Object[];
     this.dataSource.sort = this.sort;
     this.paginator.pageSize = 10;

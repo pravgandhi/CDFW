@@ -23,6 +23,8 @@ export class LaborClassTasksComponent implements OnInit {
 
   @Input("taskCatalog") taskCatalog: any;
   addedTasks: any = [];
+  filters: any;
+  lcfilter: any;
 
   dataSource = new MatTableDataSource<Object>();
   searchInput: string;
@@ -49,6 +51,21 @@ export class LaborClassTasksComponent implements OnInit {
     this.dataSource.data = this.taskCatalog as Object[];
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = this.customFilterPredicate();
+
+    this.filters = JSON.parse(sessionStorage.getItem('cslcfilters'));
+    this.filters = this.filters == null ? {} : this.filters;
+    this.lcfilter = this.filters[this.positionId];
+    if(this.lcfilter != undefined) {
+      this.applyAllFilters(this.lcfilter.globalFilter, this.lcfilter.filteredValues);
+    }
+  }
+
+  saveFilter(){
+    this.lcfilter = {};
+    this.lcfilter["globalFilter"] = this.globalFilter;
+    this.lcfilter["filteredValues"] = this.filteredValues;
+    this.filters[this.positionId] = this.lcfilter;
+    sessionStorage.setItem('cslcfilters', JSON.stringify(this.filters));
   }
 
   loadLaborClassInputs(){
@@ -82,6 +99,7 @@ export class LaborClassTasksComponent implements OnInit {
       subProgram: '', taskCategory: '', taskName: ''
     };
     this.applyAllFilters(this.globalFilter, this.filteredValues);
+    this.saveFilter();
   }
 
   customFilterPredicate() {
@@ -116,11 +134,13 @@ export class LaborClassTasksComponent implements OnInit {
   applyColumnFilter(filterValue: string, col: string) {
     this.filteredValues[col] = filterValue;
     this.dataSource.filter = JSON.stringify(this.filteredValues);
+    this.saveFilter();
   }
 
   applyFilter(filter) {
     this.globalFilter = filter;
     this.dataSource.filter = JSON.stringify(this.filteredValues);
+    this.saveFilter();
   }
 
   addInput(task) {
