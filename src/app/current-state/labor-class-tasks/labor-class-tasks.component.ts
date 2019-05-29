@@ -49,23 +49,31 @@ export class LaborClassTasksComponent implements OnInit {
       this.displayedFilterColumns.push(e + '-filter');
     });
     this.dataSource.data = this.taskCatalog as Object[];
-    this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = this.customFilterPredicate();
 
     this.filters = JSON.parse(sessionStorage.getItem('cslcfilters'));
     this.filters = this.filters == null ? {} : this.filters;
     this.lcfilter = this.filters[this.positionId];
     if(this.lcfilter != undefined) {
+      this.paginator.pageIndex = this.lcfilter.pageIndex;
+      this.paginator.pageSize = this.lcfilter.pageSize;
       this.applyAllFilters(this.lcfilter.globalFilter, this.lcfilter.filteredValues);
     }
+    this.dataSource.paginator = this.paginator;
   }
 
   saveFilter(){
     this.lcfilter = {};
     this.lcfilter["globalFilter"] = this.globalFilter;
     this.lcfilter["filteredValues"] = this.filteredValues;
+    this.lcfilter["pageIndex"] = this.paginator.pageIndex;
+    this.lcfilter["pageSize"] = this.paginator.pageSize;
     this.filters[this.positionId] = this.lcfilter;
     sessionStorage.setItem('cslcfilters', JSON.stringify(this.filters));
+  }
+
+  handlePage(e){
+    this.saveFilter();
   }
 
   loadLaborClassInputs(){
