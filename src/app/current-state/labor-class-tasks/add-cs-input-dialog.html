@@ -1,8 +1,30 @@
 <div>
-  <p style="font-size: 20px; font-weight: 600; margin-bottom: 0;">{{data.task.taskName}}({{data.task.taskId}}) - {{data.positionId}}</p>
+  <table class="w-100">
+    <tr>
+      <td style="font-size: 20px; font-weight: 600; margin-bottom: 0;">{{task.taskName}}({{task.taskId}}) - {{positionId}}</td>
+      <td rowspan="2" style="text-align: center; width: 148px;">
+        ({{task.index}} out of {{filteredTasks.length}})<br>
+        <button mat-button class="float-sm-right" *ngIf="task.nextTask != undefined" title="{{task.nextTask.taskId}}" (click)="goToTask(task.nextTask.taskId)">
+            <mat-icon class="next_task_icon">navigate_next</mat-icon>
+        </button>
+        <button mat-button class="float-sm-right" *ngIf="task.nextTask != undefined" title="{{task.prevTask.taskId}}" (click)="goToTask(task.prevTask.taskId)">
+            <mat-icon class="next_task_icon">navigate_before</mat-icon>
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td style="font-size: 14px; color: gray; padding-bottom: 10px;">
+        {{task.serviceName}}/{{task.program}}/{{task.subProgram}}/{{task.taskCategory}}
+      </td>
+    </tr>
+    <tr *ngIf="taskMessage != ''">
+      <td colspan="2" class="alert alert-success">{{taskMessage}}</td>
+    </tr>
+  </table>
+  <!-- <p style="font-size: 20px; font-weight: 600; margin-bottom: 0;">{{data.task.taskName}}({{data.task.taskId}}) - {{data.positionId}}</p>
   <p style="font-size: 14px;">{{data.task.serviceName}} / {{data.task.program}} / {{data.task.subProgram}}
     /{{data.task.taskCategory}}
-  </p>
+  </p> -->
 </div>
 <div class="row">
   <div class="col-12">
@@ -10,25 +32,26 @@
       <tr>
         <td rowspan="3" style="background-color: white;">
             <mat-form-field class="px-1">
-              <input matInput style="color:black;" placeholder="Input Hours" type="number" [(ngModel)]="data.hours">
+              <input matInput style="color:black;" placeholder="Input Hours" type="number" [(ngModel)]="hours">
             </mat-form-field>
             <mat-form-field class="px-1">
-              <textarea matInput placeholder="Feedback" [(ngModel)]="data.feedback" style="color: black;"></textarea>
+              <textarea matInput placeholder="Feedback" [(ngModel)]="feedback" style="color: black;"></textarea>
             </mat-form-field>
-          <button mat-raised-button color="primary" cdkFocusInitial (click)="onAdd()" class="m-1" style="width: 70px;">Add</button>
+          <button mat-raised-button color="primary" cdkFocusInitial (click)="onAdd()" class="m-1" style="width: 70px;" *ngIf="!existingTask">Add</button>
+          <button mat-raised-button color="primary" cdkFocusInitial (click)="onUpdate()" class="m-1" style="width: 70px;" *ngIf="existingTask">Update</button>
           <button mat-raised-button  (click)="onNoClick()" class="m-1" style="width: 70px;">Cancel</button>
         </td>
         <td rowspan="3" style="width: 75px;"></td>
         <td>Hours bank for the position</td>
-        <td style="width: 75px; border-bottom: 1px solid white;">{{data.hoursBank}}</td>
+        <td style="width: 75px; border-bottom: 1px solid white;">{{hoursBank}}</td>
       </tr>
       <tr>
         <td>Total hours allocated</td>
-        <td style="border-bottom: 1px solid white;">{{data.hoursEntered+data.hours}}</td>
+        <td style="border-bottom: 1px solid white;">{{hoursEntered+hours-staticInputHours}}</td>
       </tr>
       <tr>
         <td>Hours remaining to be allocated</td>
-        <td style="border-bottom: 1px solid white;">{{data.hoursBank-data.hoursEntered-data.hours}}</td>
+        <td style="border-bottom: 1px solid white;">{{hoursBank-(hoursEntered+hours-staticInputHours)}}</td>
       </tr>
     </table>
   </div>
@@ -36,22 +59,22 @@
 <div class="row pt-3">
   <div class="col-3">
     <mat-form-field class="w-100">
-      <textarea matInput placeholder="Description" disabled style="min-height: 150px; color: #444 !important;">{{data.task.taskDesc}}</textarea>
+      <textarea matInput placeholder="Description" disabled style="min-height: 150px; color: #444 !important;">{{task.taskDesc}}</textarea>
     </mat-form-field>
   </div>
   <div class="col-3">
     <mat-form-field class="w-100">
-      <textarea matInput placeholder="Desired Performance" disabled style="min-height: 150px; color: #444 !important;">{{data.task.desiredPerf}}</textarea>
+      <textarea matInput placeholder="Desired Performance" disabled style="min-height: 150px; color: #444 !important;">{{task.desiredPerf}}</textarea>
     </mat-form-field>
   </div>
   <div class="col-3">
     <mat-form-field class="w-100">
-      <textarea matInput placeholder="Glossary" disabled style="min-height: 150px; color: #444 !important;">{{data.task.serviceGlossary}}</textarea>
+      <textarea matInput placeholder="Glossary" disabled style="min-height: 150px; color: #444 !important;">{{task.serviceGlossary}}</textarea>
     </mat-form-field>
   </div>
   <div class="col-3">
     <mat-form-field class="w-100">
-      <textarea matInput placeholder="Additional Budget Factors" disabled style="min-height: 150px; color: #444 !important;">{{data.task.addtnlBudgetFator}}</textarea>
+      <textarea matInput placeholder="Additional Budget Factors" disabled style="min-height: 150px; color: #444 !important;">{{task.addtnlBudgetFator}}</textarea>
     </mat-form-field>
   </div>
 </div>

@@ -110,7 +110,7 @@
                 <div *ngIf="taskCatalog != null && taskCatalog.length > 0">
                   <app-labor-class-tasks [taskCatalog]="taskCatalog" [hoursBank]="element.hours" 
                    [hoursEntered]="element.hoursEntered" [positionId]="element.positionId" 
-                   [regionId]="selectedRegionId" (updateHoursEntered)="updateHoursEnteredFromAdd(element, $event)"></app-labor-class-tasks>
+                   [regionId]="selectedRegionId" (updateHoursEntered)="updateHoursEntered(element, $event)"></app-labor-class-tasks>
                 </div>
               </ng-template>
             </mat-tab>

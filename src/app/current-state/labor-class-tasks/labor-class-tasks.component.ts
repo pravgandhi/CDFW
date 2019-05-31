@@ -153,24 +153,44 @@ export class LaborClassTasksComponent implements OnInit {
 
   addInput(task) {
 
-    this.serviceMatrix.getCSInput(this.regionId, this.userService.userId, this.positionId, task.taskId).subscribe(res => {
-      if(res != null && res['inputHours'] > 0){
-        this.dialog.open(CSInputTaskExistDialog, {});
-      } else {
+    var tasks = this.dataSource.filteredData;
+    let filteredTasks = [];
+    if(tasks.length > 0){
+      for(var i=0; i<tasks.length; i++){
+        var sspt = tasks[i];
+        if(i==0){
+          sspt["prevTask"] = tasks[tasks.length-1];
+          sspt["nextTask"] = tasks[i+1];
+        } else if (i == tasks.length-1) {
+          sspt["prevTask"] = tasks[i-1];
+          sspt["nextTask"] = tasks[0];
+        } else {
+          sspt["prevTask"] = tasks[i-1];
+          sspt["nextTask"] = tasks[i+1];
+        }
+        sspt["index"]= i+1;
+        filteredTasks.push(sspt);
+      }
+    }
+
+    // this.serviceMatrix.getCSInput(this.regionId, this.userService.userId, this.positionId, task.taskId).subscribe(res => {
+    //   if(res != null && res['inputHours'] > 0){
+    //     this.dialog.open(CSInputTaskExistDialog, {});
+    //   } else {
         const dialogRef = this.dialog.open(AddCSInputDialog, {
           data: { positionId: this.positionId, task: task, hours: 0, feedback: ""
           , userId: this.user['id'], selectedRegionId: this.regionId
-          , hoursBank: this.hoursBank, hoursEntered: this.hoursEntered }
+          , hoursBank: this.hoursBank, hoursEntered: this.hoursEntered, filteredTasks: filteredTasks }
         });
 
         dialogRef.afterClosed().subscribe(res => {
-          if (res != undefined && res.result) {
+          if (res != undefined && res.hours) {
             // this.loadLaborClassInputs();
             this.updateHoursEntered.emit(res.hours)
           }
         });
-      }
-    })
+    //   }
+    // })
   }
 
 }
@@ -196,21 +216,92 @@ export class CSInputTaskExistDialog {
   templateUrl: 'add-cs-input-dialog.html',
   styleUrls: ['./add-cs-input-dialog.css']
 })
-export class AddCSInputDialog {
+export class AddCSInputDialog implements OnInit {
+
+  positionId: string;
+  selectedTaskId: any; 
+  hours: number = 0; 
+  feedback: string = "";
+  userId: number; 
+  selectedRegionId: number;
+  hoursBank: number; 
+  hoursEntered: number;
+  filteredTasks: any[];
+  task: any;
+  existingTask: boolean;
+  taskMessage: string;
+  csInputUserId: number;
+  staticInputHours: number;
 
   constructor(
     public dialogRef: MatDialogRef<AddCSInputDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private serviceMatrix: ServiceMatrixService, private snackBar: MatSnackBarComponent) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private serviceMatrix: ServiceMatrixService, private snackBar: MatSnackBarComponent,
+    private userService: UserService) { }
+  
+  ngOnInit() {
+    this.selectedRegionId = this.data.selectedRegionId;
+    this.userId = this.userService.user['id'];
+    this.positionId = this.data.positionId;
+    this.hoursBank = this.data.hoursBank;
+    this.hoursEntered = this.data.hoursEntered;
+    this.selectedTaskId = this.data.task.taskId;
+    this.filteredTasks = this.data.filteredTasks;
+    this.goToTask(this.selectedTaskId);
+  }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({"hours":this.hoursEntered});
+  }
+
+  goToTask(taskId){
+    this.task = this.filteredTasks.find(e => e.taskId == taskId);
+    this.hours = 0;
+    this.feedback = "";
+    this.taskMessage = "";
+    this.existingTask = false;
+    this.staticInputHours = 0;
+    this.serviceMatrix.getCSInput(this.selectedRegionId, this.userId, this.positionId, taskId).subscribe(res => {
+      console.log("Task Input-->"+res);
+      if(res != null && res['inputHours'] > 0){
+        this.hours = res['inputHours'];
+        this.feedback = res['feedback'];
+        this.staticInputHours = res['inputHours'];
+        this.existingTask = true;
+        if(res['sttsId'] == 'A'){
+          this.taskMessage = "Task has been already validated";
+        }
+        this.csInputUserId = res['userId'];
+      }
+    });
+  }
+
+  onUpdate() {
+    let csInput = new Object;
+    csInput['regionId'] = this.selectedRegionId;
+    csInput['userId'] = this.csInputUserId;
+    csInput['positionId'] = this.positionId;
+    csInput['taskId'] = this.task.taskId;
+    csInput['inputHours'] = this.hours;
+    csInput['feedback'] = this.feedback;
+
+    this.serviceMatrix.editCSInput(csInput, this.userId).subscribe(res => {
+      if (res) {
+        this.hoursEntered = this.hoursEntered + (this.hours-this.staticInputHours);
+        this.staticInputHours = this.hours;
+        this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
+      } else {
+        this.snackBar.openSnackBar("Error saving input value", 'Close', "red-snackbar");
+      }
+    });
   }
 
   onAdd() {
-    this.serviceMatrix.saveCsInput(this.data.selectedRegionId, this.data.userId, this.data.positionId, this.data.task.taskId, this.data.hours, this.data.feedback).subscribe(res => {
+    this.serviceMatrix.saveCsInput(this.selectedRegionId, this.userId, this.positionId, this.task.taskId, this.hours, this.feedback).subscribe(res => {
       if (res) {
+        this.hoursEntered = this.hoursEntered + this.hours;
+        this.staticInputHours = this.hours;
         this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
-        this.dialogRef.close({"result":res, "hours":this.data.hours});
+        // this.dialogRef.close({"result":res, "hours":this.data.hours});
       } else {
         this.snackBar.openSnackBar("Error saving input value", 'Close', "red-snackbar");
       }
