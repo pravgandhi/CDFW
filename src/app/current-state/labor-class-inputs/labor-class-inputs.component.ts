@@ -16,18 +16,22 @@ export class LaborClassInputsComponent implements OnInit {
   @Input('positionId') positionId: string;
   @Input('regionId') regionId: number;
   @Output() hoursEntered = new EventEmitter();
-  
+  @Input('laborMappings') laborMappings: any;
   @Input("hoursEntered") hoursEnterd: number;
   @Input("hoursBank") hoursBank: number;
 
   result: any[];
   user: Object;
+  positions: any;
 
   constructor(private userService: UserService, private serviceMatrix: ServiceMatrixService, public dialog: MatDialog, private snackBar: MatSnackBarComponent) { }
 
   ngOnInit() {
     this.customInit();
     this.user = this.userService.user;
+    this.laborMappings = this.laborMappings.filter(function( obj ) {
+      return obj.positionId !== this.positionId;
+    });
   }
 
   customInit() {
@@ -81,6 +85,20 @@ export class LaborClassInputsComponent implements OnInit {
       }
     });
   }
+
+
+    copyTasks(){
+      alert(this.positionId);
+      let destinationPositions = this.positions.map(a => a.positionId);
+      alert(destinationPositions);
+      let tasksToBeCopied:string[] = this.result.map(a => a.taskId);
+      this.serviceMatrix.copyTasks(this.regionId, this.userService.userId, this.positionId, destinationPositions,
+         tasksToBeCopied).subscribe(res => {
+        this.snackBar.openSnackBar( "Tasks copied successfully", 'Close', "green-snackbar");
+      }, err => {
+        this.snackBar.openSnackBar( "Error copying tasks", 'Close', "red-snackbar");
+      });
+    }
 
 }
 

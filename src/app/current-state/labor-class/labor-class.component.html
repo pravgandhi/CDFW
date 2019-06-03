@@ -109,16 +109,26 @@
             <mat-tab label="Add Task">
               <ng-template matTabContent>
                 <div *ngIf="taskCatalog != null && taskCatalog.length > 0">
-                  <app-labor-class-tasks [taskCatalog]="taskCatalog" [hoursBank]="element.hours" 
-                   [hoursEntered]="element.hoursEntered" [positionId]="element.positionId" 
+                  <app-labor-class-tasks [taskCatalog]="taskCatalog" [hoursBank]="element.hours"
+                   [hoursEntered]="element.hoursEntered" [positionId]="element.positionId"
                    [regionId]="selectedRegionId" (updateHoursEntered)="updateHoursEnteredFromAdd(element, $event)"></app-labor-class-tasks>
                 </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Inputs">
               <ng-template matTabContent>
-                <app-labor-class-inputs [positionId]="element.positionId" [hoursBank]="element.hours" 
+                <app-labor-class-inputs [positionId]="element.positionId" [hoursBank]="element.hours"
                   [hoursEntered]="element.hoursEntered" (hoursEntered)="updateHoursEntered(element, $event)"
+                  [regionId]="selectedRegionObj.regionByRegionId.regionId"
+                  [laborMappings] = "laborMappings"></app-labor-class-inputs>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Copy Tasks">
+              <ng-template matTabContent>
+                <app-labor-class-inputs [positionId]="element.positionId" [hoursBank]="element.hours"
+                  [hoursEntered]="element.hoursEntered"
+                  [laborMappings] = "laborMappings"
+                  (hoursEntered)="updateHoursEntered(element, $event)"
                   [regionId]="selectedRegionObj.regionByRegionId.regionId"></app-labor-class-inputs>
               </ng-template>
             </mat-tab>

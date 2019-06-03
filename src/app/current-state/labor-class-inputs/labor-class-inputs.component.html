@@ -1,3 +1,15 @@
+<button mat-button (click)="copyTasks()" color="primary" matTooltip="Copy All Tasks" style="cursor:default;">
+  <mat-icon>file_copy</mat-icon>
+  Copy All Tasks
+</button>
+<mat-form-field>
+  <mat-label>Choose Position IDs</mat-label>
+  <mat-select [(ngModel)]="positions" multiple>
+    <mat-option *ngFor="let position of laborMappings" [value]="position">
+        {{position.positionId}} | {{position.laborClassName}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 <table class="w-100 lcsummary-table">
   <tr class="border-bottom" style="background-color: #1f4e79; color: white;">
     <th></th>
@@ -8,7 +20,7 @@
     <th style="width:150px;">Validated by</th>
     <th style="width:150px;">Last edited by</th>
     <th style="width:60px;">Hours</th>
-    <th style="width:100px;">Feedback</th>
+    <th style="width:100px;word-break:break-word;">Feedback</th>
     <th style="width:60px;">Actions</th>
   </tr>
   <tr *ngFor="let summary of result" class="border-bottom">

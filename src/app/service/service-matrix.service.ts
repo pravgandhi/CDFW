@@ -160,7 +160,7 @@ export class ServiceMatrixService {
   saveCsInput(selectedRegionId: number, userId: any, pid: any, taskid: string, taskhours: number, feedback: string) {
     return this.http.post(this.API_URL + 'addCsInput', { regionId: selectedRegionId, userId: userId, positionId: pid, taskId: taskid, inputHours: taskhours, feedback: feedback });
   }
-  
+
   public getCSInput(regionId: number, userId: number, positionId: string, taskid: string) {
     return this.http.get(this.API_URL + 'getCsInput/'+regionId+'/'+userId+'/'+positionId+'/'+taskid);
   }
@@ -177,6 +177,9 @@ export class ServiceMatrixService {
     return this.http.post(this.API_URL + 'approveCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], approverId: approverId});
   }
 
+  public copyTasks(regionId:number, userId:number, sourcePosition:string, destinationPositions:string[], tasksToBeCopied:string[]) {
+    return this.http.post(this.API_URL+ 'copyTasks', {regionId: regionId, userId:userId, sourcePosition: sourcePosition , destinationPositions: destinationPositions,tasksToBeCopied: tasksToBeCopied }, {responseType: 'text'});
+  }
 
   async getTaskInfo(taskId: string) {
     var self = this;

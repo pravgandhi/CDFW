@@ -10,6 +10,7 @@ import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatSnackBarComponent } from 'src/app/service/mat-snack-bar/mat-snack-bar.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-labor-class',
@@ -54,6 +55,8 @@ export class LaborClassComponent implements OnInit {
 
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]>;
+  positions: any;
+  laborMappings:any ;
 
   constructor(private http: HttpClient, private router: Router, private serviceMatrix: ServiceMatrixService,
     private userService: UserService, private route: ActivatedRoute, private snackBar: MatSnackBarComponent) { }
@@ -80,7 +83,7 @@ export class LaborClassComponent implements OnInit {
           // this.taskCatalog.forEach(e => this.serviceNames.add(e["serviceName"]));
           localStorage.setItem('csServiceMatrix', JSON.stringify(res as []));
         });
-    } 
+    }
     // else {
     //   this.taskCatalog.forEach(e => this.serviceNames.add(e["serviceName"]));
     // }
@@ -169,9 +172,10 @@ export class LaborClassComponent implements OnInit {
     this.regionList = this.user['userRegionMappingsById'];
     this.selectedRegionObj = this.regionList.find(e => e["regionId"] == regionId);
     if (this.user != null) {
-      var result = [];
+      //var result = [];
       this.serviceMatrix.getLaborMappingsData(this.selectedRegionId, this.user["id"]).subscribe(res => {
-        result = res as Object[];
+        //result = res as Object[];
+        this.laborMappings = res as Object[];
         // result.forEach(element => {
         //   var inputHours = 0;
         //   element["csUserLaborClassInputs"].forEach(e => {
@@ -179,7 +183,7 @@ export class LaborClassComponent implements OnInit {
         //   });
         //   element["inputHours"] = inputHours;
         // });
-        this.setDatasource(this.selectedRegionId, result);
+        this.setDatasource(this.selectedRegionId, this.laborMappings);
       });
     }
   }
@@ -209,5 +213,4 @@ export class LaborClassComponent implements OnInit {
     this.resetAddTaskForm();
     this.expandedElement = this.expandedElement === element ? null : element;
   }
-
 }
