@@ -150,10 +150,12 @@ export class LaborClassComponent implements OnInit {
 
   updateHoursEntered(element, hours){
     element['hoursEntered'] = hours;
+    element['hoursRemaining'] = element['hours'] - element['hoursEntered'];
   }
 
   updateHoursEnteredFromAdd(element, hours){
     element['hoursEntered'] = element['hoursEntered'] + hours;
+    element['hoursRemaining'] = element['hours'] - element['hoursEntered'];
   }
 
   resetAddTaskForm() {
@@ -183,6 +185,10 @@ export class LaborClassComponent implements OnInit {
         //   });
         //   element["inputHours"] = inputHours;
         // });
+
+        this.laborMappings.forEach(element => {
+          element.hoursRemaining = element.hours - element.hoursEntered;
+        });
         this.setDatasource(this.selectedRegionId, this.laborMappings);
       });
     }
@@ -194,7 +200,7 @@ export class LaborClassComponent implements OnInit {
 
   setDatasource(regionId, userLsMappingByRegion) {
     this.dataSource.data = [];
-    this.displayedColumns = ["expansion", "positionId", "laborClassName", "hours", "inputHours", "utilization"];
+    this.displayedColumns = ["expansion", "positionId", "laborClassName", "hours", "inputHours", "hoursRemaining"];
     this.dataSource.data = userLsMappingByRegion as Object[];
     this.dataSource.sort = this.sort;
     this.paginator.pageSize = 10;
