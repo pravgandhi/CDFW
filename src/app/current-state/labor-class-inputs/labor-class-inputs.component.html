@@ -3,9 +3,9 @@
   Copy All Tasks
 </button>
 <mat-form-field>
-  <mat-label>Choose Position IDs</mat-label>
+  <mat-label>Select Position IDs</mat-label>
   <mat-select [(ngModel)]="positions" multiple>
-    <mat-option *ngFor="let position of laborMappings" [value]="position">
+    <mat-option style="min-width:1000px;" *ngFor="let position of laborMappings" [value]="position">
         {{position.positionId}} | {{position.laborClassName}}
     </mat-option>
   </mat-select>
@@ -15,12 +15,12 @@
     <th></th>
     <th style="width:175px; height: 40px;">Task ID</th>
     <th>Task Name</th>
-    <th style="width:150px;">Respondent name</th>
-    <th style="width:100px;">Status</th>
-    <th style="width:150px;">Validated by</th>
-    <th style="width:150px;">Last edited by</th>
+    <th style="width:125px;">Respondent name</th>
+    <th style="width:75px;">Status</th>
+    <th style="width:100px;">Validated by</th>
+    <th style="width:100px;">Last edited by</th>
     <th style="width:60px;">Hours</th>
-    <th style="width:100px;word-break:break-word;">Feedback</th>
+    <th style="width:200px;">Feedback</th>
     <th style="width:60px;">Actions</th>
   </tr>
   <tr *ngFor="let summary of result" class="border-bottom">
@@ -35,24 +35,24 @@
         <tbody>
         <!-- <tr *ngFor="let task of summary.tasks; index as i"> -->
         <tr *ngFor="let task of summary.tasks; index as i" [class.border-top]="i>0">
-          <td style="width:150px; height: 35px;">{{task.user.userName}}</td>
-          <td style="width:100px;">
+          <td style="width:125px; height: 35px;">{{task.user.userName}}</td>
+          <td style="width:75px;">
             <div *ngIf="task.statusBySttsId != null">
               {{task.statusBySttsId.statusCode}}
             </div>
           </td>
-          <td style="width:150px;">
+          <td style="width:100px;">
             <div *ngIf="task.userByApproverId != null">
               {{task.userByApproverId.userName}}
             </div>
           </td>
-          <td style="width:150px;">
+          <td style="width:100px;">
             <div *ngIf="task.userByEditedBy != null">
               {{task.userByEditedBy.userName}}
             </div>
           </td>
           <td style="width:60px;" class="text-center">{{task.inputHours}}</td>
-          <td style="width:100px;">{{task.feedback}}</td>
+          <td style="width:200px;">{{task.feedback}}</td>
           <td style="width:60px;">
             <i class="material-icons info text-primary" title="Edit" *ngIf="(task.userId == user.id &&  task.sttsId != 'A') || user.userRoleByCsRoleId.roleName == 'c_lead'"
               (click)="editInput(task)">edit</i>

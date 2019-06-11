@@ -17,15 +17,15 @@ export class AuthInterceptor implements HttpInterceptor {
     });
 
    setTimeout(() => this.spinner.show());
-   console.log(`Intercepting requests --> ${this.count}`);
+   //console.log(`Intercepting requests --> ${this.count}`);
     this.count++;
-    console.log(`Incrementing count --> ${this.count}`);
+    //console.log(`Incrementing count --> ${this.count}`);
     return next.handle(req)
             .pipe ( tap (
                     event => console.log(event),
                     error => console.log( error )
                 ), finalize(() => {
-                    console.log(`Decrementing count --> ${this.count}`);
+                    //console.log(`Decrementing count --> ${this.count}`);
                     this.count--;
                     if ( this.count == 0 ) this.spinner.hide ()
                 })

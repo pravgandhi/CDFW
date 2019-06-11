@@ -118,17 +118,9 @@
               <ng-template matTabContent>
                 <app-labor-class-inputs [positionId]="element.positionId" [hoursBank]="element.hours"
                   [hoursEntered]="element.hoursEntered" (hoursEntered)="updateHoursEntered(element, $event)"
+                  (copyInd) = "reloadLaborClass()"
                   [regionId]="selectedRegionObj.regionByRegionId.regionId"
                   [laborMappings] = "laborMappings"></app-labor-class-inputs>
-              </ng-template>
-            </mat-tab>
-            <mat-tab label="Copy Tasks">
-              <ng-template matTabContent>
-                <app-labor-class-inputs [positionId]="element.positionId" [hoursBank]="element.hours"
-                  [hoursEntered]="element.hoursEntered"
-                  [laborMappings] = "laborMappings"
-                  (hoursEntered)="updateHoursEntered(element, $event)"
-                  [regionId]="selectedRegionObj.regionByRegionId.regionId"></app-labor-class-inputs>
               </ng-template>
             </mat-tab>
           </mat-tab-group>

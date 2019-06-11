@@ -91,8 +91,9 @@
                         class="input-task-feedback-area w-94" [disabled]="saveRespInputDisabled || multiplier == undefined"> </textarea>
                     </td>
                     <td class="text-center align-top">
-                      <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]="saveRespInputDisabled
-                                    || multiplier == undefined">
+                      <!--<button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]="saveRespInputDisabled
+                                    || multiplier == undefined"> -->
+                      <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]=true>
                         <mat-icon>save</mat-icon>
                         Save Response
                       </button>
@@ -140,8 +141,8 @@
       </div>
       <div class="row" style="background: #1f4e79;">
         <div class="col-md-12 pb-3">
-          <app-inputs [taskId]="inpuTaskId" [regionName]="selectedRegion" 
-          [totalHours]="task.totalLaborHours * task.frequency" 
+          <app-inputs [taskId]="inpuTaskId" [regionName]="selectedRegion"
+          [totalHours]="task.totalLaborHours * task.frequency"
           [changeDetection]="changeInputDetection"
           (approved)="onApproval(task, $event)"></app-inputs>
         </div>

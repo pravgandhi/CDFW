@@ -153,6 +153,10 @@ export class LaborClassComponent implements OnInit {
     element['hoursRemaining'] = element['hours'] - element['hoursEntered'];
   }
 
+  reloadLaborClass(){
+    this.customInit(this.selectedRegionId);
+  }
+
   updateHoursEnteredFromAdd(element, hours){
     element['hoursEntered'] = element['hoursEntered'] + hours;
     element['hoursRemaining'] = element['hours'] - element['hoursEntered'];

@@ -99,7 +99,7 @@ export class LaborClassTasksComponent implements OnInit {
 
   clearAllFilters() {
     this.paginator.pageIndex = 0;
-    this.paginator.pageSize = 5;
+    this.paginator.pageSize = 10;
     this.dataSource.paginator = this.paginator;
     this.globalFilter = '';
     this.filteredValues = {
@@ -219,12 +219,12 @@ export class CSInputTaskExistDialog {
 export class AddCSInputDialog implements OnInit {
 
   positionId: string;
-  selectedTaskId: any; 
-  hours: number = 0; 
+  selectedTaskId: any;
+  hours: number = 0;
   feedback: string = "";
-  userId: number; 
+  userId: number;
   selectedRegionId: number;
-  hoursBank: number; 
+  hoursBank: number;
   hoursEntered: number;
   filteredTasks: any[];
   task: any;
@@ -237,7 +237,7 @@ export class AddCSInputDialog implements OnInit {
     public dialogRef: MatDialogRef<AddCSInputDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private serviceMatrix: ServiceMatrixService, private snackBar: MatSnackBarComponent,
     private userService: UserService) { }
-  
+
   ngOnInit() {
     this.selectedRegionId = this.data.selectedRegionId;
     this.userId = this.userService.user['id'];

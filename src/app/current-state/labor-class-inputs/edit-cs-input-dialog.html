@@ -48,7 +48,7 @@
       </tr>
       <tr>
         <td>Hours remaining to be allocated</td>
-        <td style="border-bottom: 1px solid white;">{{data.hoursBank-data.hoursEntered-data.task.inputHours-staticInputHours}}</td>
+        <td style="border-bottom: 1px solid white;">{{data.hoursBank-(data.hoursEntered+data.task.inputHours-staticInputHours)}}</td>
       </tr>
     </table>
   </div>
@@ -56,22 +56,22 @@
 <div class="row pt-3">
   <div class="col-3">
     <mat-form-field class="w-100">
-      <textarea matInput placeholder="Description" disabled style="min-height: 100px;">{{data.task.serviceMatrixByTaskId.taskDesc}}</textarea>
+      <textarea matInput placeholder="Description" disabled style="min-height: 150px; color: #444 !important;">{{data.task.serviceMatrixByTaskId.taskDesc}}</textarea>
     </mat-form-field>
   </div>
   <div class="col-3">
     <mat-form-field class="w-100">
-      <textarea matInput placeholder="Desired Performance" disabled style="min-height: 100px;">{{data.task.serviceMatrixByTaskId.desiredPerf}}</textarea>
+      <textarea matInput placeholder="Desired Performance" disabled style="min-height: 150px; color: #444 !important;">{{data.task.serviceMatrixByTaskId.desiredPerf}}</textarea>
     </mat-form-field>
   </div>
   <div class="col-3">
     <mat-form-field class="w-100">
-      <textarea matInput placeholder="Glossary" disabled style="min-height: 100px;">{{data.task.serviceMatrixByTaskId.serviceGlossary}}</textarea>
+      <textarea matInput placeholder="Glossary" disabled style="min-height: 150px; color: #444 !important;">{{data.task.serviceMatrixByTaskId.serviceGlossary}}</textarea>
     </mat-form-field>
   </div>
   <div class="col-3">
     <mat-form-field class="w-100">
-      <textarea matInput placeholder="Additional Budget Factors" disabled style="min-height: 100px;">{{data.task.serviceMatrixByTaskId.addtnlBudgetFator}}</textarea>
+      <textarea matInput placeholder="Additional Budget Factors" disabled style="min-height: 150px; color: #444 !important;">{{data.task.serviceMatrixByTaskId.addtnlBudgetFator}}</textarea>
     </mat-form-field>
   </div>
 </div>

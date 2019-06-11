@@ -16,23 +16,33 @@ export class LaborClassInputsComponent implements OnInit {
   @Input('positionId') positionId: string;
   @Input('regionId') regionId: number;
   @Output() hoursEntered = new EventEmitter();
-  @Input('laborMappings') laborMappings: any;
+  @Output() copyInd = new EventEmitter();
+//  @Input('laborMappings') laborMappings: any;
+  _laborMappings: any;
   @Input("hoursEntered") hoursEnterd: number;
   @Input("hoursBank") hoursBank: number;
 
   result: any[];
   user: Object;
   positions: any;
+  isCopyListEmpty :boolean = false;
 
   constructor(private userService: UserService, private serviceMatrix: ServiceMatrixService, public dialog: MatDialog, private snackBar: MatSnackBarComponent) { }
 
   ngOnInit() {
     this.customInit();
     this.user = this.userService.user;
-    this.laborMappings = this.laborMappings.filter(function( obj ) {
-      return obj.positionId !== this.positionId;
-    });
   }
+
+  get laborMappings(): any {
+   // transform value for display
+   return this._laborMappings;
+ }
+
+ @Input('laborMappings')
+ set laborMappings(laborMappings: any) {
+   this._laborMappings = laborMappings.filter(e => e['positionId'] != this.positionId);
+ }
 
   customInit() {
     let _self = this;
@@ -75,7 +85,16 @@ export class LaborClassInputsComponent implements OnInit {
   }
 
   approveCSInput(task) {
-    const dialogRef = this.dialog.open(ApproveCSInputDialog, {
+    this.serviceMatrix.approveCSInput(task, this.userService.userId).subscribe(res => {
+      if (res) {
+        this.snackBar.openSnackBar("Input Validated", 'Close', "green-snackbar");
+        this.customInit();
+        //this.dialogRef.close(res);
+      } else {
+        this.snackBar.openSnackBar("Error approving input", 'Close', "red-snackbar");
+      }
+    });
+  /*  const dialogRef = this.dialog.open(ApproveCSInputDialog, {
       data: { task: task }
     });
 
@@ -83,21 +102,25 @@ export class LaborClassInputsComponent implements OnInit {
       if (result) {
         this.customInit();
       }
-    });
+    });*/
   }
 
 
     copyTasks(){
-      alert(this.positionId);
-      let destinationPositions = this.positions.map(a => a.positionId);
-      alert(destinationPositions);
-      let tasksToBeCopied:string[] = this.result.map(a => a.taskId);
-      this.serviceMatrix.copyTasks(this.regionId, this.userService.userId, this.positionId, destinationPositions,
-         tasksToBeCopied).subscribe(res => {
-        this.snackBar.openSnackBar( "Tasks copied successfully", 'Close', "green-snackbar");
-      }, err => {
-        this.snackBar.openSnackBar( "Error copying tasks", 'Close', "red-snackbar");
-      });
+      this.isCopyListEmpty = false;
+      if(this.positions == undefined || this.positions.length == 0) {
+        this.snackBar.openSnackBar( "Please select position ids", 'Close', "red-snackbar");
+      } else {
+        let destinationPositions = this.positions.map(a => a.positionId);
+        let tasksToBeCopied:string[] = this.result.map(a => a.taskId);
+        this.serviceMatrix.copyTasks(this.regionId, this.userService.userId, this.positionId, destinationPositions,
+           tasksToBeCopied).subscribe(res => {
+          this.snackBar.openSnackBar( "Tasks copied successfully", 'Close', "green-snackbar");
+          this.copyInd.emit();
+        }, err => {
+          this.snackBar.openSnackBar( "Error copying tasks", 'Close', "red-snackbar");
+        });
+      }
     }
 
 }
