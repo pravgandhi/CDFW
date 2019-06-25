@@ -16,22 +16,28 @@ export class LaborClassInputsComponent implements OnInit {
   @Input('positionId') positionId: string;
   @Input('regionId') regionId: number;
   @Output() hoursEntered = new EventEmitter();
+  @Output() validatedHours = new EventEmitter();
   @Output() copyInd = new EventEmitter();
 //  @Input('laborMappings') laborMappings: any;
   _laborMappings: any;
   @Input("hoursEntered") hoursEnterd: number;
+  @Input("validatdHours") validatdHours: number;
   @Input("hoursBank") hoursBank: number;
 
   result: any[];
   user: Object;
   positions: any;
   isCopyListEmpty :boolean = false;
+  isVaidator: boolean = false;
 
   constructor(private userService: UserService, private serviceMatrix: ServiceMatrixService, public dialog: MatDialog, private snackBar: MatSnackBarComponent) { }
 
   ngOnInit() {
     this.customInit();
     this.user = this.userService.user;
+    if('c_lead' === this.user['userRoleByCsRoleId']['roleName']) {
+      this.isVaidator = true;
+    }
   }
 
   get laborMappings(): any {
@@ -55,8 +61,13 @@ export class LaborClassInputsComponent implements OnInit {
       let he = _.sumBy(res as [], function (e) {
           return e['inputHours'];
       });
-
+      let resp = res as [];
+      let filteredResp = resp.filter(e => e['sttsId'] == 'A');
+      let hv = _.sumBy(filteredResp, function (e) {
+          return e['inputHours'];
+      });
       this.hoursEntered.emit(he);
+      this.validatedHours.emit(hv);
     });
   }
 
@@ -105,6 +116,17 @@ export class LaborClassInputsComponent implements OnInit {
     });*/
   }
 
+  approveAllTasks(){
+    this.serviceMatrix.approveAllInputs(this.regionId,  this.positionId, this.userService.userId).subscribe(res => {
+      if (res) {
+        this.snackBar.openSnackBar("Inputs Validated", 'Close', "green-snackbar");
+        this.customInit();
+        //this.dialogRef.close(res);
+      } else {
+        this.snackBar.openSnackBar("Error approving input", 'Close', "red-snackbar");
+      }
+    });
+  }
 
     copyTasks(){
       this.isCopyListEmpty = false;
@@ -136,14 +158,22 @@ export class EditCSInputDialog {
   constructor(
     public dialogRef: MatDialogRef<EditCSInputDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private serviceMatrix: ServiceMatrixService, private snackBar: MatSnackBarComponent,
-    private userService :UserService) { }
+    private userService :UserService) {
+      dialogRef.disableClose = true;
+    }
 
   onNoClick(): void {
+    this.data.task.inputHours = this.staticInputHours;
     this.dialogRef.close();
   }
 
   onUpdate() {
-    this.serviceMatrix.editCSInput(this.data.task, this.userService.userId).subscribe(res => {
+    let user = this.userService.user;
+    let vaidator:boolean= false;
+    if('c_lead' === user['userRoleByCsRoleId']['roleName']) {
+      vaidator = true;
+    }
+    this.serviceMatrix.editCSInput(this.data.task, this.userService.userId, vaidator).subscribe(res => {
       if (res) {
         this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
         this.dialogRef.close(res);
@@ -152,6 +182,18 @@ export class EditCSInputDialog {
       }
     });
   }
+
+  onValidate() {
+    this.serviceMatrix.updateAndValidateCsInput(this.data.task, this.userService.userId).subscribe(res => {
+      if (res) {
+        this.snackBar.openSnackBar("Input approved successfully", 'Close', "green-snackbar");
+        this.dialogRef.close(res);
+      } else {
+        this.snackBar.openSnackBar("Error approving input", 'Close', "red-snackbar");
+      }
+    });
+  }
+
 }
 
 @Component({

@@ -48,7 +48,6 @@ export class InputsComponent implements OnInit  {
   }
 
   ngOnChanges() {
-    console.log(this.taskId);
     this.selectedRegionObject = this.userService.getSelectedRegionObject(this.regionName);
     this.fetchInputs();
   }

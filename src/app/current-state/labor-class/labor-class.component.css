@@ -10,6 +10,10 @@ table, mat-paginator {
   width: 90%;
 }
 
+.hours-container{
+  text-align: center;
+}
+
 mat-header-cell {
   display:flex;
   justify-content:flex-end;
@@ -110,7 +114,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .expand-icon {
-  cursor: pointer; 
+  cursor: pointer;
   color: #1f4e79;
 }
 

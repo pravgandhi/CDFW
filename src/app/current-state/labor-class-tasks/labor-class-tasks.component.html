@@ -119,5 +119,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedFilterColumns" class="example-second-header-row"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons (page)="pageEvent = handlePage($event)"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons (page)="pageEvent = handlePage($event)"></mat-paginator>
 </div>

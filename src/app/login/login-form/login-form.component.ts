@@ -48,6 +48,12 @@ export class LoginFormComponent implements OnInit {
           if (validUser) {
             var mappedRegions = self.userService.user != undefined ? self.userService.user['userRegionMappingsById'] : null;
             if (mappedRegions != null && mappedRegions.length > 0) {
+              mappedRegions = mappedRegions.sort(
+                (function(a, b){
+                if(a.regionByRegionId.regionName < b.regionByRegionId.regionName) { return -1; }
+                if(a.regionByRegionId.regionName > b.regionByRegionId.regionName) { return 1; }
+                return 0;
+              }));
               let userRegion = mappedRegions[0]['regionByRegionId'];
               if(self.userService.user['dataTypeByDataTypeId']['dataType'] == 'mission') {
                   self.router.navigate(['service', userRegion["regionName"], userRegion["regionId"]]);

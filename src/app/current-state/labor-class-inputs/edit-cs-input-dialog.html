@@ -37,7 +37,8 @@
               <textarea matInput placeholder="Feedback" [(ngModel)]="data.task.feedback" style="color: black;"></textarea>
             </mat-form-field>
           <button mat-raised-button color="primary"cdkFocusInitial (click)="onUpdate()" class="m-1" style="width: 75px;">Update</button>
-            <button mat-raised-button  (click)="onNoClick()" class="m-1" style="width: 75px;">Cancel</button></td>
+          <!--<button mat-raised-button color="primary"cdkFocusInitial (click)="onValidate()" class="m-1" style="width: 75px;">Validate</button>-->
+            <button mat-raised-button  (click)="onNoClick()" class="m-1" style="width: 75px;">Close</button></td>
         <td rowspan="3" style="width: 75px;"></td>
         <td>Hours bank for the position</td>
         <td style="width: 75px; border-bottom: 1px solid white;">{{data.hoursBank}}</td>

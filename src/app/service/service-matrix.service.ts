@@ -14,8 +14,8 @@ export class ServiceMatrixService {
   filterStore: Filters;
   //API_URL:string = "http://ec2-18-220-6-166.us-east-2.compute.amazonaws.com:8080/";
   //API_URL: string = "http://localhost:8080/";
-  API_URL:string = "https://prod.cdfw-sbb.com/";
-  //API_URL:string = "https://dev.cdfw-sbb.com/";
+  //API_URL:string = "https://prod.cdfw-sbb.com/";
+  API_URL:string = "https://dev.cdfw-sbb.com/";
   @ViewChild(MatPaginator) paginator: MatPaginator;
   inputDataStore = [{
     id: 1,
@@ -157,24 +157,32 @@ export class ServiceMatrixService {
   }
 
 
-  saveCsInput(selectedRegionId: number, userId: any, pid: any, taskid: string, taskhours: number, feedback: string) {
-    return this.http.post(this.API_URL + 'addCsInput', { regionId: selectedRegionId, userId: userId, positionId: pid, taskId: taskid, inputHours: taskhours, feedback: feedback });
+  saveCsInput(selectedRegionId: number, userId: any, pid: any, taskid: string, taskhours: number, feedback: string, isValidator: boolean) {
+      return this.http.post(this.API_URL + 'addCsInput', { regionId: selectedRegionId, userId: userId, positionId: pid, taskId: taskid, inputHours: taskhours, feedback: feedback, isValidator: isValidator });
   }
 
   public getCSInput(regionId: number, userId: number, positionId: string, taskid: string) {
     return this.http.get(this.API_URL + 'getCsInput/'+regionId+'/'+userId+'/'+positionId+'/'+taskid);
   }
 
-  public editCSInput(csInput: Object, editedBy: number) {
-    return this.http.post(this.API_URL + 'editCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], feedback: csInput['feedback'], editedBy: editedBy });
+  public editCSInput(csInput: Object, editedBy: number, isValidator: boolean) {
+    return this.http.post(this.API_URL + 'editCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], feedback: csInput['feedback'], editedBy: editedBy, isValidator: isValidator});
   }
 
   public deleteCSInput(csInput: Object) {
     return this.http.post(this.API_URL + 'deleteCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'] });
   }
 
+  public approveAllInputs(regionId:number, positionId: string,  approverId: number){
+    return this.http.post(this.API_URL + 'approveAllInputs', { regionId: regionId, positionId: positionId, approverId: approverId});
+  }
+
   public approveCSInput(csInput: Object, approverId: number){
     return this.http.post(this.API_URL + 'approveCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], approverId: approverId});
+  }
+
+  public updateAndValidateCsInput(csInput: Object, approverId: number){
+    return this.http.post(this.API_URL + 'updateAndValidateCsInput', { regionId: csInput['regionId'], userId: csInput['userId'], positionId: csInput['positionId'], taskId: csInput['taskId'], inputHours: csInput['inputHours'], approverId: approverId, feedback: csInput['feedback']});
   }
 
   public copyTasks(regionId:number, userId:number, sourcePosition:string, destinationPositions:string[], tasksToBeCopied:string[]) {

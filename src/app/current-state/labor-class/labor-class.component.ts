@@ -77,12 +77,14 @@ export class LaborClassComponent implements OnInit {
   loadTaskCatalog() {
     this.taskCatalog = JSON.parse(localStorage.getItem('csServiceMatrix'));
     if (this.taskCatalog == null || this.taskCatalog.length <= 0) {
+      console.time("Loading Task Catalog");
       this.serviceMatrix.getCsMatrixData()
         .subscribe(res => {
           this.taskCatalog = res as [];
           // this.taskCatalog.forEach(e => this.serviceNames.add(e["serviceName"]));
           localStorage.setItem('csServiceMatrix', JSON.stringify(res as []));
         });
+      console.time("Loaded Task Catalog");
     }
     // else {
     //   this.taskCatalog.forEach(e => this.serviceNames.add(e["serviceName"]));
@@ -140,17 +142,22 @@ export class LaborClassComponent implements OnInit {
 
   addTask() {
     var pid = this.expandedElement['positionId'];
-    this.serviceMatrix.saveCsInput(this.selectedRegionId, this.user["id"], pid, this.taskid, this.taskhours, this.feedback)
+    this.serviceMatrix.saveCsInput(this.selectedRegionId, this.user["id"], pid, this.taskid, this.taskhours, this.feedback, false)
       .subscribe(res => {
         this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
-        console.log(res);
         this.expandedElement['hoursEntered'] = this.expandedElement['hoursEntered'] + this.taskhours;
+        //this.expandedElement['validatedHours'] = this.expandedElement['validatedHours'] + this.taskhours;
       });
   }
 
   updateHoursEntered(element, hours){
     element['hoursEntered'] = hours;
     element['hoursRemaining'] = element['hours'] - element['hoursEntered'];
+  }
+
+  updatedValidatedHours(element, hours) {
+    element['validatedHours'] = hours;
+    element['validatedHoursRemaining'] = element['hours'] - element['validatedHours'];
   }
 
   reloadLaborClass(){
@@ -174,8 +181,15 @@ export class LaborClassComponent implements OnInit {
   }
 
   customInit(regionId) {
+    console.time("Landing Page");
     this.user = this.userService.user;
-    this.regionList = this.user['userRegionMappingsById'];
+    this.regionList = this.user['userRegionMappingsById'].sort(
+      (function(a, b){
+      if(a.regionByRegionId.regionName < b.regionByRegionId.regionName) { return -1; }
+      if(a.regionByRegionId.regionName > b.regionByRegionId.regionName) { return 1; }
+      return 0;
+    }));
+
     this.selectedRegionObj = this.regionList.find(e => e["regionId"] == regionId);
     if (this.user != null) {
       //var result = [];
@@ -192,10 +206,12 @@ export class LaborClassComponent implements OnInit {
 
         this.laborMappings.forEach(element => {
           element.hoursRemaining = element.hours - element.hoursEntered;
+          element.validatedHoursRemaining = element.hours - element.validatedHours;
         });
         this.setDatasource(this.selectedRegionId, this.laborMappings);
       });
     }
+    console.time("Landing Page loaded");
   }
 
   chooseRegion(regionId: number) {
@@ -204,10 +220,14 @@ export class LaborClassComponent implements OnInit {
 
   setDatasource(regionId, userLsMappingByRegion) {
     this.dataSource.data = [];
-    this.displayedColumns = ["expansion", "positionId", "laborClassName", "hours", "inputHours", "hoursRemaining"];
+    if('c_lead' === this.user['userRoleByCsRoleId']['roleName']) {
+      this.displayedColumns = ["expansion", "respondentName", "positionId", "laborClassName", "hours", "inputHours", "hoursRemaining", "validatedHours", "validatedHoursRemaining"];
+    } else {
+      this.displayedColumns = ["expansion", "positionId", "laborClassName", "hours", "inputHours", "hoursRemaining", "validatedHours", "validatedHoursRemaining"];
+    }
     this.dataSource.data = userLsMappingByRegion as Object[];
     this.dataSource.sort = this.sort;
-    this.paginator.pageSize = 10;
+    this.paginator.pageSize = 20;
     this.dataSource.paginator = this.paginator;
   }
 

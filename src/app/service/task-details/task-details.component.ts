@@ -73,7 +73,6 @@ export class TaskDetailsComponent implements OnInit {
     var cf = '{"taskId":"","serviceName":"","program":"","subProgram":"","taskCategory":"","taskName":"","statusCode":"","myInput":"","inputCount":"","feedbackReceived":"","toBeEnteredBy":"","inputReceived":""}';
     if(fstore.pageIndex !=0 || fstore.globalFilter != ''
     || fstore.pageSize != 50 || (fstore.columnFilter != undefined && JSON.stringify(fstore.columnFilter) != cf)){
-      console.log(fstore.toString());
       if(this.user['filter'] != fstore.toString()){
         this.serviceMatrix.saveFilter(this.user['id'], fstore.toString()).subscribe(data => {
           let user = JSON.parse(localStorage.getItem('currentUser'));
@@ -195,7 +194,6 @@ export class TaskDetailsComponent implements OnInit {
     this.serviceMatrix.saveUserInput(this.user['id'], this.selectedRegion, this.inpuTaskId, this.multiplier, this.taskfeedback).subscribe(res => {
         this.customInit(this.selectedRegion , this.inpuTaskId);
         this.changeInputDetection = !this.changeInputDetection;
-        console.log(this.changeInputDetection);
         this.snackBar.openSnackBar( "Input saved successfully", 'Close', "green-snackbar");
       },
       err => {

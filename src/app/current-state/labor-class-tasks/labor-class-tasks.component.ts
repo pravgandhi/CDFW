@@ -15,9 +15,11 @@ export class LaborClassTasksComponent implements OnInit {
   @Input('positionId') positionId: string;
   @Input('regionId') regionId: number;
   @Input("hoursEntered") hoursEntered: number;
+  @Input("validatedHours") validatedHours: number;
   @Input("hoursBank") hoursBank: number;
 
   @Output() updateHoursEntered = new EventEmitter();
+  @Output() updatedValidatedHours = new EventEmitter();
 
   user: Object;
 
@@ -180,13 +182,15 @@ export class LaborClassTasksComponent implements OnInit {
         const dialogRef = this.dialog.open(AddCSInputDialog, {
           data: { positionId: this.positionId, task: task, hours: 0, feedback: ""
           , userId: this.user['id'], selectedRegionId: this.regionId
-          , hoursBank: this.hoursBank, hoursEntered: this.hoursEntered, filteredTasks: filteredTasks }
+          , hoursBank: this.hoursBank, hoursEntered: this.hoursEntered
+          , validatedHours: this.validatedHours,  filteredTasks: filteredTasks }
         });
 
         dialogRef.afterClosed().subscribe(res => {
           if (res != undefined && res.hours) {
             // this.loadLaborClassInputs();
-            this.updateHoursEntered.emit(res.hours)
+            this.updateHoursEntered.emit(res.hours);
+            this.updatedValidatedHours.emit(res.validatedHours);
           }
         });
     //   }
@@ -226,31 +230,37 @@ export class AddCSInputDialog implements OnInit {
   selectedRegionId: number;
   hoursBank: number;
   hoursEntered: number;
+  validatedHours: number;
   filteredTasks: any[];
   task: any;
   existingTask: boolean;
   taskMessage: string;
   csInputUserId: number;
   staticInputHours: number;
+  user: object;
 
   constructor(
     public dialogRef: MatDialogRef<AddCSInputDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private serviceMatrix: ServiceMatrixService, private snackBar: MatSnackBarComponent,
-    private userService: UserService) { }
+    private userService: UserService) {
+      dialogRef.disableClose = true;
+    }
 
   ngOnInit() {
+    this.user = this.userService.user;
     this.selectedRegionId = this.data.selectedRegionId;
     this.userId = this.userService.user['id'];
     this.positionId = this.data.positionId;
     this.hoursBank = this.data.hoursBank;
     this.hoursEntered = this.data.hoursEntered;
+    this.validatedHours = this.data.validatedHours;
     this.selectedTaskId = this.data.task.taskId;
     this.filteredTasks = this.data.filteredTasks;
     this.goToTask(this.selectedTaskId);
   }
 
   onNoClick(): void {
-    this.dialogRef.close({"hours":this.hoursEntered});
+    this.dialogRef.close({"hours":this.hoursEntered, "validatedHours": this.validatedHours});
   }
 
   goToTask(taskId){
@@ -261,7 +271,6 @@ export class AddCSInputDialog implements OnInit {
     this.existingTask = false;
     this.staticInputHours = 0;
     this.serviceMatrix.getCSInput(this.selectedRegionId, this.userId, this.positionId, taskId).subscribe(res => {
-      console.log("Task Input-->"+res);
       if(res != null && res['inputHours'] > 0){
         this.hours = res['inputHours'];
         this.feedback = res['feedback'];
@@ -284,9 +293,16 @@ export class AddCSInputDialog implements OnInit {
     csInput['inputHours'] = this.hours;
     csInput['feedback'] = this.feedback;
 
-    this.serviceMatrix.editCSInput(csInput, this.userId).subscribe(res => {
+    let vaidator:boolean= false;
+    if('c_lead' === this.user['userRoleByCsRoleId']['roleName']) {
+      vaidator = true;
+    }
+    this.serviceMatrix.editCSInput(csInput, this.userId, vaidator).subscribe(res => {
       if (res) {
         this.hoursEntered = this.hoursEntered + (this.hours-this.staticInputHours);
+        if(vaidator) {
+          this.validatedHours = this.validatedHours + (this.hours - this.staticInputHours);
+        }
         this.staticInputHours = this.hours;
         this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
       } else {
@@ -296,9 +312,16 @@ export class AddCSInputDialog implements OnInit {
   }
 
   onAdd() {
-    this.serviceMatrix.saveCsInput(this.selectedRegionId, this.userId, this.positionId, this.task.taskId, this.hours, this.feedback).subscribe(res => {
+    let vaidator:boolean= false;
+    if('c_lead' === this.user['userRoleByCsRoleId']['roleName']) {
+      vaidator = true;
+    }
+    this.serviceMatrix.saveCsInput(this.selectedRegionId, this.userId, this.positionId, this.task.taskId, this.hours, this.feedback, vaidator).subscribe(res => {
       if (res) {
         this.hoursEntered = this.hoursEntered + this.hours;
+        if(vaidator){
+            this.validatedHours = this.validatedHours + this.hours;
+        }
         this.staticInputHours = this.hours;
         this.snackBar.openSnackBar("Input saved successfully", 'Close', "green-snackbar");
         // this.dialogRef.close({"result":res, "hours":this.data.hours});
@@ -307,4 +330,6 @@ export class AddCSInputDialog implements OnInit {
       }
     });
   }
+
+
 }

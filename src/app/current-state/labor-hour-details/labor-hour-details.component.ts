@@ -94,11 +94,9 @@ export class LaborHourDetailsComponent implements OnInit {
   }
 
   assignHours(row:any){
-    console.log(row);
     this.selectedTask = row;
     this.assignedTasks.push(row);
     this.addRow(row);
-    console.log(this.assignedTasks);
   }
 
   onRowEditInit(csHoursData: any) {

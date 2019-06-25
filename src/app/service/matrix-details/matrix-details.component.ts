@@ -83,7 +83,12 @@ export class MatrixDetailsComponent implements OnInit{
     }
 
     public getRegionDetails  (user: Object) {
-      this.regionList =  user['userRegionMappingsById'];
+      this.regionList =  user['userRegionMappingsById'].sort(
+        (function(a, b){
+        if(a.regionByRegionId.regionName < b.regionByRegionId.regionName) { return -1; }
+        if(a.regionByRegionId.regionName > b.regionByRegionId.regionName) { return 1; }
+        return 0;
+      })); ;
     }
 
     loadLastUsedFilter(){

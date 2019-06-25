@@ -1,3 +1,4 @@
+<div>
 <button mat-button (click)="copyTasks()" color="primary" matTooltip="Copy All Tasks" style="cursor:default;">
   <mat-icon>file_copy</mat-icon>
   Copy All Tasks
@@ -10,6 +11,14 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+<span *ngIf="isVaidator" style="float: right;">
+  <button id="valAllTasks" mat-button (click)="approveAllTasks()" color="primary" matTooltip="Validate All Tasks">
+    <mat-icon>done_all</mat-icon>
+    Validate All Tasks
+  </button>
+</span>
+</div>
+
 <table class="w-100 lcsummary-table">
   <tr class="border-bottom" style="background-color: #1f4e79; color: white;">
     <th></th>

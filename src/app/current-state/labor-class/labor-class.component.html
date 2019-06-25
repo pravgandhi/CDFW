@@ -54,6 +54,13 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="respondentName" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Respondent Name</th>
+      <td mat-cell *matCellDef="let element" style="width:150px;">
+        {{element.respondentName}}
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="positionId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Position ID</th>
       <td mat-cell *matCellDef="let element">
@@ -70,24 +77,39 @@
 
     <ng-container matColumnDef="hours">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Bank</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" class="hours-container">
         {{element.hours}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="inputHours">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Entered</th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Respondent Hours Entered</th>
+      <td mat-cell *matCellDef="let element" class="hours-container">
         {{element.hoursEntered}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="hoursRemaining">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Hours Remaining</th>
-      <td mat-cell *matCellDef="let element" [class.text-success]="element.hoursRemaining > 0" [class.text-danger]="element.hoursRemaining < 0">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Respondent Hours Remaining</th>
+      <td mat-cell *matCellDef="let element" [class.text-success]="element.hoursRemaining > 0" [class.text-danger]="element.hoursRemaining < 0" class="hours-container">
         {{element.hoursRemaining}}
       </td>
     </ng-container>
+
+    <ng-container matColumnDef="validatedHours">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Validated Hours</th>
+      <td mat-cell *matCellDef="let element" class="hours-container">
+        {{element.validatedHours}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="validatedHoursRemaining">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Unvalidated Hours Remaining</th>
+      <td mat-cell *matCellDef="let element" [class.text-success]="element.validatedHoursRemaining > 0" [class.text-danger]="element.validatedHoursRemaining < 0" class="hours-container">
+        {{element.validatedHoursRemaining}}
+      </td>
+    </ng-container>
+
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Actions</th>
@@ -109,15 +131,20 @@
               <ng-template matTabContent>
                 <div *ngIf="taskCatalog != null && taskCatalog.length > 0">
                   <app-labor-class-tasks [taskCatalog]="taskCatalog" [hoursBank]="element.hours"
-                   [hoursEntered]="element.hoursEntered" [positionId]="element.positionId"
-                   [regionId]="selectedRegionId" (updateHoursEntered)="updateHoursEntered(element, $event)"></app-labor-class-tasks>
+                   [hoursEntered]="element.hoursEntered" [validatedHours]="element.validatedHours" [positionId]="element.positionId"
+                   [regionId]="selectedRegionId" (updateHoursEntered)="updateHoursEntered(element, $event)"
+                   (updatedValidatedHours)= "updatedValidatedHours(element, $event)"
+                   ></app-labor-class-tasks>
                 </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Inputs">
               <ng-template matTabContent>
                 <app-labor-class-inputs [positionId]="element.positionId" [hoursBank]="element.hours"
-                  [hoursEntered]="element.hoursEntered" (hoursEntered)="updateHoursEntered(element, $event)"
+                  [hoursEntered]="element.hoursEntered"
+                  [validatdHours]="element.validatedHours"
+                  (hoursEntered)="updateHoursEntered(element, $event)"
+                  (validatedHours)="updatedValidatedHours(element, $event)"
                   (copyInd) = "reloadLaborClass()"
                   [regionId]="selectedRegionObj.regionByRegionId.regionId"
                   [laborMappings] = "laborMappings"></app-labor-class-inputs>
