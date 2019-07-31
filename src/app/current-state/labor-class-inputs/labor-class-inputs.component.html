@@ -1,4 +1,4 @@
-<div>
+<!--<div>
 <button mat-button (click)="copyTasks()" color="primary" matTooltip="Copy All Tasks" style="cursor:default;">
   <mat-icon>file_copy</mat-icon>
   Copy All Tasks
@@ -17,7 +17,7 @@
     Validate All Tasks
   </button>
 </span>
-</div>
+</div>-->
 
 <table class="w-100 lcsummary-table">
   <tr class="border-bottom" style="background-color: #1f4e79; color: white;">
@@ -63,12 +63,14 @@
           <td style="width:60px;" class="text-center">{{task.inputHours}}</td>
           <td style="width:200px;">{{task.feedback}}</td>
           <td style="width:60px;">
-            <i class="material-icons info text-primary" title="Edit" *ngIf="(task.userId == user.id &&  task.sttsId != 'A') || user.userRoleByCsRoleId.roleName == 'c_lead'"
+            <!--
+            <i disabled=true class="material-icons info text-primary" title="Edit" *ngIf="(task.userId == user.id &&  task.sttsId != 'A') || user.userRoleByCsRoleId.roleName == 'c_lead'"
               (click)="editInput(task)">edit</i>
             <i class="material-icons info text-danger" title="Remove" *ngIf="(task.userId == user.id && task.sttsId != 'A') || user.userRoleByCsRoleId.roleName == 'c_lead'"
               (click)="deleteInput(task)">delete</i>
             <i class="material-icons info text-success" title="Approve"
               (click)="approveCSInput(task)" *ngIf="user.userRoleByCsRoleId.roleName == 'c_lead'">check_circle</i>
+-->
           </td>
         </tr>
         </tbody>

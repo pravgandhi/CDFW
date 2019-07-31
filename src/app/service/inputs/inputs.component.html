@@ -52,10 +52,10 @@
     </table>
   <!-- </mat-card-content> -->
   <div class="text-center pt-2" *ngIf="userRole == 'admin' || userRole == 'm_lead'">
-    <button mat-raised-button color="primary" (click)="approveResponse()" class="mx-2 text-dark bg-white task-input-multiplier-btn"
-      [disabled]=true>Select</button>
-      <!--<button mat-raised-button color="primary" (click)="approveResponse()" class="mx-2 text-dark bg-white task-input-multiplier-btn"
-        [disabled]="this.selectedRow != undefined && this.selectedRow.taskStatus == 'Approved'">Select</button>-->
+    <!--<button mat-raised-button color="primary" (click)="approveResponse()" class="mx-2 text-dark bg-white task-input-multiplier-btn"
+      [disabled]=true>Select</button>-->
+      <button mat-raised-button color="primary" (click)="approveResponse()" class="mx-2 text-dark bg-white task-input-multiplier-btn"
+        [disabled]="this.selectedRow != undefined && this.selectedRow.taskStatus == 'Approved'">Select</button>
     <!-- <button mat-raised-button color="primary" (click)="provideYourInput()" class="text-dark bg-white task-input-multiplier-btn">Provide your own Input</button> -->
   </div>
 <!-- </mat-card> -->

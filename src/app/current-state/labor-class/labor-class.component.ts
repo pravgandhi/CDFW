@@ -151,13 +151,13 @@ export class LaborClassComponent implements OnInit {
   }
 
   updateHoursEntered(element, hours){
-    element['hoursEntered'] = hours;
-    element['hoursRemaining'] = element['hours'] - element['hoursEntered'];
+    element['hoursEntered'] = Math.round(hours);
+    element['hoursRemaining'] = Math.round(element['hours'] - element['hoursEntered']);
   }
 
   updatedValidatedHours(element, hours) {
-    element['validatedHours'] = hours;
-    element['validatedHoursRemaining'] = element['hours'] - element['validatedHours'];
+    element['validatedHours'] = Math.round(hours);
+    element['validatedHoursRemaining'] = Math.round(element['hours'] - element['validatedHours']);
   }
 
   reloadLaborClass(){

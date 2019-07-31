@@ -27,7 +27,8 @@ export class MatrixDetailsComponent implements OnInit{
   regionList;
   filteredValues = { taskId:'', serviceName:'', program:'',
     subProgram:'', taskCategory: '', taskName : '', statusCode: '',
-    myInput:'', inputCount: '', feedbackReceived: '', toBeEnteredBy: ''//, topFilter: false
+    myInput:'', inputCount: '', feedbackReceived: '', toBeEnteredBy: '',
+    updateInd: ''//, topFilter: false
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -50,7 +51,7 @@ export class MatrixDetailsComponent implements OnInit{
     customInit(params){
       this.user = this.userService.user;
       this.displayedColumns = ["viewTask", "taskId", "serviceName", "program",
-      "subProgram", "taskCategory", "taskName", "myInput",  "statusCode", "inputCount", "feedbackReceived", "toBeEnteredBy"];
+      "subProgram", "taskCategory", "taskName", "myInput",  "statusCode", "inputCount", "toBeEnteredBy", "updateInd", "feedbackReceived"];
       this.displayedFilterColumns = [];
       this.displayedColumns.forEach(e => {
         this.displayedFilterColumns.push(e + '-filter');
@@ -112,6 +113,7 @@ export class MatrixDetailsComponent implements OnInit{
       this.applyColumnFilter(fValues.inputCount, 'inputReceived');
       this.applyColumnFilter(fValues.feedbackReceived, 'feedbackReceived');
       this.applyColumnFilter(fValues.toBeEnteredBy, 'toBeEnteredBy');
+      this.applyColumnFilter(fValues.updateInd, 'updateInd');
     }
 
     clearAllFilters(){
@@ -122,7 +124,7 @@ export class MatrixDetailsComponent implements OnInit{
       this.filteredValues = { taskId:'', serviceName:'', program:'',
         subProgram:'', taskCategory: '', taskName : '', statusCode: '',
         myInput:'', inputCount: '',
-        feedbackReceived:'', toBeEnteredBy: ''
+        feedbackReceived:'', toBeEnteredBy: '', updateInd: ''
       };
       this.serviceMatrix.filterStore.pageIndex = 0;
       this.serviceMatrix.filterStore.globalFilter = '';
@@ -149,7 +151,8 @@ export class MatrixDetailsComponent implements OnInit{
         let taskDescFound = data.taskDesc.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let sgFound = data.serviceGlossary.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
         let toBeEnteredFound = data.toBeEnteredBy.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
-        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound || fbReceivedFound || taskDescFound || sgFound || toBeEnteredFound;
+        let updateInd = data.updateInd.toString().trim().toLowerCase().indexOf(this.globalFilter.toString().toLowerCase()) !== -1;
+        globalMatch = taskIdFound || serviceNameFound || programFound || subProgramFound || taskCategoryFound || taskNameFound || statusFound || inputFound || countFound || fbReceivedFound || taskDescFound || sgFound || toBeEnteredFound || updateInd;
       }
 
       if (!globalMatch) {
@@ -168,7 +171,8 @@ export class MatrixDetailsComponent implements OnInit{
       let countFound = data.inputReceived.toString().trim().toLowerCase().indexOf(searchString.inputCount.toString().toLowerCase()) !== -1;
       let fbReceivedFound = data.feedbackReceived.toString().trim().toLowerCase().indexOf(searchString.feedbackReceived.toString().toLowerCase()) !== -1;
       let toBeEnteredFound = data.toBeEnteredBy.toString().trim().toLowerCase().indexOf(searchString.toBeEnteredBy.toString().toLowerCase()) !== -1;
-      return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound && fbReceivedFound && toBeEnteredFound;
+      let updateIndFound = data.updateInd.toString().trim().toLowerCase().indexOf(searchString.updateInd.toString().toLowerCase()) !== -1;
+      return taskIdFound && serviceNameFound && programFound && subProgramFound && taskCategoryFound && taskNameFound && statusFound && inputFound && countFound && fbReceivedFound && toBeEnteredFound && updateIndFound;
     }
     return myFilterPredicate;
   }

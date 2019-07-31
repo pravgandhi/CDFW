@@ -12,7 +12,8 @@
     <ng-container matColumnDef="viewTask">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="th-header-background">Actions</th>
       <td mat-cell *matCellDef="let row">
-        <button mat-button color="primary" (click)="addInput(row)" title="Add Hours" [disabled]="isTaskAdded(row.taskId) >= 0">
+        <!--<button mat-button color="primary" (click)="addInput(row)" title="Add Hours" [disabled]="isTaskAdded(row.taskId) >= 0">-->
+        <button mat-button color="primary" (click)="addInput(row)" title="Add Hours" [disabled]=true>
           <mat-icon>add_box</mat-icon>
         </button>
       </td>

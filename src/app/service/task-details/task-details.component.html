@@ -91,9 +91,9 @@
                         class="input-task-feedback-area w-94" [disabled]="saveRespInputDisabled || multiplier == undefined"> </textarea>
                     </td>
                     <td class="text-center align-top">
-                      <!--<button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]="saveRespInputDisabled
-                                    || multiplier == undefined"> -->
-                      <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]=true>
+                      <button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]="saveRespInputDisabled
+                                    || multiplier == undefined">
+                      <!--<button mat-button class="text-dark bg-white task-input-multiplier-btn" (click)="saveResponse()" [disabled]=true>-->
                         <mat-icon>save</mat-icon>
                         Save Response
                       </button>
